@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\favicon-16x16.png" />
+    <Content Include="wwwroot\favicon-32x32.png" />
+    <Content Include="wwwroot\index.html" />
+    <Content Include="wwwroot\oauth2-redirect.html" />
+    <Content Include="wwwroot\swagger-ui-bundle.js" />
+    <Content Include="wwwroot\swagger-ui-bundle.js.map" />
+    <Content Include="wwwroot\swagger-ui-standalone-preset.js" />
+    <Content Include="wwwroot\swagger-ui-standalone-preset.js.map" />
+    <Content Include="wwwroot\swagger-ui.css" />
+    <Content Include="wwwroot\swagger-ui.css.map" />
+    <Content Include="wwwroot\swagger-ui.js" />
+    <Content Include="wwwroot\swagger-ui.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Owin" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="1.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
+    <PackageReference Include="Nancy" Version="2.0.0-clinteastwood" />
+    <PackageReference Include="Nancy.Metadata.Modules" Version="2.0.0-clinteastwood" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Nancy.Metadata.OpenApi\Nancy.Metadata.OpenApi.csproj" />
+  </ItemGroup>
+
+</Project>

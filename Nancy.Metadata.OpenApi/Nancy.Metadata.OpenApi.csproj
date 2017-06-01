@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <Version>1.0.1</Version>
+    <AssemblyName>Nancy.Metadata.OpenApi</AssemblyName>
+    <RootNamespace>Nancy.Metadata.OpenApi</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Nancy" Version="2.0.0-clinteastwood" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
+    <PackageReference Include="NJsonSchema" Version="6.3.6185.19861" />
+  </ItemGroup>
+
+</Project>
