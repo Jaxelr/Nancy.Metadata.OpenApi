@@ -10,9 +10,6 @@ namespace Nancy.Metadata.OpenApi.Model
             OperationId = name;
         }
 
-        [JsonProperty("tags")]
-        public string[] Tags { get; set; }
-
         [JsonProperty("summary")]
         public string Summary { get; set; }
 
