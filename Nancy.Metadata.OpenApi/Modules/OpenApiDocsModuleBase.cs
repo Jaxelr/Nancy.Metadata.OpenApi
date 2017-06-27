@@ -16,7 +16,6 @@ namespace Nancy.Metadata.OpenApi.Modules
         private readonly string apiVersion;
         private readonly Server host;
         private readonly string apiBaseUrl;
-        private readonly string[] schemes;
 
         protected OpenApiDocsModuleBase(IRouteCacheProvider routeCacheProvider,
             string docsLocation = "/api/docs",
@@ -24,15 +23,13 @@ namespace Nancy.Metadata.OpenApi.Modules
             string apiVersion = "1.0",
             string host = "localhost:5000",
             string hostDescription = "My Localhost",
-            string apiBaseUrl = "/",
-            params string[] schemes)
+            string apiBaseUrl = "/")
         {
             this.routeCacheProvider = routeCacheProvider;
             this.title = title;
             this.apiVersion = apiVersion;
             this.host = new Server { Url = host, Description = hostDescription };
             this.apiBaseUrl = apiBaseUrl;
-            this.schemes = schemes;
 
             Get(docsLocation, r => GetDocumentation());
         }
@@ -56,8 +53,7 @@ namespace Nancy.Metadata.OpenApi.Modules
                     Title = title,
                     Version = apiVersion,
                 },
-                Servers = new Server[] { host },
-                Schemes = schemes,
+                Servers = new Server[] { host }
             };
 
             // generate documentation
@@ -85,19 +81,24 @@ namespace Nancy.Metadata.OpenApi.Modules
                 endpoints[path].Add(m.Method, m.Info);
 
                 // add definitions
-                if (swaggerSpecification.ModelDefinitions == null)
+                if (swaggerSpecification.Component == null)
                 {
-                    swaggerSpecification.ModelDefinitions = new Dictionary<string, NJsonSchema.JsonSchema4>();
+                    swaggerSpecification.Component = new Component();
+
+                    if (swaggerSpecification.Component.ModelDefinitions == null)
+                    {
+                        swaggerSpecification.Component.ModelDefinitions = new Dictionary<string, NJsonSchema.JsonSchema4>();
+                    }
                 }
 
                 foreach (string key in SchemaCache.Cache.Keys)
                 {
-                    if (swaggerSpecification.ModelDefinitions.ContainsKey(key))
+                    if (swaggerSpecification.Component.ModelDefinitions.ContainsKey(key))
                     {
                         continue;
                     }
 
-                    swaggerSpecification.ModelDefinitions.Add(key, SchemaCache.Cache[key]);
+                    swaggerSpecification.Component.ModelDefinitions.Add(key, SchemaCache.Cache[key]);
                 }
             }
 

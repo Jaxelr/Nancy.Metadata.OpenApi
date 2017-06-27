@@ -74,26 +74,16 @@ namespace Nancy.Metadata.OpenApi.Fluent
                 Name = name,
                 Schema = new SchemaRef
                 {
-                    Ref = "#/definitions/" + GetOrSaveSchemaReference(requestType)
+                    Ref = $"#/components/{GetOrSaveSchemaReference(requestType)}"
                 }
             });
 
             return endpointInfo;
         }
 
-        public static Endpoint WithDescription(this Endpoint endpointInfo, string description, string[] contentType = null, params string[] tags)
+        public static Endpoint WithDescription(this Endpoint endpointInfo, string description, string[] contentType = null)
         {
-            if (endpointInfo.Tags == null)
-            {
-                if (tags.Length == 0)
-                {
-                    tags = new[] { "default" };
-                }
-
-                endpointInfo.Tags = tags;
-            }
-
-           endpointInfo.Description = description;
+            endpointInfo.Description = description;
 
             return endpointInfo;
         }
@@ -110,7 +100,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
             {
                 Schema = new SchemaRef
                 {
-                    Ref = "#/definitions/" + GetOrSaveSchemaReference(responseType)
+                    Ref = $"#/components/{GetOrSaveSchemaReference(responseType)}"
                 },
                 Description = description
             };

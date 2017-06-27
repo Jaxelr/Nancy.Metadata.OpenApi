@@ -21,7 +21,7 @@ namespace Nancy.Metadata.OpenApi.Core
         {
             JObject j = new JObject();
 
-            // Rather crude hack to have all necessary type definitions on one level.
+            // Rather crude hack to have all necessary type components on one level.
             // The good thing is that it's save: as we use Type.FullName as
             // schema type name, there shouldn't be any conflicts, if two requests have
             // same submodel of Namespace.SpecificType type, they are guaranteed to be the
