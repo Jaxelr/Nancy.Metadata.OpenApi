@@ -19,7 +19,7 @@ namespace Nancy.Metadata.OpenApi.Core
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            JObject j = new JObject();
+            var j = new JObject();
 
             // Rather crude hack to have all necessary type components on one level.
             // The good thing is that it's save: as we use Type.FullName as
@@ -28,7 +28,7 @@ namespace Nancy.Metadata.OpenApi.Core
             // same type
             foreach (var pair in (value as Dictionary<string, NJsonSchema.JsonSchema4>))
             {
-                var el = JObject.Parse(pair.Value.ToJson());
+                var el = JObject.Parse(pair.Value.ToJson().Replace("#/definitions/", "#/components/schemas/"));
 
                 var defs = el.GetValue("definitions");
 

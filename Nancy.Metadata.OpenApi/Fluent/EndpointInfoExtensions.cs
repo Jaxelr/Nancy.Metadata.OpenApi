@@ -74,7 +74,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
                 Name = name,
                 Schema = new SchemaRef
                 {
-                    Ref = $"#/components/{GetOrSaveSchemaReference(requestType)}"
+                    Ref = $"#/components/schemas/{GetOrSaveSchemaReference(requestType)}"
                 }
             });
 
@@ -100,7 +100,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
             {
                 Schema = new SchemaRef
                 {
-                    Ref = $"#/components/{GetOrSaveSchemaReference(responseType)}"
+                    Ref = $"#/components/schemas/{GetOrSaveSchemaReference(responseType)}"
                 },
                 Description = description
             };
@@ -123,14 +123,14 @@ namespace Nancy.Metadata.OpenApi.Fluent
                 return key;
             }
 
-            var schema = JsonSchema4.FromType(type, new NJsonSchema.Generation.JsonSchemaGeneratorSettings
+            var taskSchema = JsonSchema4.FromTypeAsync(type, new NJsonSchema.Generation.JsonSchemaGeneratorSettings
             {
                 NullHandling = NullHandling.Swagger,
                 TypeNameGenerator = new TypeNameGenerator(),
                 SchemaNameGenerator = new TypeNameGenerator()
             });
 
-            SchemaCache.Cache[key] = schema;
+            SchemaCache.Cache[key] = taskSchema.Result;
 
             return key;
         }

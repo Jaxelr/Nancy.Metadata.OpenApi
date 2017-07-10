@@ -9,8 +9,8 @@
 
   <ItemGroup>
     <PackageReference Include="Nancy" Version="2.0.0-clinteastwood" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
-    <PackageReference Include="NJsonSchema" Version="6.3.6185.19861" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="NJsonSchema" Version="9.3.0" />
   </ItemGroup>
 
 </Project>

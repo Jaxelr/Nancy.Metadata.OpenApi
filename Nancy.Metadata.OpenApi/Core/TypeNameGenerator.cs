@@ -1,15 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using NJsonSchema;
 
 namespace Nancy.Metadata.OpenApi.Core
 {
-    public class TypeNameGenerator : NJsonSchema.ITypeNameGenerator, NJsonSchema.ISchemaNameGenerator
+    public class TypeNameGenerator : ITypeNameGenerator, ISchemaNameGenerator
     {
         public string Generate(Type type)
         {
             return type.FullName;
         }
 
-        public string Generate(NJsonSchema.JsonSchema4 schema, string typeNameHint)
+        public string Generate(JsonSchema4 schema, string typeNameHint, IEnumerable<string> reservedTypeNames)
         {
             return typeNameHint;
         }
