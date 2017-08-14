@@ -2,9 +2,23 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
-    <Version>1.0.1</Version>
+    <Version>0.3.0</Version>
+    <PackageVersion>0.3.0-pre</PackageVersion>
+    <PackageId>Nancy.Metadata.OpenApi</PackageId>
+    <Copyright>Copyright 2017</Copyright>
+    <Authors>Jaxel Rojas, Anton Kudryavtsev</Authors>
     <AssemblyName>Nancy.Metadata.OpenApi</AssemblyName>
     <RootNamespace>Nancy.Metadata.OpenApi</RootNamespace>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>First alpha release with the modifications to comply with the OpenApi spec 3.0.0. 
+(Not backwards compatible with Swagger 2.0).</PackageReleaseNotes>
+    <PackageTags>OpenApi Nancy Metadata</PackageTags>
+    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageProjectUrl></PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Jaxelr/Nancy.Metadata.OpenApi</RepositoryUrl>
+    <Company />
+    <Description>A library to add the capability to add to a NancyFx web service operation the ability to generate an a json doc that complies with the OpenApi specification 3.0.0.</Description>
+    <NeutralLanguage></NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,5 +26,4 @@
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="NJsonSchema" Version="9.4.2" />
   </ItemGroup>
-
 </Project>
