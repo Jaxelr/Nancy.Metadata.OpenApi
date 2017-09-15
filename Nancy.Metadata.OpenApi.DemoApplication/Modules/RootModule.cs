@@ -22,7 +22,7 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
         {
             NestedRequestModel model = this.Bind<NestedRequestModel>();
 
-            SimpleResponseModel response = new SimpleResponseModel
+            var response = new SimpleResponseModel
             {
                 Hello = $"Hello, {model.SimpleModel.Name}. We got your name from nested object"
             };
@@ -34,7 +34,7 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
         {
             SimpleRequestModel model = this.Bind<SimpleRequestModel>();
 
-            SimpleResponseModel response = new SimpleResponseModel
+            var response = new SimpleResponseModel
             {
                 Hello = $"Hello, {model.Name}"
             };
@@ -44,7 +44,7 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
 
         private Response HelloPost()
         {
-            SimpleResponseModel response = new SimpleResponseModel
+            var response = new SimpleResponseModel
             {
                 Hello = "Hello Post!"
             };
@@ -54,7 +54,7 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
 
         private Response Hello(string name)
         {
-            SimpleResponseModel response = new SimpleResponseModel
+            var response = new SimpleResponseModel
             {
                 Hello = $"Hello, {name}"
             };
@@ -64,7 +64,7 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
 
         private Response HelloWorld()
         {
-            SimpleResponseModel response = new SimpleResponseModel
+            var response = new SimpleResponseModel
             {
                 Hello = "Hello World!"
             };
