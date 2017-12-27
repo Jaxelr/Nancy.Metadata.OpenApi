@@ -41,7 +41,10 @@ namespace Nancy.Metadata.OpenApi.Modules
                 GenerateSpecification();
             }
 
-            return Response.AsText(JsonConvert.SerializeObject(swaggerSpecification, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+            return Response
+                    .AsText(JsonConvert.SerializeObject(swaggerSpecification, 
+                    Formatting.None,  new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }))
+                    .WithContentType("application/json");
         }
 
         private void GenerateSpecification()
