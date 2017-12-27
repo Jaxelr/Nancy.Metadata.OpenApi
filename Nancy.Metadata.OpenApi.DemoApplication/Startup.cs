@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using Nancy.Owin;
 
 namespace Nancy.Metadata.OpenApi.DemoApplication
@@ -10,6 +11,18 @@ namespace Nancy.Metadata.OpenApi.DemoApplication
         {
             app.UseStaticFiles();
             app.UseOwin(x => x.UseNancy());
+
+            app.UseCors("CustomPolicy");
+        }
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddCors(o => o.AddPolicy("CustomPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
         }
     }
 }
