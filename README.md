@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/bk8fiqknunkegnv7?svg=true)](https://ci.appveyor.com/project/Jaxelr/nancy-metadata-openapi)
+
 # Nancy.Metadata.OpenApi
 
 This repository is a fork of the https://github.com/HackandCraft/Nancy.Metadata.Swagger repository, due to inactivity. 
