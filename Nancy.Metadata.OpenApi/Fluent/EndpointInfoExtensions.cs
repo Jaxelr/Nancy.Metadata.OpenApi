@@ -21,9 +21,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
         }
 
         public static Endpoint WithDefaultResponse(this Endpoint endpointInfo, Type responseType, string description = "Default response")
-        {
-            return endpointInfo.WithResponseModel("200", responseType, description);
-        }
+            => endpointInfo.WithResponseModel("200", responseType, description);
 
         public static Endpoint WithResponse(this Endpoint endpointInfo, string statusCode, string description)
         {
@@ -95,24 +93,20 @@ namespace Nancy.Metadata.OpenApi.Fluent
         }
 
         private static Model.Response GenerateResponseInfo(string description, Type responseType)
-        {
-            return new Model.Response
-            {
-                Schema = new SchemaRef
-                {
-                    Ref = $"#/components/schemas/{GetOrSaveSchemaReference(responseType)}"
-                },
-                Description = description
-            };
-        }
+           => new Model.Response
+           {
+               Schema = new SchemaRef
+               {
+                   Ref = $"#/components/schemas/{GetOrSaveSchemaReference(responseType)}"
+               },
+               Description = description
+           };
 
         private static Model.Response GenerateResponseInfo(string description)
-        {
-            return new Model.Response
+            => new Model.Response
             {
                 Description = description
             };
-        }
 
         private static string GetOrSaveSchemaReference(Type type)
         {

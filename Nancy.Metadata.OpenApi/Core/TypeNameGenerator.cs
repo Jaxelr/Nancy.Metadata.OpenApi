@@ -6,14 +6,8 @@ namespace Nancy.Metadata.OpenApi.Core
 {
     public class TypeNameGenerator : ITypeNameGenerator, ISchemaNameGenerator
     {
-        public string Generate(Type type)
-        {
-            return type.FullName;
-        }
+        public string Generate(Type type) => type.FullName;
 
-        public string Generate(JsonSchema4 schema, string typeNameHint, IEnumerable<string> reservedTypeNames)
-        {
-            return typeNameHint;
-        }
+        public string Generate(JsonSchema4 schema, string typeNameHint, IEnumerable<string> reservedTypeNames) => typeNameHint;
     }
 }

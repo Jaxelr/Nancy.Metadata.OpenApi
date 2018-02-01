@@ -11,7 +11,7 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
         public RootModule() : base("/api")
         {
             Get("/hello", r => HelloWorld(), name: "SimpleRequest");
-            Post("/hello", r => HelloPost(), name: "SimplePostRequst");
+            Post("/hello", r => HelloPost(), name: "SimplePostRequest");
             Get("/hello/{name}", r => Hello(r.name), name: "SimpleRequestWithParameter");
             Post("/hello", r => r.HelloPost(), name: "SimplePostRequest");
             Post("hello/model/", r => HelloModel(), name: "PostRequestWithModel");

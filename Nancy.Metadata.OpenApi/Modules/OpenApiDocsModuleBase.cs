@@ -42,8 +42,8 @@ namespace Nancy.Metadata.OpenApi.Modules
             }
 
             return Response
-                    .AsText(JsonConvert.SerializeObject(swaggerSpecification, 
-                    Formatting.None,  new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }))
+                    .AsText(JsonConvert.SerializeObject(swaggerSpecification,
+                    Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }))
                     .WithContentType("application/json");
         }
 
@@ -62,7 +62,7 @@ namespace Nancy.Metadata.OpenApi.Modules
             // generate documentation
             IEnumerable<OpenApiRouteMetadata> metadata = routeCacheProvider.GetCache().RetrieveMetadata<OpenApiRouteMetadata>();
 
-            Dictionary<string, Dictionary<string, Endpoint>> endpoints = new Dictionary<string, Dictionary<string, Endpoint>>();
+            var endpoints = new Dictionary<string, Dictionary<string, Endpoint>>();
 
             foreach (OpenApiRouteMetadata m in metadata)
             {

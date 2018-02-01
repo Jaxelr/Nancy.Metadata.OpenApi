@@ -16,13 +16,12 @@ namespace Nancy.Metadata.OpenApi.DemoApplication
         }
 
         public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddCors(o => o.AddPolicy("CustomPolicy", builder =>
+            => services.AddCors(o => o.AddPolicy("CustomPolicy",
+                builder =>
             {
                 builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
             }));
-        }
     }
 }
