@@ -1,6 +1,6 @@
 # How to contribute
 
-Thanks for all the support even if it is reading this contribute silly guide.
+I've tried to keep the requirements to the minimum possible. 
 
 ## Pull requests.
 
