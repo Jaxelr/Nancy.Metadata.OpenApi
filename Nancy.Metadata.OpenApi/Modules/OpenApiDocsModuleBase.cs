@@ -9,8 +9,9 @@ namespace Nancy.Metadata.OpenApi.Modules
 {
     public abstract class OpenApiDocsModuleBase : NancyModule
     {
-        private OpenApiSpecification swaggerSpecification;
+        private const string CONTENT_TYPE = "application/json";
 
+        private OpenApiSpecification openApiSpecification;
         private readonly IRouteCacheProvider routeCacheProvider;
         private readonly string title;
         private readonly string apiVersion;
@@ -34,22 +35,23 @@ namespace Nancy.Metadata.OpenApi.Modules
             Get(docsLocation, r => GetDocumentation());
         }
 
+
         public virtual Response GetDocumentation()
         {
-            if (swaggerSpecification == null)
+            if (openApiSpecification == null)
             {
                 GenerateSpecification();
             }
 
             return Response
-                    .AsText(JsonConvert.SerializeObject(swaggerSpecification,
+                    .AsText(JsonConvert.SerializeObject(openApiSpecification,
                     Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }))
-                    .WithContentType("application/json");
+                    .WithContentType(CONTENT_TYPE);
         }
 
         private void GenerateSpecification()
         {
-            swaggerSpecification = new OpenApiSpecification
+            openApiSpecification = new OpenApiSpecification
             {
                 Api = new Api
                 {
@@ -84,28 +86,28 @@ namespace Nancy.Metadata.OpenApi.Modules
                 endpoints[path].Add(m.Method, m.Info);
 
                 // add definitions
-                if (swaggerSpecification.Component == null)
+                if (openApiSpecification.Component == null)
                 {
-                    swaggerSpecification.Component = new Component();
+                    openApiSpecification.Component = new Component();
 
-                    if (swaggerSpecification.Component.ModelDefinitions == null)
+                    if (openApiSpecification.Component.ModelDefinitions == null)
                     {
-                        swaggerSpecification.Component.ModelDefinitions = new Dictionary<string, NJsonSchema.JsonSchema4>();
+                        openApiSpecification.Component.ModelDefinitions = new Dictionary<string, NJsonSchema.JsonSchema4>();
                     }
                 }
 
                 foreach (string key in SchemaCache.Cache.Keys)
                 {
-                    if (swaggerSpecification.Component.ModelDefinitions.ContainsKey(key))
+                    if (openApiSpecification.Component.ModelDefinitions.ContainsKey(key))
                     {
                         continue;
                     }
 
-                    swaggerSpecification.Component.ModelDefinitions.Add(key, SchemaCache.Cache[key]);
+                    openApiSpecification.Component.ModelDefinitions.Add(key, SchemaCache.Cache[key]);
                 }
             }
 
-            swaggerSpecification.PathInfos = endpoints;
+            openApiSpecification.PathInfos = endpoints;
         }
     }
 }

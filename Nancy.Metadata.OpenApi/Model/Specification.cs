@@ -6,7 +6,7 @@ namespace Nancy.Metadata.OpenApi.Model
     public class OpenApiSpecification
     {
         [JsonProperty("openapi")]
-        public string OpenApiVersion { get { return "3.0.0"; } }
+        public string OpenApiVersion => "3.0.0";
 
         [JsonProperty("info")]
         public Api Api { get; set; }
