@@ -23,7 +23,14 @@ using Nancy.Metadata.OpenApi.Modules;
 
     public class DocsModule : OpenApiDocsModuleBase //We must inherit from the OpenApiDocsModuleBase
     {
-        public DocsModule(IRouteCacheProvider routeCacheProvider) : base(routeCacheProvider, "/api/docs", "Sample API documentation", "v1.0", "localhost:5000", "/api", "http")
+        public DocsModule(IRouteCacheProvider routeCacheProvider) : 
+            base(routeCacheProvider, 
+            "/api/docs",                    //Document location path
+            "My API ",                      //Api Title 
+            "v1.0",                         //Version of the Api            
+            "localhost:5000",               //Host
+            "Sample API documentation",     //Host Description
+            "/api")                         //Base url
         {
         }
     }
