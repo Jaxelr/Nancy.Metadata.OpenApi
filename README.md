@@ -5,7 +5,7 @@
 This repository is a fork of the https://github.com/HackandCraft/Nancy.Metadata.Swagger repository, due to inactivity. 
 
 ---
-Currently works on the OpenApi specification 3.0.0 & 3.0.1, this was implemented for usage with NancyFx (using Nancy 2.0.0-clinteastwood for .Net Core). This repo depends on the following libraries:
+Currently works on the OpenApi specification 3.0.X, this was implemented for usage with NancyFx (using Nancy 2.0.0-clinteastwood for .Net Core). This repo depends on the following libraries:
 
 * [NancyFx](https://github.com/NancyFx/Nancy)
 * [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json)
