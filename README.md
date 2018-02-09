@@ -74,8 +74,4 @@ For a working example,  clone this repo and see the demo application that uses t
 
 ## Missing so far:
 
-Open Api specifies certain optional objects that havent been implemented at the library level.
-
-* A Security object at the root level.
-* A Security scheme at the component level.
-* A Callback scheme at the component level.
+Open Api specifies certain optional objects that havent been implemented at the library level. Check the [Current Development Project](https://github.com/Jaxelr/Nancy.Metadata.OpenApi/projects) for more details.
