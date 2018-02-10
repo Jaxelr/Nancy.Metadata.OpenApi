@@ -14,7 +14,7 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
             Get("/hello/{name}", r => Hello(r.name), name: "SimpleRequestWithParameter");
             Post("/hello", r => HelloPost(), name: "SimplePostRequest");
             Post("hello/model", r => HelloModel(), name: "PostRequestWithModel");
-            Post("/hello/nestedmodel", r => r.HelloNestedModel(), name: "PostRequestWithNestedModel");
+            Post("/hello/nestedmodel", r => HelloNestedModel(), name: "PostRequestWithNestedModel");
         }
 
         private Response HelloNestedModel()
