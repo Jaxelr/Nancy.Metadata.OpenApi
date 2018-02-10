@@ -11,10 +11,9 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
         public RootModule() : base("/api")
         {
             Get("/hello", r => HelloWorld(), name: "SimpleRequest");
-            Post("/hello", r => HelloPost(), name: "SimplePostRequest");
             Get("/hello/{name}", r => Hello(r.name), name: "SimpleRequestWithParameter");
-            Post("/hello", r => r.HelloPost(), name: "SimplePostRequest");
-            Post("hello/model/", r => HelloModel(), name: "PostRequestWithModel");
+            Post("/hello", r => HelloPost(), name: "SimplePostRequest");
+            Post("hello/model", r => HelloModel(), name: "PostRequestWithModel");
             Post("/hello/nestedmodel", r => r.HelloNestedModel(), name: "PostRequestWithNestedModel");
         }
 
@@ -24,7 +23,7 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
 
             var response = new SimpleResponseModel
             {
-                Hello = $"Hello, {model.SimpleModel.Name}. We got your name from nested object"
+                Hello = $"Hello, {model?.SimpleModel?.Name}. We got your name from nested object"
             };
 
             return Response.AsJson(response);
@@ -86,19 +85,17 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
                             .WithRequestParameter("name")
                             .WithSummary("Simple GET with parameters"));
 
-            Describe["SimplePostRequst"] = desc => new OpenApiRouteMetadata(desc)
+            Describe["SimplePostRequest"] = desc => new OpenApiRouteMetadata(desc)
                 .With(info => info.WithResponseModel("200", typeof(SimpleResponseModel), "Sample response")
                     .WithSummary("Simple POST example"));
 
             Describe["PostRequestWithModel"] = desc => new OpenApiRouteMetadata(desc)
                 .With(info => info.WithResponseModel("200", typeof(SimpleResponseModel))
-                    .WithResponse("400", "Bad request")
                     .WithSummary("Simple POST example with request model")
                     .WithRequestModel(typeof(SimpleRequestModel)));
 
             Describe["PostRequestWithNestedModel"] = desc => new OpenApiRouteMetadata(desc)
                 .With(info => info.WithResponseModel("200", typeof(SimpleResponseModel))
-                    .WithResponse("400", "Bad request")
                     .WithSummary("Simple POST example with nested request model")
                     .WithRequestModel(typeof(NestedRequestModel)));
         }
