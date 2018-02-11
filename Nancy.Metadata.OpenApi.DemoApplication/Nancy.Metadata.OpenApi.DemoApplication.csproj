@@ -30,6 +30,7 @@
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.1" />
     <PackageReference Include="Nancy" Version="2.0.0-clinteastwood" />
     <PackageReference Include="Nancy.Metadata.Modules" Version="2.0.0-clinteastwood" />
+    <PackageReference Include="Nancy.Validation.FluentValidation" Version="2.0.0-clinteastwood" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
   <ItemGroup>

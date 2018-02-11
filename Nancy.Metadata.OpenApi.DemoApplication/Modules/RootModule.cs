@@ -19,26 +19,75 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
 
         private Response HelloNestedModel()
         {
-            NestedRequestModel model = this.Bind<NestedRequestModel>();
-
-            var response = new SimpleResponseModel
+            try
             {
-                Hello = $"Hello, {model?.SimpleModel?.Name}. We got your name from nested object"
-            };
+                NestedRequestModel model = this.BindAndValidate<NestedRequestModel>();
 
-            return Response.AsJson(response);
+
+                if (!ModelValidationResult.IsValid)
+                {
+                    return Response
+                         .AsJson(new ValidationFailedResponseModel(ModelValidationResult))
+                         .WithStatusCode(HttpStatusCode.BadRequest);
+                }
+
+                var response = new SimpleResponseModel
+                {
+                    Hello = $"Hello, {model?.SimpleModel.Name}. We got your name from a nested object."
+                };
+
+                return Response.AsJson(response);
+            }
+
+            catch (ModelBindingException)
+            {
+                return Response
+                     .AsJson(new ValidationFailedResponseModel("Model Binding Failed with Exception."))
+                     .WithStatusCode(HttpStatusCode.BadRequest);
+            }
+
+            catch (System.NullReferenceException)
+            {
+                return Response
+                .AsJson(new ValidationFailedResponseModel("The body contains an invalid nested request model."))
+                .WithStatusCode(HttpStatusCode.InternalServerError);
+            }
         }
 
         private Response HelloModel()
         {
-            SimpleRequestModel model = this.Bind<SimpleRequestModel>();
-
-            var response = new SimpleResponseModel
+            try
             {
-                Hello = $"Hello, {model.Name}"
-            };
+                SimpleRequestModel model = this.BindAndValidate<SimpleRequestModel>();
 
-            return Response.AsJson(response);
+                if (!ModelValidationResult.IsValid)
+                {
+                    return Response
+                         .AsJson(new ValidationFailedResponseModel(ModelValidationResult))
+                         .WithStatusCode(HttpStatusCode.BadRequest);
+                }
+
+                var response = new SimpleResponseModel
+                {
+                    Hello = $"Hello, {model.Name}."
+                };
+
+                return Response.AsJson(response);
+            }
+
+            catch (ModelBindingException)
+            {
+                return Response
+                     .AsJson(new ValidationFailedResponseModel("Model Binding Failed with Exception."))
+                     .WithStatusCode(HttpStatusCode.BadRequest);
+            }
+
+            catch (System.NullReferenceException)
+            {
+                return Response
+                .AsJson(new ValidationFailedResponseModel("The body contains an invalid nested request model."))
+                .WithStatusCode(HttpStatusCode.InternalServerError);
+            }
         }
 
         private Response HelloPost()
@@ -90,12 +139,14 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
                     .WithSummary("Simple POST example"));
 
             Describe["PostRequestWithModel"] = desc => new OpenApiRouteMetadata(desc)
-                .With(info => info.WithResponseModel("200", typeof(SimpleResponseModel))
+                .With(info => info.WithResponseModel("200", typeof(SimpleResponseModel), "Simple Response Model")
+                    .WithResponseModel("400", typeof(ValidationFailedResponseModel))
                     .WithSummary("Simple POST example with request model")
                     .WithRequestModel(typeof(SimpleRequestModel)));
 
             Describe["PostRequestWithNestedModel"] = desc => new OpenApiRouteMetadata(desc)
-                .With(info => info.WithResponseModel("200", typeof(SimpleResponseModel))
+                    .With(info => info.WithResponseModel("200", typeof(SimpleResponseModel), "Simple Response Model")
+                    .WithResponseModel("400", typeof(ValidationFailedResponseModel))
                     .WithSummary("Simple POST example with nested request model")
                     .WithRequestModel(typeof(NestedRequestModel)));
         }

@@ -37,6 +37,7 @@ namespace Nancy.Metadata.OpenApi.Core
                 }
 
                 el.Remove("definitions");
+                el.Remove("title");
                 el.Remove("$schema");
 
                 j.Add(pair.Key, el);
