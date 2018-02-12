@@ -1,3 +1,10 @@
+# Type of Issue
+
+```
+[ ] Bug.
+[ ] Feature.
+```
+
 ## Expected Behavior
 
 
