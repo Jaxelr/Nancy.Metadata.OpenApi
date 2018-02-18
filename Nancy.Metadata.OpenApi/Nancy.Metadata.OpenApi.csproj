@@ -6,13 +6,13 @@
     <PackageVersion>0.3.1-pre</PackageVersion>
     <PackageId>Nancy.Metadata.OpenApi</PackageId>
     <Copyright>Copyright 2017</Copyright>
-    <Authors>Jaxel Rojas, Anton Kudryavtsev</Authors>
+    <Authors>Jaxel Rojas;Anton Kudryavtsev</Authors>
     <AssemblyName>Nancy.Metadata.OpenApi</AssemblyName>
     <RootNamespace>Nancy.Metadata.OpenApi</RootNamespace>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes>Alpha release with the modifications to comply with the OpenApi spec 3.0.0. 
 (Not backwards compatible with Swagger 2.0). ** Updated doc base to return Json.</PackageReleaseNotes>
-    <PackageTags>OpenApi Nancy Metadata</PackageTags>
+    <PackageTags>openapi;nancy;metadata</PackageTags>
     <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/Jaxelr/Nancy.Metadata.OpenApi</RepositoryUrl>
