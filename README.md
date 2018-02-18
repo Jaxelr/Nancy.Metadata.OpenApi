@@ -1,4 +1,4 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/bk8fiqknunkegnv7?svg=true)](https://ci.appveyor.com/project/Jaxelr/nancy-metadata-openapi)
+[![Build status](https://ci.appveyor.com/api/projects/status/bk8fiqknunkegnv7?svg=true)](https://ci.appveyor.com/project/Jaxelr/nancy-metadata-openapi) [![NuGet](https://img.shields.io/nuget/v/Nancy.Metadata.OpenApi.svg)](https://www.nuget.org/packages/Nancy.Metadata.OpenApi)
 
 # Nancy.Metadata.OpenApi
 
@@ -8,15 +8,16 @@ This repository is a fork of the https://github.com/HackandCraft/Nancy.Metadata.
 Currently works on the OpenApi specification 3.0.X, this was implemented for usage with NancyFx (using Nancy 2.0.0-clinteastwood for .Net Core). This repo depends on the following libraries:
 
 * [NancyFx](https://github.com/NancyFx/Nancy)
+* [Nancy.Metadata.Modules](https://github.com/NancyFx/Nancy/tree/master/src/Nancy.Metadata.Modules)
 * [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json)
 * [NJsonSchema](https://github.com/NJsonSchema/NJsonSchema)
 
 
-You can find the [OpenApi specification here](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md) 
+You can find the [OpenApi the latest specification here](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.1.md) 
 
 ## Usage:
 
-First we must define a docs module were we will retrieve the Open Api Json document:
+First, we must define a docs module were we will retrieve the Open Api Json (currently only json is supported) document:
 
 ```c#
 using Nancy.Metadata.OpenApi.Modules;
@@ -49,7 +50,7 @@ Then you define the Nancy modules as you would usually do:
     }
 ```
 
-Finally, to define the metadata of the operations you must simply declare the metadata module (using Nancy.Metadata.Modules) on the same namespace as the endpoint operations were defined, using the inherited MetadataModule class and the OpenApiRouteMetadata class defined on Nancy.Metadata.OpenApi.Core.
+Finally, you must define the metadata of the operations. To do so, simply declare the metadata module (using Nancy.Metadata.Modules) on the same namespace as the endpoint operations were defined, using the inherited MetadataModule class and the OpenApiRouteMetadata class defined on Nancy.Metadata.OpenApi.Core.
 
 ```c#
  public class MyMetadataModule : MetadataModule<OpenApiRouteMetadata>
@@ -68,7 +69,7 @@ Finally, to define the metadata of the operations you must simply declare the me
     }
 ```
 
-Thats it, that would generate some valid OpenApi json. You can validate the Open Api endpoint using [swagger-ui](https://github.com/swagger-api/swagger-ui). (For those unaware, OpenApi used to be called Swagger, so any reference to Swagger usually means version <= 2.0) Check the [Compatibility table](https://github.com/swagger-api/swagger-ui#compatibility) of UI for usage.
+Thats pretty much it, that would generate some valid OpenApi json. You can validate the Open Api endpoint using [swagger-ui](https://github.com/swagger-api/swagger-ui). (For those unaware, OpenApi used to be called Swagger, so any reference to Swagger usually means version <= 2.0) Check the [Compatibility table](https://github.com/swagger-api/swagger-ui#compatibility) of UI for usage.
 
 For a working example,  clone this repo and see the demo application that uses the Swagger-UI site as a validator.
 
