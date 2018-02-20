@@ -19,6 +19,7 @@
     <Company />
     <Description>A library to add the capability to add to a NancyFx web service operation the ability to generate an a json doc that complies with the OpenApi specification 3.0.0.</Description>
     <NeutralLanguage></NeutralLanguage>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
