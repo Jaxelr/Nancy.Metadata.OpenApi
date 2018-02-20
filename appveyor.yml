@@ -10,3 +10,5 @@ before_build:
   - cmd: dotnet restore ./Nancy.Metadata.OpenApi/Nancy.Metadata.OpenApi.csproj
 build_script:
   - cmd: dotnet publish ./Nancy.Metadata.OpenApi/Nancy.Metadata.OpenApi.csproj
+artifacts:
+  - path: '**\*.nupkg'
