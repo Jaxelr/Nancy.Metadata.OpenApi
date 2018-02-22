@@ -2,10 +2,12 @@
 
 # Nancy.Metadata.OpenApi
 
-This repository is a fork of the https://github.com/HackandCraft/Nancy.Metadata.Swagger repository, due to inactivity. 
+ ** Currently on prerelease status following the Nancy 2.0.0 version release.
+
+Designed for usage with the OpenApi spec 3.0.X.
 
 ---
-Currently works on the OpenApi specification 3.0.X, this was implemented for usage with NancyFx (using Nancy 2.0.0-clinteastwood for .Net Core). This repo depends on the following libraries:
+This library depends on the following libraries:
 
 * [NancyFx](https://github.com/NancyFx/Nancy)
 * [Nancy.Metadata.Modules](https://github.com/NancyFx/Nancy/tree/master/src/Nancy.Metadata.Modules)
@@ -15,11 +17,18 @@ Currently works on the OpenApi specification 3.0.X, this was implemented for usa
 
 You can find the [OpenApi the latest specification here](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.1.md) 
 
+Install via nuget: 
+
+``` 
+    PM> Install-Package Nancy.Metadata.OpenApi -Version 0.3.1-pre 
+```
+
 ## Usage:
 
 First, we must define a docs module were we will retrieve the Open Api Json (currently only json is supported) document:
 
 ```c#
+using Nancy.Metadata.OpenApi.Model;
 using Nancy.Metadata.OpenApi.Modules;
 
     public class DocsModule : OpenApiDocsModuleBase //We must inherit from the OpenApiDocsModuleBase
@@ -29,8 +38,11 @@ using Nancy.Metadata.OpenApi.Modules;
             "/api/docs",                    //Document location path
             "My API ",                      //Api Title 
             "v1.0",                         //Version of the Api            
-            "localhost:5000",               //Host
-            "Sample API documentation",     //Host Description
+            new Server                      //could be an array of Servers
+            { 
+                Url = "http://localhost:5000", 
+                Description = "Sample Api Docs." 
+            },
             "/api")                         //Base url
         {
         }
