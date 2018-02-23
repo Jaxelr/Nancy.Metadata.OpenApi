@@ -12,12 +12,12 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
                 "/api/docs",
                 "Sample API documentation",
                 "v1.0",
-                new Server
+                host: new Server
                 {
                     Url = "http://localhost:51637/",
                     Description = "My Descripton"
                 },
-                "/api")
+                apiBaseUrl: "/api")
         {
             Get("/", async (x, ct) => await Task.Run(() => Response.AsRedirect("/index.html")));
         }

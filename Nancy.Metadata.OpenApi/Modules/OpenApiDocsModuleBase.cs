@@ -24,6 +24,9 @@ namespace Nancy.Metadata.OpenApi.Modules
         private readonly string apiVersion;
         private readonly Server[] hosts;
         private readonly string apiBaseUrl;
+        private readonly string termsOfService;
+        private Contact contact;
+        private License license;
 
         [System.Obsolete("Deprecated in favor of the usage of constructor with Server model.")]
         protected OpenApiDocsModuleBase(IRouteCacheProvider routeCacheProvider,
@@ -37,7 +40,28 @@ namespace Nancy.Metadata.OpenApi.Modules
                     docsLocation,
                     title,
                     apiVersion,
-                    new Server[] { new Server { Url = host, Description = hostDescription } },
+                    hosts: new Server[] { new Server { Url = host, Description = hostDescription } },
+                    apiBaseUrl: apiBaseUrl)
+        {
+        }
+
+        protected OpenApiDocsModuleBase(IRouteCacheProvider routeCacheProvider,
+            string docsLocation,
+            string title,
+            string apiVersion,
+            string termsOfService = null,
+            Server host = null,
+            Contact contact = null,
+            License license = null,
+            string apiBaseUrl = API_BASE_URL) : this(
+                    routeCacheProvider,
+                    docsLocation,
+                    title,
+                    apiVersion,
+                    termsOfService,
+                    new Server[] { host },
+                    contact,
+                    license,
                     apiBaseUrl)
         {
         }
@@ -46,28 +70,19 @@ namespace Nancy.Metadata.OpenApi.Modules
             string docsLocation,
             string title,
             string apiVersion,
-            Server host = null,
-            string apiBaseUrl = API_BASE_URL) : this(
-            routeCacheProvider,
-            docsLocation,
-            title,
-            apiVersion,
-            new Server[] { host },
-            apiBaseUrl)
-        {
-        }
-
-        protected OpenApiDocsModuleBase(IRouteCacheProvider routeCacheProvider,
-            string docsLocation,
-            string title,
-            string apiVersion,
+            string termsOfService = null,
             Server[] hosts = null,
+            Contact contact = null,
+            License license = null,
             string apiBaseUrl = API_BASE_URL)
         {
             this.routeCacheProvider = routeCacheProvider;
             this.title = title;
             this.apiVersion = apiVersion;
+            this.termsOfService = termsOfService;
             this.hosts = hosts;
+            this.contact = contact;
+            this.license = license;
             this.apiBaseUrl = apiBaseUrl;
 
             Get(docsLocation, r => GetDocumentation());
@@ -94,6 +109,9 @@ namespace Nancy.Metadata.OpenApi.Modules
                 {
                     Title = title,
                     Version = apiVersion,
+                    TermsOfService = termsOfService,
+                    Contact = contact,
+                    License = license
                 },
                 Servers = hosts
             };
@@ -112,7 +130,7 @@ namespace Nancy.Metadata.OpenApi.Modules
 
                 string path = m.Path;
 
-                //Swagger doesnt handle these special characters on the url path construction, but Nancy allows it.
+                //OpenApi doesnt handle these special characters on the url path construction, but Nancy allows it.
                 path = Regex.Replace(path, "[?:.*]", string.Empty);
 
                 if (!endpoints.ContainsKey(path))
