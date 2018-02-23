@@ -10,9 +10,7 @@
     <AssemblyName>Nancy.Metadata.OpenApi</AssemblyName>
     <RootNamespace>Nancy.Metadata.OpenApi</RootNamespace>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>
-      Modifications to comply with the OpenApi spec 3.0.0. (Not backwards compatible with Swagger 2.0).
-    </PackageReleaseNotes>
+    <PackageReleaseNotes>Modifications to License, Terms Of Service, Contact information.</PackageReleaseNotes>
     <PackageTags>openapi;nancy;metadata</PackageTags>
     <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/Jaxelr/Nancy.Metadata.OpenApi</PackageProjectUrl>
