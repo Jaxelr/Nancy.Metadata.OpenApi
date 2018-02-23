@@ -15,6 +15,6 @@ namespace Nancy.Metadata.OpenApi.Model
         public List<string> RequiredProperties { get; set; }
 
         [JsonProperty("properties")]
-        public Dictionary<string, TypeDefinition> Properties { get; set; }
+        public IDictionary<string, TypeDefinition> Properties { get; set; }
     }
 }

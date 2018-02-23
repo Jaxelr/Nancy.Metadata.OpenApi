@@ -17,10 +17,10 @@ namespace Nancy.Metadata.OpenApi.Model
         public string Description { get; set; }
 
         [JsonProperty("responses")]
-        public Dictionary<string, Response> ResponseInfos { get; set; }
+        public IDictionary<string, Response> ResponseInfos { get; set; }
 
         [JsonProperty("parameters")]
-        public List<RequestParameter> RequestParameters { get; set; }
+        public IList<RequestParameter> RequestParameters { get; set; }
 
         [JsonProperty("operationId")]
         public string OperationId { get; set; }
