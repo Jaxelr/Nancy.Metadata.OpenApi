@@ -38,11 +38,11 @@ using Nancy.Metadata.OpenApi.Modules;
             "/api/docs",                    //Document location path
             "My API ",                      //Api Title 
             "v1.0",                         //Version of the Api            
-            new Server                      //could be an array of Servers
+            new Server                      
             { 
                 Url = "http://localhost:5000", 
                 Description = "Sample Api Docs." 
-            },
+            },                              //could be an array of Servers
             "/api")                         //Base url
         {
         }
