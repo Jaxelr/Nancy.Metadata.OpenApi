@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
-    <Version>0.3.1</Version>
-    <PackageVersion>0.3.1-pre</PackageVersion>
+    <Version>0.4.0</Version>
+    <PackageVersion>0.4.0-pre</PackageVersion>
     <PackageId>Nancy.Metadata.OpenApi</PackageId>
     <Copyright>Copyright 2017</Copyright>
     <Authors>Jaxel Rojas;Anton Kudryavtsev</Authors>
@@ -15,7 +15,7 @@
     </PackageReleaseNotes>
     <PackageTags>openapi;nancy;metadata</PackageTags>
     <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
-    <PackageProjectUrl></PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/Jaxelr/Nancy.Metadata.OpenApi</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Jaxelr/Nancy.Metadata.OpenApi</RepositoryUrl>
     <Company />
     <Description>A library to add capabilities to a NancyFx web service to generate a json doc that complies to OpenApi spec 3.0.0.</Description>
