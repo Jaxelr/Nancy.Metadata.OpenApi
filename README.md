@@ -2,7 +2,7 @@
 
 # Nancy.Metadata.OpenApi
 
- ** Currently on prerelease status following the Nancy 2.0.0 version release.
+ ** Currently on prerelease status following the Nancy 2.0.0 version [release](https://github.com/NancyFx/Nancy/milestone/45).
 
 Designed for usage with the OpenApi spec 3.0.X.
 
@@ -31,54 +31,54 @@ First, we must define a docs module were we will retrieve the Open Api Json (cur
 using Nancy.Metadata.OpenApi.Model;
 using Nancy.Metadata.OpenApi.Modules;
 
-    public class DocsModule : OpenApiDocsModuleBase //We must inherit from the OpenApiDocsModuleBase
+public class DocsModule : OpenApiDocsModuleBase //We must inherit from the OpenApiDocsModuleBase
+{
+    public DocsModule(IRouteCacheProvider routeCacheProvider) : 
+        base(routeCacheProvider, 
+        "/api/docs",                    //Document location path
+        "My API ",                      //Api Title 
+        "v1.0",                         //Version of the Api            
+        new Server                      
+        { 
+            Url = "http://localhost:5000", 
+            Description = "Sample Api Docs." 
+        },                              //could be an array of Servers
+        "/api")                         //Base url
     {
-        public DocsModule(IRouteCacheProvider routeCacheProvider) : 
-            base(routeCacheProvider, 
-            "/api/docs",                    //Document location path
-            "My API ",                      //Api Title 
-            "v1.0",                         //Version of the Api            
-            new Server                      
-            { 
-                Url = "http://localhost:5000", 
-                Description = "Sample Api Docs." 
-            },                              //could be an array of Servers
-            "/api")                         //Base url
-        {
-        }
     }
+}
 ```
 
 Then you define the Nancy modules as you would usually do:
 
 ```c#
-    public class MyModule : NancyModule
+public class MyModule : NancyModule
+{
+    public MyModule() : base("/api")
     {
-        public MyModule() : base("/api")
-        {
-            Get("/hello", r => HelloWorld(), name: "SimpleRequest");
-            Get("/hello/{name}", r => Hello(r.name), name: "SimpleRequestWithParameter");
-        }
+        Get("/hello", r => HelloWorld(), name: "SimpleRequest");
+        Get("/hello/{name}", r => Hello(r.name), name: "SimpleRequestWithParameter");
     }
+}
 ```
 
 Finally, you must define the metadata of the operations. To do so, simply declare the metadata module (using Nancy.Metadata.Modules) on the same namespace as the endpoint operations were defined, using the inherited MetadataModule class and the OpenApiRouteMetadata class defined on Nancy.Metadata.OpenApi.Core.
 
 ```c#
- public class MyMetadataModule : MetadataModule<OpenApiRouteMetadata>
+public class MyMetadataModule : MetadataModule<OpenApiRouteMetadata>
+{
+    public MyMetadataModule()
     {
-        public MyMetadataModule()
-        {
-            Describe["SimpleRequest"] = desc => new OpenApiRouteMetadata(desc)
-                .With(i => i.WithResponseModel("200", typeof(SimpleResponseModel), "Sample response")
-                            .WithSummary("Simple GET example"));
+        Describe["SimpleRequest"] = desc => new OpenApiRouteMetadata(desc)
+            .With(i => i.WithResponseModel("200", typeof(SimpleResponseModel), "Sample response")
+                        .WithSummary("Simple GET example"));
 
-            Describe["SimpleRequestWithParameter"] = desc => new OpenApiRouteMetadata(desc)
-                .With(i => i.WithResponseModel("200", typeof(SimpleResponseModel), "Sample response")
-                            .WithRequestParameter("name")
-                            .WithSummary("Simple GET with parameters"));
-        }
+        Describe["SimpleRequestWithParameter"] = desc => new OpenApiRouteMetadata(desc)
+            .With(i => i.WithResponseModel("200", typeof(SimpleResponseModel), "Sample response")
+                        .WithRequestParameter("name")
+                        .WithSummary("Simple GET with parameters"));
     }
+}
 ```
 
 Thats pretty much it, that would generate some valid OpenApi json. You can validate the Open Api endpoint using [swagger-ui](https://github.com/swagger-api/swagger-ui). (For those unaware, OpenApi used to be called Swagger, so any reference to Swagger usually means version <= 2.0) Check the [Compatibility table](https://github.com/swagger-api/swagger-ui#compatibility) of UI for usage.
