@@ -19,6 +19,12 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
                 },
                 apiBaseUrl: "/api")
         {
+            //Optional information.
+            WithContact("myContact", "contactsample@email.com", "http://randomurl.com");
+
+            //Optional information.
+            WithLicense("MIT", "https://opensource.org/licenses/MIT");
+
             Get("/", async (x, ct) => await Task.Run(() => Response.AsRedirect("/index.html")));
         }
     }

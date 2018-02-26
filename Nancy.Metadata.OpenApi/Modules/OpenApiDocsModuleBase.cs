@@ -73,8 +73,6 @@ namespace Nancy.Metadata.OpenApi.Modules
             string apiVersion,
             string termsOfService = null,
             Server host = null,
-            Contact contact = null,
-            License license = null,
             string apiBaseUrl = API_BASE_URL) : this(
                     routeCacheProvider,
                     docsLocation,
@@ -82,8 +80,6 @@ namespace Nancy.Metadata.OpenApi.Modules
                     apiVersion,
                     termsOfService,
                     new Server[] { host },
-                    contact,
-                    license,
                     apiBaseUrl)
         {
         }
@@ -106,8 +102,6 @@ namespace Nancy.Metadata.OpenApi.Modules
             string apiVersion,
             string termsOfService = null,
             Server[] hosts = null,
-            Contact contact = null,
-            License license = null,
             string apiBaseUrl = API_BASE_URL)
         {
             this.routeCacheProvider = routeCacheProvider;
@@ -115,12 +109,36 @@ namespace Nancy.Metadata.OpenApi.Modules
             this.apiVersion = apiVersion;
             this.termsOfService = termsOfService;
             this.hosts = hosts;
-            this.contact = contact;
-            this.license = license;
             this.apiBaseUrl = apiBaseUrl;
 
             Get(docsLocation, r => GetDocumentation());
         }
+
+        /// <summary>
+        /// Add Contract information
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="email"></param>
+        /// <param name="url"></param>
+        protected void WithContact(string name, string email, string url)
+            => contact = new Contact()
+            {
+                Name = name,
+                Email = email,
+                Url = url
+            };
+
+        /// <summary>
+        /// Add License Information
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="url"></param>
+        protected void WithLicense(string name, string url)
+            => license = new License()
+            {
+                Name = name,
+                Url = url
+            };
 
         /// <summary>
         /// Generate the json documentation file.
