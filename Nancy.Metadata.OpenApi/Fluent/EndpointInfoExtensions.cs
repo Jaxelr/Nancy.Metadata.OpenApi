@@ -79,8 +79,16 @@ namespace Nancy.Metadata.OpenApi.Fluent
             return endpointInfo;
         }
 
-        public static Endpoint WithDescription(this Endpoint endpointInfo, string description, string[] contentType = null)
+        public static Endpoint WithDescription(this Endpoint endpointInfo, string description, params string[] tags)
         {
+            if (endpointInfo.Tags == null)
+            {
+                if (tags.Length > 0)
+                {
+                    endpointInfo.Tags = tags;
+                }
+            }
+
             endpointInfo.Description = description;
 
             return endpointInfo;
@@ -89,6 +97,24 @@ namespace Nancy.Metadata.OpenApi.Fluent
         public static Endpoint WithSummary(this Endpoint endpointInfo, string summary)
         {
             endpointInfo.Summary = summary;
+            return endpointInfo;
+        }
+
+        public static Endpoint WithExternalDocumentation(this Endpoint endpointInfo, string url, string description)
+        {
+            endpointInfo.ExternalDocs = new ExternalDocumentation()
+            {
+                Url = url,
+                Description = description
+            };
+
+            return endpointInfo;
+        }
+
+        public static Endpoint WithDeprecatedFlag(this Endpoint endpointInfo)
+        {
+            endpointInfo.IsDeprecated = true;
+
             return endpointInfo;
         }
 
