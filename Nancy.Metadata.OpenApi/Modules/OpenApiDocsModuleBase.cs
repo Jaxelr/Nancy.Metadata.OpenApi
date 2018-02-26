@@ -28,6 +28,16 @@ namespace Nancy.Metadata.OpenApi.Modules
         private Contact contact;
         private License license;
 
+        /// <summary>
+        /// Default constructor used, inherited from version Swagger version.
+        /// </summary>
+        /// <param name="routeCacheProvider"></param>
+        /// <param name="docsLocation"></param>
+        /// <param name="title"></param>
+        /// <param name="apiVersion"></param>
+        /// <param name="host"></param>
+        /// <param name="hostDescription"></param>
+        /// <param name="apiBaseUrl"></param>
         [System.Obsolete("Deprecated in favor of the usage of constructor with Server model.")]
         protected OpenApiDocsModuleBase(IRouteCacheProvider routeCacheProvider,
             string docsLocation = DOCS_LOCATION,
@@ -45,6 +55,18 @@ namespace Nancy.Metadata.OpenApi.Modules
         {
         }
 
+        /// <summary>
+        /// New Constructor established for use with Open Api version.
+        /// </summary>
+        /// <param name="routeCacheProvider"></param>
+        /// <param name="docsLocation"></param>
+        /// <param name="title"></param>
+        /// <param name="apiVersion"></param>
+        /// <param name="termsOfService"></param>
+        /// <param name="host"></param>
+        /// <param name="contact"></param>
+        /// <param name="license"></param>
+        /// <param name="apiBaseUrl"></param>
         protected OpenApiDocsModuleBase(IRouteCacheProvider routeCacheProvider,
             string docsLocation,
             string title,
@@ -66,6 +88,18 @@ namespace Nancy.Metadata.OpenApi.Modules
         {
         }
 
+        /// <summary>
+        /// Constructor that contains multiple objects.
+        /// </summary>
+        /// <param name="routeCacheProvider"></param>
+        /// <param name="docsLocation"></param>
+        /// <param name="title"></param>
+        /// <param name="apiVersion"></param>
+        /// <param name="termsOfService"></param>
+        /// <param name="hosts"></param>
+        /// <param name="contact"></param>
+        /// <param name="license"></param>
+        /// <param name="apiBaseUrl"></param>
         protected OpenApiDocsModuleBase(IRouteCacheProvider routeCacheProvider,
             string docsLocation,
             string title,
@@ -88,6 +122,10 @@ namespace Nancy.Metadata.OpenApi.Modules
             Get(docsLocation, r => GetDocumentation());
         }
 
+        /// <summary>
+        /// Generate the json documentation file.
+        /// </summary>
+        /// <returns></returns>
         public virtual Response GetDocumentation()
         {
             if (openApiSpecification == null)
@@ -101,6 +139,9 @@ namespace Nancy.Metadata.OpenApi.Modules
                     .WithContentType(CONTENT_TYPE);
         }
 
+        /// <summary>
+        /// This operation generates the specification into the openApiSpecification variable.
+        /// </summary>
         private void GenerateSpecification()
         {
             openApiSpecification = new OpenApiSpecification
