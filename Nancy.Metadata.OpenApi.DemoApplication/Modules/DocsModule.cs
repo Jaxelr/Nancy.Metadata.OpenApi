@@ -25,6 +25,9 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
             //Optional information.
             WithLicense("MIT", "https://opensource.org/licenses/MIT");
 
+            //Optional Information.
+            WithExternalDocument("This is my external doc.", "https://www.google.com");
+
             Get("/", async (x, ct) => await Task.Run(() => Response.AsRedirect("/index.html")));
         }
     }

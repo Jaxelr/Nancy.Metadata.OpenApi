@@ -27,6 +27,7 @@ namespace Nancy.Metadata.OpenApi.Modules
         private readonly string termsOfService;
         private Contact contact;
         private License license;
+        private ExternalDocumentation externalDocs;
 
         /// <summary>
         /// Default constructor used, inherited from version Swagger version.
@@ -141,6 +142,18 @@ namespace Nancy.Metadata.OpenApi.Modules
             };
 
         /// <summary>
+        /// Add (optional) External Document
+        /// </summary>
+        /// <param name="description"></param>
+        /// <param name="url"></param>
+        protected void WithExternalDocument(string description, string url)
+            => externalDocs = new ExternalDocumentation()
+            {
+                Description = description,
+                Url = url
+            };
+
+        /// <summary>
         /// Generate the json documentation file.
         /// </summary>
         /// <returns></returns>
@@ -172,7 +185,8 @@ namespace Nancy.Metadata.OpenApi.Modules
                     Contact = contact,
                     License = license
                 },
-                Servers = hosts
+                Servers = hosts,
+                ExternalDocs = externalDocs
             };
 
             // generate documentation
