@@ -116,7 +116,7 @@ namespace Nancy.Metadata.OpenApi.Modules
         }
 
         /// <summary>
-        /// Add Contract information
+        /// Add (optional) Contract information
         /// </summary>
         /// <param name="name"></param>
         /// <param name="email"></param>
@@ -130,7 +130,7 @@ namespace Nancy.Metadata.OpenApi.Modules
             };
 
         /// <summary>
-        /// Add License Information
+        /// Add (optional) License Information
         /// </summary>
         /// <param name="name"></param>
         /// <param name="url"></param>

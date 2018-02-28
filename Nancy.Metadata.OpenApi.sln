@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nancy.Metadata.OpenApi", "Nancy.Metadata.OpenApi\Nancy.Metadata.OpenApi.csproj", "{5D00A219-9F98-498E-8A3F-F06449E3E864}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nancy.Metadata.OpenApi", "src\Nancy.Metadata.OpenApi\Nancy.Metadata.OpenApi.csproj", "{5D00A219-9F98-498E-8A3F-F06449E3E864}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nancy.Metadata.OpenApi.DemoApplication", "Nancy.Metadata.OpenApi.DemoApplication\Nancy.Metadata.OpenApi.DemoApplication.csproj", "{2F0A9588-2611-421B-AECE-9C1EE0CC4885}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nancy.Metadata.OpenApi.DemoApplication", "src\Nancy.Metadata.OpenApi.DemoApplication\Nancy.Metadata.OpenApi.DemoApplication.csproj", "{2F0A9588-2611-421B-AECE-9C1EE0CC4885}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{178C30E6-3F69-41B0-A1B9-B3D43F67871F}"
 	ProjectSection(SolutionItems) = preProject
@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{97BB
 		.github\PULL_REQUEST_TEMPLATE.md = .github\PULL_REQUEST_TEMPLATE.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy.Metadata.OpenApi.Tests", "tests\Nancy.Metadata.OpenApi.Tests\Nancy.Metadata.OpenApi.Tests.csproj", "{2208CC8E-3A44-4B16-BD1A-9C0D2A30F213}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{2F0A9588-2611-421B-AECE-9C1EE0CC4885}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F0A9588-2611-421B-AECE-9C1EE0CC4885}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F0A9588-2611-421B-AECE-9C1EE0CC4885}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2208CC8E-3A44-4B16-BD1A-9C0D2A30F213}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2208CC8E-3A44-4B16-BD1A-9C0D2A30F213}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2208CC8E-3A44-4B16-BD1A-9C0D2A30F213}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2208CC8E-3A44-4B16-BD1A-9C0D2A30F213}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

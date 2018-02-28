@@ -20,13 +20,13 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
                 apiBaseUrl: "/api")
         {
             //Optional information.
-            WithContact("myContact", "contactsample@email.com", "http://randomurl.com");
+            WithContact("Contact Information", "jaxelrojas@email.com", "https://jaxelr.github.io");
 
             //Optional information.
             WithLicense("MIT", "https://opensource.org/licenses/MIT");
 
             //Optional Information.
-            WithExternalDocument("This is my external doc.", "https://www.google.com");
+            WithExternalDocument("This is an external doc, maybe a tutorial or a spec doc.", "https://jaxelr.github.io");
 
             Get("/", async (x, ct) => await Task.Run(() => Response.AsRedirect("/index.html")));
         }
