@@ -49,6 +49,27 @@ public class DocsModule : OpenApiDocsModuleBase //We must inherit from the OpenA
 }
 ```
 
+You could optionally if the information is needed add Contact, License and External Docs information:
+
+``` c#
+public class DocsModule : OpenApiDocsModuleBase //We must inherit from the OpenApiDocsModuleBase
+{
+    public DocsModule(IRouteCacheProvider routeCacheProvider) : 
+        base(routeCacheProvider, "/api/docs", "My API 2", "v1.1",                         
+        new Server { Url = "http://localhost:5001", Description = "Sample Api Docs." }, "/api")
+    {
+        //Optional information.
+        WithContact("Contact Information", "jaxelrojas@email.com", "https://jaxelr.github.io");
+
+        //Optional information.
+        WithLicense("MIT", "https://opensource.org/licenses/MIT");
+
+        //Optional Information.
+        WithExternalDocument("This is an external doc, maybe a tutorial or a spec doc.", "https://jaxelr.github.io");    
+    }
+}
+```
+
 Then you define the Nancy modules as you would usually do:
 
 ```c#
