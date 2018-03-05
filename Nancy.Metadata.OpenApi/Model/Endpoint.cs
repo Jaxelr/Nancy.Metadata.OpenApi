@@ -31,6 +31,9 @@ namespace Nancy.Metadata.OpenApi.Model
         [JsonProperty("deprecated")]
         public bool? IsDeprecated { get; set; }
 
+        [JsonProperty("security")]
+        public Security Security { get; set; }
+
         [JsonProperty("externalDocs")]
         public ExternalDocumentation ExternalDocs { get; set; }
     }
