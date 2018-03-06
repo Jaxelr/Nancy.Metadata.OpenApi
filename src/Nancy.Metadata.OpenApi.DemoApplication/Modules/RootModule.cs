@@ -23,7 +23,6 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
             {
                 NestedRequestModel model = this.BindAndValidate<NestedRequestModel>();
 
-
                 if (!ModelValidationResult.IsValid)
                 {
                     return Response
@@ -38,14 +37,12 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
 
                 return Response.AsJson(response);
             }
-
             catch (ModelBindingException)
             {
                 return Response
                      .AsJson(new ValidationFailedResponseModel("Model Binding Failed with Exception."))
                      .WithStatusCode(HttpStatusCode.BadRequest);
             }
-
             catch (System.NullReferenceException)
             {
                 return Response
@@ -74,14 +71,12 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
 
                 return Response.AsJson(response);
             }
-
             catch (ModelBindingException)
             {
                 return Response
                      .AsJson(new ValidationFailedResponseModel("Model Binding Failed with Exception."))
                      .WithStatusCode(HttpStatusCode.BadRequest);
             }
-
             catch (System.NullReferenceException)
             {
                 return Response
