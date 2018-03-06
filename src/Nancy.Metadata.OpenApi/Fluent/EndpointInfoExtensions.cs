@@ -132,8 +132,16 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <param name="description"></param>
         /// <param name="contentType"></param>
         /// <returns></returns>
-        public static Endpoint WithDescription(this Endpoint endpointInfo, string description, string[] contentType = null)
+        public static Endpoint WithDescription(this Endpoint endpointInfo, string description, params string[] tags)
         {
+            if (endpointInfo.Tags == null)
+            {
+                if (tags.Length > 0)
+                {
+                    endpointInfo.Tags = tags;
+                }
+            }
+
             endpointInfo.Description = description;
 
             return endpointInfo;
@@ -153,6 +161,35 @@ namespace Nancy.Metadata.OpenApi.Fluent
 
         /// <summary>
         /// Create new Response model with Schema Ref property and Description.
+        /// </summary>
+        /// <param name="description"></param>
+        /// <param name="responseType"></param>
+        /// <returns></returns>
+        public static Endpoint WithExternalDocumentation(this Endpoint endpointInfo, string url, string description)
+        {
+            endpointInfo.ExternalDocs = new ExternalDocumentation()
+            {
+                Url = url,
+                Description = description
+            };
+
+            return endpointInfo;
+        }
+
+        /// <summary>
+        /// Create an optional deprecation flag for the endpoints.
+        /// </summary>
+        /// <param name="endpointInfo"></param>
+        /// <returns></returns>
+        public static Endpoint WithDeprecatedFlag(this Endpoint endpointInfo)
+        {
+            endpointInfo.IsDeprecated = true;
+
+            return endpointInfo;
+        }
+
+        /// <summary>
+        /// 
         /// </summary>
         /// <param name="description"></param>
         /// <param name="responseType"></param>
