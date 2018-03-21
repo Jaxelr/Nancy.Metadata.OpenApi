@@ -7,9 +7,9 @@ init:
   - cmd: git config --global core.autocrlf true
 before_build:
   - cmd: dotnet --version
-  - cmd: dotnet restore ./src/Nancy.Metadata.OpenApi/Nancy.Metadata.OpenApi.csproj
+  - cmd: dotnet restore ./src/Nancy.Metadata.OpenApi.csproj
 build_script:
-  - cmd: dotnet publish ./src/Nancy.Metadata.OpenApi/Nancy.Metadata.OpenApi.csproj -c release -v minimal
+  - cmd: dotnet publish ./src/Nancy.Metadata.OpenApi.csproj -c release -v minimal
 test_script:
   - cmd: dotnet test ./tests/Nancy.Metadata.OpenApi.Tests.csproj 
 artifacts:

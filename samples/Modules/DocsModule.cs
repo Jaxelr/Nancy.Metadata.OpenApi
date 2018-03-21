@@ -1,7 +1,6 @@
 ﻿using Nancy.Metadata.OpenApi.Model;
 using Nancy.Metadata.OpenApi.Modules;
 using Nancy.Routing;
-using System.Threading.Tasks;
 
 namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
 {
@@ -26,7 +25,7 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
             //Optional Information.
             WithExternalDocument("This is an external doc, maybe a tutorial or a spec doc.", "https://jaxelr.github.io");
 
-            Get("/", async (x, ct) => await Task.Run(() => Response.AsRedirect("/index.html")));
+            Get("/", async (x, ct) => await Response.AsRedirect("/index.html"));
         }
     }
 }
