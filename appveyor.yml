@@ -3,6 +3,7 @@ image: Visual Studio 2017
 branches:
   only:
   - master
+  - develop
 init:
   - cmd: git config --global core.autocrlf true
 before_build:
@@ -17,3 +18,11 @@ artifacts:
 skip_commits:
   files:
     - '**/*.md'
+deploy:
+- provider: NuGet
+  server: https://www.myget.org/F/nancy-metadata-openapi/api/v2/package
+  on:
+    branch: develop  
+  api_key:
+    secure: 6xhHSsDvB9arsrSDLuynnbxaVS+BwaoJU96RfQenc5FOnUYvP8SHM6kbvrmpvja2
+  skip_symbols: true
