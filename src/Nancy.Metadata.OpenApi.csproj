@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
-    <Version>0.4.0</Version>
-    <PackageVersion>0.4.0-pre</PackageVersion>
+    <Version>0.4.1</Version>
+    <PackageVersion>0.4.1-pre</PackageVersion>
     <PackageId>Nancy.Metadata.OpenApi</PackageId>
     <Copyright>Copyright 2017</Copyright>
     <Authors>Jaxel Rojas;Anton Kudryavtsev</Authors>
