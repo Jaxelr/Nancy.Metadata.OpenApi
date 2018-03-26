@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Nancy.Metadata.OpenApi.Tests.UnitTests
 {
-    public class EndpointInfoTest
+    public class EndpointInfoTests
     {
         [Fact]
         public void Endpoint_with_summary()
