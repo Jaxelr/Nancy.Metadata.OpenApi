@@ -22,7 +22,7 @@ deploy:
 - provider: NuGet
   server: https://www.myget.org/F/nancy-metadata-openapi/api/v2/package
   on:
-    branch: develop  
+    branch: master  
   api_key:
     secure: 6xhHSsDvB9arsrSDLuynnbxaVS+BwaoJU96RfQenc5FOnUYvP8SHM6kbvrmpvja2
   skip_symbols: true
