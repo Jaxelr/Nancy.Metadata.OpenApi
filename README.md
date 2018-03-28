@@ -20,7 +20,7 @@ You can find the [OpenApi the latest specification here](https://github.com/OAI/
 Install via nuget: 
 
 ``` 
-    PM> Install-Package Nancy.Metadata.OpenApi -Version 0.3.1-pre 
+    PM> Install-Package Nancy.Metadata.OpenApi -Version 0.4.1-pre 
 ```
 
 ## Usage:
@@ -33,18 +33,39 @@ using Nancy.Metadata.OpenApi.Modules;
 
 public class DocsModule : OpenApiDocsModuleBase //We must inherit from the OpenApiDocsModuleBase
 {
+    //Could be an array of Servers.
+    public static Server Server => new Server() { Description = "My Descripton", Url = "http://localhost:5000/" };
+
     public DocsModule(IRouteCacheProvider routeCacheProvider) : 
         base(routeCacheProvider, 
         "/api/docs",                    //Document location path
         "My API ",                      //Api Title 
         "v1.0",                         //Version of the Api            
-        new Server                      
-        { 
-            Url = "http://localhost:5000", 
-            Description = "Sample Api Docs." 
-        },                              //could be an array of Servers
+        Server,                              
         "/api")                         //Base url
     {
+    }
+}
+```
+
+You could optionally if the information is needed add Contact, License and External Docs information:
+
+``` c#
+public class DocsModule : OpenApiDocsModuleBase //We must inherit from the OpenApiDocsModuleBase
+{
+    public static Server Server => new Server() { Description = "My Descripton", Url = "http://localhost:5001/" };
+
+    public DocsModule(IRouteCacheProvider routeCacheProvider) : 
+        base(routeCacheProvider, "/api/docs", "My API 2", "v1.1", Server, "/api")
+    {
+        //Optional information.
+        WithContact("Contact Information", "jaxelrojas@email.com", "https://jaxelr.github.io");
+
+        //Optional information.
+        WithLicense("MIT", "https://opensource.org/licenses/MIT");
+
+        //Optional Information.
+        WithExternalDocument("This is an external doc, maybe a tutorial or a spec doc.", "https://jaxelr.github.io");    
     }
 }
 ```
@@ -88,3 +109,7 @@ For a working example,  clone this repo and see the demo application that uses t
 ## Missing so far:
 
 Open Api specifies certain optional objects that havent been implemented at the library level. Check the [Current Development Project](https://github.com/Jaxelr/Nancy.Metadata.OpenApi/projects) for more details.
+
+## Contributing
+
+Check the [guidelines](https://github.com/Jaxelr/Nancy.Metadata.OpenApi/blob/master/.github/CONTRIBUTING.md) for a simple explanation on how you could help out.

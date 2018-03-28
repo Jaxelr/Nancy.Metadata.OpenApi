@@ -3,12 +3,26 @@ image: Visual Studio 2017
 branches:
   only:
   - master
+  - develop
 init:
   - cmd: git config --global core.autocrlf true
 before_build:
   - cmd: dotnet --version
-  - cmd: dotnet restore ./Nancy.Metadata.OpenApi/Nancy.Metadata.OpenApi.csproj
+  - cmd: dotnet restore ./src/Nancy.Metadata.OpenApi.csproj -v quiet
 build_script:
-  - cmd: dotnet publish ./Nancy.Metadata.OpenApi/Nancy.Metadata.OpenApi.csproj -c release -v minimal
+  - cmd: dotnet publish ./src/Nancy.Metadata.OpenApi.csproj -v quiet
+test_script:
+  - cmd: dotnet test ./tests/Nancy.Metadata.OpenApi.Tests.csproj 
 artifacts:
   - path: '**\*.nupkg'
+skip_commits:
+  files:
+    - '**/*.md'
+deploy:
+- provider: NuGet
+  server: https://www.myget.org/F/nancy-metadata-openapi/api/v2/package
+  on:
+    branch: develop  
+  api_key:
+    secure: 6xhHSsDvB9arsrSDLuynnbxaVS+BwaoJU96RfQenc5FOnUYvP8SHM6kbvrmpvja2
+  skip_symbols: true
