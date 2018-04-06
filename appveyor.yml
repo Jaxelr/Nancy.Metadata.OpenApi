@@ -1,4 +1,4 @@
-﻿version: '1.0.{build}'
+﻿version: '0.4.1.{build}'
 image: Visual Studio 2017
 branches:
   only:
@@ -8,13 +8,12 @@ init:
   - cmd: git config --global core.autocrlf true
 before_build:
   - cmd: dotnet --version
-  - cmd: dotnet restore ./src/Nancy.Metadata.OpenApi.csproj -v quiet
 build_script:
   - cmd: dotnet publish ./src/Nancy.Metadata.OpenApi.csproj -v quiet
 test_script:
   - cmd: dotnet test ./tests/Nancy.Metadata.OpenApi.Tests.csproj 
 artifacts:
-  - path: '**\*.nupkg'
+  - path: '**/*.nupkg'
 skip_commits:
   files:
     - '**/*.md'
