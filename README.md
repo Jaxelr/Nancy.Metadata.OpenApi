@@ -1,8 +1,8 @@
 
 
-# Nancy.Metadata.OpenApi
+# Nancy.Metadata.OpenApi [![Mit License][mit-img]][mit]
 
- ** Currently on prerelease status following the Nancy 2.0.0 version [release](https://github.com/NancyFx/Nancy/milestone/45).
+_Currently_ on prerelease status following the Nancy 2.0.0 version [release](https://github.com/NancyFx/Nancy/milestone/45).
 
 You can find the [OpenApi the latest specification here](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.1.md) 
 
@@ -24,13 +24,13 @@ NuGet (Stable) | MyGet (Prerelease)
 
 Via nuget: 
 
-``` 
+``` powershell
     PM> Install-Package Nancy.Metadata.OpenApi -Version 0.4.1-pre 
 ```
 
-You also need the following library provided by Nancyfx:
+You also need the Metadata library provided by Nancyfx:
 
-``` 
+``` powershell
     PM> Install-Package Nancy.Metadata.Modules -Version 2.0.0-clinteastwood 
 ```
 
@@ -128,3 +128,6 @@ Open Api specifies certain optional objects that havent been implemented at the 
 ## Contributing
 
 Check the [guidelines](https://github.com/Jaxelr/Nancy.Metadata.OpenApi/blob/master/.github/CONTRIBUTING.md) for a simple explanation on how you could help out.
+
+[mit-img]: http://img.shields.io/badge/License-MIT-blue.svg
+[mit]: https://github.com/Jaxelr/Nancy.Metadata.OpenApi/blob/master/LICENSE
