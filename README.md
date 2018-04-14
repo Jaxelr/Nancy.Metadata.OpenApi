@@ -1,5 +1,3 @@
-
-
 # Nancy.Metadata.OpenApi [![Mit License][mit-img]][mit]
 
 _Currently_ on prerelease status following the Nancy 2.0.0 version [release](https://github.com/NancyFx/Nancy/milestone/45).
@@ -47,12 +45,12 @@ public class DocsModule : OpenApiDocsModuleBase //We must inherit from the OpenA
     //Could be an array of Servers.
     public static Server Server => new Server() { Description = "My Descripton", Url = "http://localhost:5000/" };
 
-    public DocsModule(IRouteCacheProvider routeCacheProvider) : 
-        base(routeCacheProvider, 
+    public DocsModule(IRouteCacheProvider routeCacheProvider) :
+        base(routeCacheProvider,
         "/api/docs",                    //Document location path
         "My API ",                      //Api Title 
-        "v1.0",                         //Version of the Api            
-        Server,                              
+        "v1.0",                         //Version of the Api
+        Server,
         "/api")                         //Base url
     {
     }
@@ -66,7 +64,7 @@ public class DocsModule : OpenApiDocsModuleBase //We must inherit from the OpenA
 {
     public static Server Server => new Server() { Description = "My Descripton", Url = "http://localhost:5001/" };
 
-    public DocsModule(IRouteCacheProvider routeCacheProvider) : 
+    public DocsModule(IRouteCacheProvider routeCacheProvider) :
         base(routeCacheProvider, "/api/docs", "My API 2", "v1.1", Server, "/api")
     {
         //Optional information.
@@ -76,7 +74,7 @@ public class DocsModule : OpenApiDocsModuleBase //We must inherit from the OpenA
         WithLicense("MIT", "https://opensource.org/licenses/MIT");
 
         //Optional Information.
-        WithExternalDocument("This is an external doc, maybe a tutorial or a spec doc.", "https://jaxelr.github.io");    
+        WithExternalDocument("This is an external doc, maybe a tutorial or a spec doc.", "https://jaxelr.github.io")
     }
 }
 ```
@@ -121,7 +119,7 @@ Thats pretty much it, the docs endpoint defined above would generate some valid 
 
 For a working example, clone this repo and see the sample app that uses the Swagger-UI site as a validator.
 
-## Work to be done:
+## Work to be done
 
 Open Api specifies certain optional objects that havent been implemented at the library level. Check the [Current Development Project](https://github.com/Jaxelr/Nancy.Metadata.OpenApi/projects) for more details.
 
