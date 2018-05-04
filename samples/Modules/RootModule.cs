@@ -3,6 +3,7 @@ using Nancy.Metadata.OpenApi.Core;
 using Nancy.Metadata.OpenApi.DemoApplication.Model;
 using Nancy.Metadata.OpenApi.Fluent;
 using Nancy.ModelBinding;
+using System.Linq;
 
 namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
 {
@@ -12,6 +13,7 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
         {
             Get("/hello", r => HelloWorld(), name: "SimpleRequest");
             Get("/hello/{name}", r => Hello(r.name), name: "SimpleRequestWithParameter");
+            Get("/hello/{names}", r => Hello(r.names), name: "SimpleRequestWithParameterArray");
             Post("/hello", r => HelloPost(), name: "SimplePostRequest");
             Post("hello/model", r => HelloModel(), name: "PostRequestWithModel");
             Post("/hello/nestedmodel", r => HelloNestedModel(), name: "PostRequestWithNestedModel");
@@ -105,6 +107,17 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
             return Response.AsJson(response);
         }
 
+        private Response Hello(string[] names)
+        {
+            var response = new SimpleResponseModel
+            {
+                Hello = names.Aggregate((curr, next) => string.Concat(curr, ", ", next))
+            };
+
+            return Response.AsJson(response);
+        }
+
+
         private Response HelloWorld()
         {
             var response = new SimpleResponseModel
@@ -128,6 +141,11 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
                 .With(i => i.WithResponseModel("200", typeof(SimpleResponseModel), "Sample response")
                             .WithRequestParameter("name")
                             .WithSummary("Simple GET with parameters"));
+
+            Describe["SimpleRequestWithParameterArray"] = desc => new OpenApiRouteMetadata(desc)
+                .With(i => i.WithResponseModel("200", typeof(SimpleResponseModel), "Sample response")
+                .WithRequestParameter("names", isArray: true, type: "string")
+                .WithSummary("Simple GET with array parameters"));
 
             Describe["SimplePostRequest"] = desc => new OpenApiRouteMetadata(desc)
                 .With(info => info.WithResponseModel("200", typeof(SimpleResponseModel), "Sample response")
