@@ -8,5 +8,7 @@
         public string Format => "format";
         public string Loc => "query";
         public bool Required => false;
+        public bool Deprecated => false;
+        public bool isArray => false;
     }
 }
