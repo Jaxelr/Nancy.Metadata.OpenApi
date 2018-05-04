@@ -231,7 +231,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
 
             var taskSchema = JsonSchema4.FromTypeAsync(type, new NJsonSchema.Generation.JsonSchemaGeneratorSettings
             {
-                NullHandling = NullHandling.Swagger,
+                SchemaType = SchemaType.OpenApi3,
                 TypeNameGenerator = new TypeNameGenerator(),
                 SchemaNameGenerator = new TypeNameGenerator()
             });

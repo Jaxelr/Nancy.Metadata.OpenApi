@@ -1,16 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.6</TargetFramework>
-    <Version>0.4.1</Version>
-    <PackageVersion>0.4.1-pre</PackageVersion>
+    <TargetFrameworks>netstandard1.6;net45</TargetFrameworks>
+    <Version>0.5.0</Version>
+    <PackageVersion>0.5.0</PackageVersion>
     <PackageId>Nancy.Metadata.OpenApi</PackageId>
     <Copyright>Copyright 2017</Copyright>
-    <Authors>Jaxel Rojas;Anton Kudryavtsev</Authors>
+    <Authors>Jaxel Rojas</Authors>
     <AssemblyName>Nancy.Metadata.OpenApi</AssemblyName>
     <RootNamespace>Nancy.Metadata.OpenApi</RootNamespace>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Modifications to License, Terms Of Service, Contact information.</PackageReleaseNotes>
+    <PackageReleaseNotes>Added support for Nancy 1.X</PackageReleaseNotes>
     <PackageTags>openapi;nancy;metadata</PackageTags>
     <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/Jaxelr/Nancy.Metadata.OpenApi</PackageProjectUrl>
@@ -22,8 +22,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Nancy" Version="2.0.0-clinteastwood" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
-    <PackageReference Include="NJsonSchema" Version="9.4.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
+    <PackageReference Include="NJsonSchema" Version="9.10.0" />
   </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.6' ">
+    <PackageReference Include="Nancy" Version="2.0.0-clinteastwood" />
+  </ItemGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
+    <DefineConstants>NETSTANDARD1_6</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net45' ">
+    <PackageReference Include="Nancy" Version="1.4.4" />
+  </ItemGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <DefineConstants>NET45</DefineConstants>
+  </PropertyGroup>
+
 </Project>

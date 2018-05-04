@@ -1,4 +1,4 @@
-﻿version: '0.4.1.{build}'
+﻿version: '0.5.0.{build}'
 image: Visual Studio 2017
 branches:
   only:
@@ -11,7 +11,8 @@ configuration:
 before_build:
   - cmd: dotnet --version
 build_script:
-  - cmd: dotnet publish ./src/Nancy.Metadata.OpenApi.csproj -v quiet
+  - cmd: dotnet build ./src/Nancy.Metadata.OpenApi.csproj -v quiet
+  - cmd: dotnet publish ./src/Nancy.Metadata.OpenApi.csproj -v quiet -f=netstandard1.6
 test_script:
   - cmd: dotnet test ./tests/Nancy.Metadata.OpenApi.Tests.csproj 
 artifacts:

@@ -28,33 +28,7 @@ namespace Nancy.Metadata.OpenApi.Modules
         private Contact contact;
         private License license;
         private ExternalDocumentation externalDocs;
-
-        /// <summary>
-        /// Default constructor used, inherited from version Swagger version.
-        /// </summary>
-        /// <param name="routeCacheProvider"></param>
-        /// <param name="docsLocation"></param>
-        /// <param name="title"></param>
-        /// <param name="apiVersion"></param>
-        /// <param name="host"></param>
-        /// <param name="hostDescription"></param>
-        /// <param name="apiBaseUrl"></param>
-        [System.Obsolete("Deprecated in favor of the usage of constructor with Server model.")]
-        protected OpenApiDocsModuleBase(IRouteCacheProvider routeCacheProvider,
-            string docsLocation = DOCS_LOCATION,
-            string title = TITLE,
-            string apiVersion = API_VERSION,
-            string host = HOST,
-            string hostDescription = HOST_DESCRIPTION,
-            string apiBaseUrl = API_BASE_URL) : this(
-                    routeCacheProvider,
-                    docsLocation,
-                    title,
-                    apiVersion,
-                    hosts: new Server[] { new Server { Url = host, Description = hostDescription } },
-                    apiBaseUrl: apiBaseUrl)
-        {
-        }
+        
 
         /// <summary>
         /// New Constructor established for use with Open Api version.
@@ -112,7 +86,11 @@ namespace Nancy.Metadata.OpenApi.Modules
             this.hosts = hosts;
             this.apiBaseUrl = apiBaseUrl;
 
+#if NETSTANDARD1_6
             Get(docsLocation, r => GetDocumentation());
+#else
+            Get[docsLocation] = r => GetDocumentation();
+#endif
         }
 
         /// <summary>
@@ -189,7 +167,7 @@ namespace Nancy.Metadata.OpenApi.Modules
                 ExternalDocs = externalDocs
             };
 
-            // generate documentation
+            // Generate documentation
             IEnumerable<OpenApiRouteMetadata> metadata = routeCacheProvider.GetCache().RetrieveMetadata<OpenApiRouteMetadata>();
 
             var endpoints = new Dictionary<string, Dictionary<string, Endpoint>>();
