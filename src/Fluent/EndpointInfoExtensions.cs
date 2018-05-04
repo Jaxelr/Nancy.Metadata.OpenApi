@@ -71,14 +71,16 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <param name="description"></param>
         /// <param name="loc"></param>
         /// <returns></returns>
-        public static Endpoint WithRequestParameter(this Endpoint endpointInfo, string name,
-            string type = "string", string format = null, bool required = true, string description = null,
-            string loc = "path")
+        public static Endpoint WithRequestParameter(this Endpoint endpointInfo, string name, string type = "string", 
+            string format = null, bool required = true, string description = null,
+            string loc = "path", bool deprecated = false, bool isArray = false)
         {
             if (endpointInfo.RequestParameters == null)
             {
                 endpointInfo.RequestParameters = new List<RequestParameter>();
             }
+
+            var schema = GetFormatPerType(type, isArray);
 
             endpointInfo.RequestParameters.Add(new RequestParameter
             {
@@ -87,7 +89,8 @@ namespace Nancy.Metadata.OpenApi.Fluent
                 Format = format,
                 In = loc,
                 Name = name,
-                Type = type
+                Deprecated = deprecated,
+                Schema = schema
             });
 
             return endpointInfo;
@@ -239,6 +242,77 @@ namespace Nancy.Metadata.OpenApi.Fluent
             SchemaCache.Cache[key] = taskSchema.Result;
 
             return key;
+        }
+
+        /// <summary>
+        /// Matches the type, format and item (if array) to the schema specified on the parameter.
+        /// </summary>
+        /// <param name="type">The type defined for the parameter, check: https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#dataTypeFormat for guidelines</param>
+        /// <param name="isArray">a boolean that determines the location of the properties on the structure.</param>
+        /// <returns></returns>
+        private static SchemaRef GetFormatPerType(string type, bool isArray)
+        {
+            SchemaRef  schema;
+            string format = null;
+
+            switch (type) //formats as defined by OAS: 
+            {
+                case "string":
+                    type = "string";
+                    format = null;
+                    break;
+                case var t when t.Contains("int"): //int, integer
+                    type = "integer";
+                    format = "int32";
+                    break;
+                case "long":
+                    type = "integer";
+                    format = "int64";
+                    break;
+                case "float":
+                    type = "number";
+                    format = "float";
+                    break;
+                case "double":
+                    type = "number";
+                    format = "double";
+                    break;
+                case "byte":
+                    type = "string";
+                    format = "byte";
+                    break;
+                case "binary":
+                    type = "string";
+                    format = "binary";
+                    break;
+                case var t when t.Contains("bool"): //bool, boolean
+                    type = "boolean";
+                    format = null;
+                    break;
+                case "date": 
+                    type = "string";
+                    format = "date";
+                    break;
+                case "datetime":
+                    type = "string";
+                    format = "date-time";
+                    break;
+                case "password":
+                    type = "string";
+                    format = "password";
+                    break;
+            }
+
+            if (isArray)
+            {
+                schema = new SchemaRef() { Item = new Item() { Type = type, Format = format }, Type = "array" };
+            }
+            else
+            {
+                schema = new SchemaRef() { Type = type , Format = format};
+            }
+
+            return schema;
         }
     }
 }

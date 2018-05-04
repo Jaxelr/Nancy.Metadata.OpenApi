@@ -16,19 +16,13 @@ namespace Nancy.Metadata.OpenApi.Model
         [JsonProperty("required")]
         public bool Required { get; set; }
 
-        [JsonProperty("type")]
-        public string Type { get; set; }
+        [JsonProperty("deprecated")]
+        public bool Deprecated { get; set; }
 
         [JsonProperty("format")]
         public string Format { get; set; }
 
         [JsonProperty("schema")]
         public SchemaRef Schema { get; set; }
-    }
-
-    public class SchemaRef
-    {
-        [JsonProperty("$ref")]
-        public string Ref { get; set; }
     }
 }
