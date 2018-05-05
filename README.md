@@ -22,13 +22,13 @@ NuGet (Stable) | MyGet (Prerelease)
 Via nuget: 
 
 ``` powershell
-    PM> Install-Package Nancy.Metadata.OpenApi 
+PM> Install-Package Nancy.Metadata.OpenApi 
 ```
 
 You also need the Metadata library provided by Nancyfx:
 
 ``` powershell
-    PM> Install-Package Nancy.Metadata.Modules 
+PM> Install-Package Nancy.Metadata.Modules 
 ```
 
 ## Usage:
@@ -42,7 +42,8 @@ using Nancy.Metadata.OpenApi.Modules;
 public class DocsModule : OpenApiDocsModuleBase //We must inherit from the OpenApiDocsModuleBase
 {
     //Could be an array of Servers.
-    public static Server Server => new Server() { Description = "My Descripton", Url = "http://localhost:5000/" };
+    public static Server Server 
+        => new Server() { Description = "My Descripton", Url = "http://localhost:5000/" };
 
     public DocsModule(IRouteCacheProvider routeCacheProvider) :
         base(routeCacheProvider,
@@ -56,7 +57,7 @@ public class DocsModule : OpenApiDocsModuleBase //We must inherit from the OpenA
 }
 ```
 
-You could optionally if the information is needed add Contact, License and External Docs information:
+You could optionally, if the information is needed, add Contact, License and External Docs information:
 
 ``` c#
 public class DocsModule : OpenApiDocsModuleBase //We must inherit from the OpenApiDocsModuleBase
@@ -83,6 +84,7 @@ Then, define the Nancy modules as you would usually do:
 ```c#
 
 //Example using Nancy v2 
+
 public class MyModule : NancyModule
 {
     public MyModule() : base("/api")
@@ -92,7 +94,7 @@ public class MyModule : NancyModule
     }
 }
 
-//Skipped method implementations for brevity sake.
+//Skipped method implementations for brevity sake...
 ```
 
 Finally, you must define the metadata of the operations. To do so, simply declare the metadata module (using Nancy.Metadata.Modules) on the same namespace as the endpoint operations were defined, using the inherited MetadataModule class and the OpenApiRouteMetadata class defined on Nancy.Metadata.OpenApi.Core.
