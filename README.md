@@ -23,13 +23,13 @@ NuGet (Stable) | MyGet (Prerelease)
 Via nuget: 
 
 ``` powershell
-    PM> Install-Package Nancy.Metadata.OpenApi -Version 0.4.1-pre 
+    PM> Install-Package Nancy.Metadata.OpenApi 
 ```
 
 You also need the Metadata library provided by Nancyfx:
 
 ``` powershell
-    PM> Install-Package Nancy.Metadata.Modules -Version 2.0.0-clinteastwood 
+    PM> Install-Package Nancy.Metadata.Modules 
 ```
 
 ## Usage:
