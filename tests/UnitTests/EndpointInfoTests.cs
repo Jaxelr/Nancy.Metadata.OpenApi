@@ -109,7 +109,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
         {
             //Arrange
             var fakeEndpoint = new FakeEndpoint();
-            var fakeRequest = new FakeRequest();
+            var fakeRequest = new FakeRequestArray();
             const string ARRAY = "array";
 
             //Act
@@ -122,7 +122,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
                 fakeRequest.Description,
                 fakeRequest.Loc,
                 fakeRequest.Deprecated,
-                !fakeRequest.isArray); //Consider this request an array of strings
+                fakeRequest.isArray); //Consider this request an array of strings
 
             //Assert
             Assert.Equal(fakeRequest.Description, endpoint.RequestParameters[0].Description);
