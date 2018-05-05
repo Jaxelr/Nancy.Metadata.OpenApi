@@ -1,6 +1,6 @@
 # Nancy.Metadata.OpenApi [![Mit License][mit-img]][mit]
 
-_Currently_ on prerelease status following the Nancy 2.0.0 version [release](https://github.com/NancyFx/Nancy/milestone/45).
+_Now_ with compatibility to Nancy 1.X!
 
 You can find the [OpenApi the latest specification here](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.1.md) 
 
@@ -8,14 +8,13 @@ You can find the [OpenApi the latest specification here](https://github.com/OAI/
 
 | Appveyor  |
 | :---:     |
-|           |
-| [![Build status](https://ci.appveyor.com/api/projects/status/bk8fiqknunkegnv7?svg=true)](https://ci.appveyor.com/project/Jaxelr/nancy-metadata-openapi) |
+| [![Build status][build-img]][build] |
 
 ## Packages
 
 NuGet (Stable) | MyGet (Prerelease)
 :---: | :---:
-[![NuGet](https://img.shields.io/nuget/v/Nancy.Metadata.OpenApi.svg)](https://www.nuget.org/packages/Nancy.Metadata.OpenApi) | [![MyGet](https://img.shields.io/myget/nancy-metadata-openapi/v/Nancy.Metadata.OpenApi.svg)](https://www.myget.org/feed/nancy-metadata-openapi/package/nuget/Nancy.Metadata.OpenApi) |
+[![NuGet][nuget-img]][nuget] | [![MyGet][myget-img]][myget] |
 
 
 ## Installation:
@@ -82,6 +81,8 @@ public class DocsModule : OpenApiDocsModuleBase //We must inherit from the OpenA
 Then, define the Nancy modules as you would usually do:
 
 ```c#
+
+//Example using Nancy v2 
 public class MyModule : NancyModule
 {
     public MyModule() : base("/api")
@@ -90,6 +91,8 @@ public class MyModule : NancyModule
         Get("/hello/{name}", r => Hello(r.name), name: "SimpleRequestWithParameter");
     }
 }
+
+//Skipped method implementations for brevity sake.
 ```
 
 Finally, you must define the metadata of the operations. To do so, simply declare the metadata module (using Nancy.Metadata.Modules) on the same namespace as the endpoint operations were defined, using the inherited MetadataModule class and the OpenApiRouteMetadata class defined on Nancy.Metadata.OpenApi.Core.
@@ -129,3 +132,9 @@ Check the [guidelines](https://github.com/Jaxelr/Nancy.Metadata.OpenApi/blob/mas
 
 [mit-img]: http://img.shields.io/badge/License-MIT-blue.svg
 [mit]: https://github.com/Jaxelr/Nancy.Metadata.OpenApi/blob/master/LICENSE
+[build]: https://ci.appveyor.com/project/Jaxelr/nancy-metadata-openapi
+[build-img]: https://ci.appveyor.com/api/projects/status/bk8fiqknunkegnv7?svg=true
+[nuget]: https://www.nuget.org/packages/Nancy.Metadata.OpenApi
+[nuget-img]: https://img.shields.io/nuget/v/Nancy.Metadata.OpenApi.svg
+[myget]: https://www.myget.org/feed/nancy-metadata-openapi/package/nuget/Nancy.Metadata.OpenApi
+[myget-img]: https://img.shields.io/myget/nancy-metadata-openapi/v/Nancy.Metadata.OpenApi.svg
