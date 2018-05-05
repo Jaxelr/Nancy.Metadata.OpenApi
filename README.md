@@ -2,7 +2,7 @@
 
 _Now_ with compatibility to Nancy 1.X!
 
-You can find the [OpenApi the latest specification here](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.1.md) 
+You can find the latest specifications of [OpenApi here](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.1.md) 
 
 ## Builds
 
