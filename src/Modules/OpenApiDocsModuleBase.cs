@@ -155,7 +155,7 @@ namespace Nancy.Metadata.OpenApi.Modules
         {
             openApiSpecification = new OpenApiSpecification
             {
-                Api = new Api
+                Info = new Info
                 {
                     Title = title,
                     Version = apiVersion,

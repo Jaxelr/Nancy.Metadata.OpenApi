@@ -2,7 +2,7 @@
 
 namespace Nancy.Metadata.OpenApi.Model
 {
-    public class Api
+    public class Info
     {
         [JsonProperty("version")]
         public string Version { get; set; }
