@@ -73,7 +73,6 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.net45.Modules
             return Response.AsJson(response);
         }
 
-
         private Response HelloWorld()
         {
             SimpleResponseModel response = new SimpleResponseModel
@@ -102,7 +101,6 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.net45.Modules
                 .With(i => i.WithResponseModel("200", typeof(SimpleResponseModel), "Sample response")
                 .WithRequestParameter("names", isArray: true, type: "string")
                 .WithSummary("Simple GET with array parameters"));
-
 
             Describe["SimplePostRequest"] = desc => new OpenApiRouteMetadata(desc)
                 .With(info => info.WithResponseModel("200", typeof(SimpleResponseModel), "Sample response")

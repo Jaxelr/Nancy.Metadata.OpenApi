@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using NJsonSchema;
+﻿using NJsonSchema;
+using System.Collections.Generic;
 
 namespace Nancy.Metadata.OpenApi.Core
 {

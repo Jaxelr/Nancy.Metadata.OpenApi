@@ -28,7 +28,6 @@ namespace Nancy.Metadata.OpenApi.Modules
         private Contact contact;
         private License license;
         private ExternalDocumentation externalDocs;
-        
 
         /// <summary>
         /// New Constructor established for use with Open Api version.

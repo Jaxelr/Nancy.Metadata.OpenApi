@@ -92,7 +92,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
                 fakeRequest.Description,
                 fakeRequest.Loc,
                 fakeRequest.Deprecated,
-                fakeRequest.isArray);
+                fakeRequest.IsArray);
 
             //Assert
             Assert.Equal(fakeRequest.Description, endpoint.RequestParameters[0].Description);

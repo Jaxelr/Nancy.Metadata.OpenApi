@@ -1,8 +1,8 @@
-﻿using Nancy.Metadata.OpenApi.Model;
+﻿using Nancy.Metadata.OpenApi.Core;
+using Nancy.Metadata.OpenApi.Model;
+using NJsonSchema;
 using System;
 using System.Collections.Generic;
-using NJsonSchema;
-using Nancy.Metadata.OpenApi.Core;
 
 namespace Nancy.Metadata.OpenApi.Fluent
 {
@@ -71,7 +71,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <param name="description"></param>
         /// <param name="loc"></param>
         /// <returns></returns>
-        public static Endpoint WithRequestParameter(this Endpoint endpointInfo, string name, string type = "string", 
+        public static Endpoint WithRequestParameter(this Endpoint endpointInfo, string name, string type = "string",
             string format = null, bool required = true, string description = null,
             string loc = "path", bool deprecated = false, bool isArray = false)
         {
@@ -86,7 +86,6 @@ namespace Nancy.Metadata.OpenApi.Fluent
             {
                 Required = required,
                 Description = description,
-                Format = format,
                 In = loc,
                 Name = name,
                 Deprecated = deprecated,
@@ -192,7 +191,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="description"></param>
         /// <param name="responseType"></param>
@@ -252,51 +251,61 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <returns></returns>
         private static SchemaRef GetSchemaByType(string type, bool isArray)
         {
-            SchemaRef  schema;
+            SchemaRef schema;
             string format = null;
 
-            switch (type) //formats as defined by OAS: 
+            switch (type.ToLowerInvariant()) //formats as defined by OAS:
             {
                 case "string":
                     type = "string";
                     format = null;
                     break;
+
                 case var t when t.Contains("int"): //int, integer
                     type = "integer";
                     format = "int32";
                     break;
+
                 case "long":
                     type = "integer";
                     format = "int64";
                     break;
+
                 case "float":
                     type = "number";
                     format = "float";
                     break;
+
                 case "double":
                     type = "number";
                     format = "double";
                     break;
+
                 case "byte":
                     type = "string";
                     format = "byte";
                     break;
+
                 case "binary":
                     type = "string";
                     format = "binary";
                     break;
+
                 case var t when t.Contains("bool"): //bool, boolean
                     type = "boolean";
                     format = null;
                     break;
-                case "date": 
+
+                case "date":
                     type = "string";
                     format = "date";
                     break;
+
                 case "datetime":
                     type = "string";
                     format = "date-time";
                     break;
+
                 case "password":
                     type = "string";
                     format = "password";
@@ -309,7 +318,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
             }
             else
             {
-                schema = new SchemaRef() { Type = type , Format = format};
+                schema = new SchemaRef() { Type = type, Format = format };
             }
 
             return schema;
