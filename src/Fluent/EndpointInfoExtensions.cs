@@ -80,7 +80,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
                 endpointInfo.RequestParameters = new List<RequestParameter>();
             }
 
-            var schema = GetFormatPerType(type, isArray);
+            var schema = GetSchemaByType(type, isArray);
 
             endpointInfo.RequestParameters.Add(new RequestParameter
             {
@@ -250,7 +250,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <param name="type">The type defined for the parameter, check: https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#dataTypeFormat for guidelines</param>
         /// <param name="isArray">a boolean that determines the location of the properties on the structure.</param>
         /// <returns></returns>
-        private static SchemaRef GetFormatPerType(string type, bool isArray)
+        private static SchemaRef GetSchemaByType(string type, bool isArray)
         {
             SchemaRef  schema;
             string format = null;
