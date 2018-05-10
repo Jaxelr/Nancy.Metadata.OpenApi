@@ -29,13 +29,13 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             var spec = JsonConvert.DeserializeObject<OpenApiSpecification>(body);
 
             //Assert
-            Assert.NotNull(spec.Api);
+            Assert.NotNull(spec.Info);
             Assert.NotNull(spec.Servers);
             Assert.Equal(FakeModule.Server.Description, spec.Servers[0].Description);
             Assert.Equal(FakeModule.Server.Url, spec.Servers[0].Url);
-            Assert.Equal(FakeModule.Title, spec.Api.Title);
-            Assert.Equal(FakeModule.ApiVersion, spec.Api.Version);
-            Assert.Equal(FakeModule.TermsOfService, spec.Api.TermsOfService);
+            Assert.Equal(FakeModule.Title, spec.Info.Title);
+            Assert.Equal(FakeModule.ApiVersion, spec.Info.Version);
+            Assert.Equal(FakeModule.TermsOfService, spec.Info.TermsOfService);
         }
 
         [Fact]
@@ -61,11 +61,11 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             var spec = JsonConvert.DeserializeObject<OpenApiSpecification>(body);
 
             //Assert
-            Assert.NotNull(spec.Api);
-            Assert.NotNull(spec.Api.Contact);
-            Assert.Equal(contact.Name, spec.Api.Contact.Name);
-            Assert.Equal(contact.Email, spec.Api.Contact.Email);
-            Assert.Equal(contact.Url, spec.Api.Contact.Url);
+            Assert.NotNull(spec.Info);
+            Assert.NotNull(spec.Info.Contact);
+            Assert.Equal(contact.Name, spec.Info.Contact.Name);
+            Assert.Equal(contact.Email, spec.Info.Contact.Email);
+            Assert.Equal(contact.Url, spec.Info.Contact.Url);
         }
 
         [Fact]
@@ -119,10 +119,10 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             var spec = JsonConvert.DeserializeObject<OpenApiSpecification>(body);
 
             //Assert
-            Assert.NotNull(spec.Api);
-            Assert.NotNull(spec.Api.License);
-            Assert.Equal(lic.Name, spec.Api.License.Name);
-            Assert.Equal(lic.Url, spec.Api.License.Url);
+            Assert.NotNull(spec.Info);
+            Assert.NotNull(spec.Info.License);
+            Assert.Equal(lic.Name, spec.Info.License.Name);
+            Assert.Equal(lic.Url, spec.Info.License.Url);
         }
     }
 }
