@@ -70,6 +70,8 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <param name="required"></param>
         /// <param name="description"></param>
         /// <param name="loc"></param>
+        /// <param name="deprecated"></param>
+        /// <param name="isArray"></param>
         /// <returns></returns>
         public static Endpoint WithRequestParameter(this Endpoint endpointInfo, string name, string type = "string",
             string format = null, bool required = true, string description = null,
@@ -105,7 +107,8 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <param name="required"></param>
         /// <param name="loc"></param>
         /// <returns></returns>
-        public static Endpoint WithRequestModel(this Endpoint endpointInfo, Type requestType, string name = "body", string description = null, bool required = true, string loc = "body")
+        public static Endpoint WithRequestModel(this Endpoint endpointInfo, Type requestType, string name = "body", 
+            string description = null, bool required = true, string loc = "body")
         {
             if (endpointInfo.RequestParameters == null)
             {
@@ -132,7 +135,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// </summary>
         /// <param name="endpointInfo"></param>
         /// <param name="description"></param>
-        /// <param name="contentType"></param>
+        /// <param name="tags"></param>
         /// <returns></returns>
         public static Endpoint WithDescription(this Endpoint endpointInfo, string description, params string[] tags)
         {
@@ -162,10 +165,11 @@ namespace Nancy.Metadata.OpenApi.Fluent
         }
 
         /// <summary>
-        /// Create new Response model with Schema Ref property and Description.
+        /// Add an external documentation object to the endpoint operation.
         /// </summary>
+        /// <param name="endpointInfo"></param>
+        /// <param name="url"></param>
         /// <param name="description"></param>
-        /// <param name="responseType"></param>
         /// <returns></returns>
         public static Endpoint WithExternalDocumentation(this Endpoint endpointInfo, string url, string description)
         {
