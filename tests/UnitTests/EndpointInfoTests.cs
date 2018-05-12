@@ -55,7 +55,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             var fakeEndpoint = new FakeEndpoint();
 
             //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName).WithDeprecatedFlag();
+            var endpoint = new Endpoint(fakeEndpoint.OperationName).IsDeprecated();
 
             //Assert
             Assert.True(endpoint.IsDeprecated);
