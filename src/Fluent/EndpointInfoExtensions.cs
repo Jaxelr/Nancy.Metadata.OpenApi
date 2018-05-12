@@ -183,7 +183,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// </summary>
         /// <param name="endpointInfo"></param>
         /// <returns></returns>
-        public static Endpoint WithDeprecatedFlag(this Endpoint endpointInfo)
+        public static Endpoint IsDeprecated(this Endpoint endpointInfo)
         {
             endpointInfo.IsDeprecated = true;
 
@@ -196,26 +196,24 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <param name="description"></param>
         /// <param name="responseType"></param>
         /// <returns></returns>
-        private static Model.Response GenerateResponseInfo(string description, Type responseType)
-           => new Model.Response
-           {
-               Schema = new SchemaRef
-               {
-                   Ref = $"#/components/schemas/{GetOrSaveSchemaReference(responseType)}"
-               },
-               Description = description
-           };
-
-        /// <summary>
-        /// Generate new Response model with Description only.
-        /// </summary>
-        /// <param name="description"></param>
-        /// <returns></returns>
-        private static Model.Response GenerateResponseInfo(string description)
-            => new Model.Response
+        private static Model.Response GenerateResponseInfo(string description, Type responseType = null)
+        {
+            if (responseType is Type)
+            { 
+                return new Model.Response
+                {
+                    Schema = new SchemaRef
+                    {
+                        Ref = $"#/components/schemas/{GetOrSaveSchemaReference(responseType)}"
+                    },
+                    Description = description
+                };
+            }
+            else
             {
-                Description = description
-            };
+                return new Model.Response { Description = description };
+            }
+        }
 
         /// <summary>
         /// Look up schema on schema cache, if not present add a new key.
