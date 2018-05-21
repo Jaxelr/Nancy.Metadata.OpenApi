@@ -1,6 +1,6 @@
 # Nancy.Metadata.OpenApi [![Mit License][mit-img]][mit]
 
-_Now_ with compatibility to Nancy 1.X!
+_Now_ compatible to Nancy 1.X and Nancy 2.0!
 
 You can find the latest specifications of [OpenApi here](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.1.md) 
 
@@ -33,7 +33,7 @@ PM> Install-Package Nancy.Metadata.Modules
 
 ## Usage:
 
-First, we must define a docs module that will serve our OpenApi Json (currently only json is supported) document:
+Define a docs module that will serve our OpenApi Json (currently only json is supported) document:
 
 ```c#
 using Nancy.Metadata.OpenApi.Model;
@@ -47,7 +47,7 @@ public class DocsModule : OpenApiDocsModuleBase //We must inherit from the OpenA
 
     public DocsModule(IRouteCacheProvider routeCacheProvider) :
         base(routeCacheProvider,
-        "/api/docs",                    //Document location path
+        "/api/docs/openapi.json",       //Document location path
         "My API ",                      //Api Title 
         "v1.0",                         //Version of the Api
         Server,
@@ -57,15 +57,16 @@ public class DocsModule : OpenApiDocsModuleBase //We must inherit from the OpenA
 }
 ```
 
-You could optionally, if the information is needed, add Contact, License and External Docs information:
+We could optionally, if the information is needed, add Contact, License and External Docs information:
 
 ``` c#
 public class DocsModule : OpenApiDocsModuleBase //We must inherit from the OpenApiDocsModuleBase
 {
-    public static Server Server => new Server() { Description = "My Descripton", Url = "http://localhost:5001/" };
+    public static Server Server 
+        => new Server() { Description = "My Descripton", Url = "http://localhost:5001/" };
 
     public DocsModule(IRouteCacheProvider routeCacheProvider) :
-        base(routeCacheProvider, "/api/docs", "My API 2", "v1.1", Server, "/api")
+        base(routeCacheProvider, "/api/docs/openapi.json", "My API 2", "v1.1", Server, "/api")
     {
         //Optional information.
         WithContact("Contact Information", "jaxelrojas@email.com", "https://jaxelr.github.io");
@@ -126,7 +127,7 @@ For a working example, clone this repo and see the sample app that uses the Swag
 
 ## Work to be done
 
-Open Api specifies certain optional objects that havent been implemented at the library level. Check the [Current Development Project](https://github.com/Jaxelr/Nancy.Metadata.OpenApi/projects) for more details.
+Open Api specifies optional objects that havent been implemented at the library level. Check the [Current Development Project](https://github.com/Jaxelr/Nancy.Metadata.OpenApi/projects) for more details.
 
 ## Contributing
 
