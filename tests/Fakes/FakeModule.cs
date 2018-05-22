@@ -12,6 +12,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Fakes
         public static string ApiVersion = "v1.0";
         public static string ApiBaseUrl = "/";
         public static string TermsOfService = "blah blah blah";
+        public static string[] Tags = { "Default" };
 
         public FakeModule(IRouteCacheProvider routeCacheProvider) :
             base(routeCacheProvider,
@@ -20,7 +21,8 @@ namespace Nancy.Metadata.OpenApi.Tests.Fakes
                 ApiVersion,
                 termsOfService: TermsOfService,
                 host: Server,
-                apiBaseUrl: ApiBaseUrl)
+                apiBaseUrl: ApiBaseUrl,
+                tags: Tags)
         {
         }
 

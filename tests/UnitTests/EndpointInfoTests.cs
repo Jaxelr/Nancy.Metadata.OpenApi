@@ -33,6 +33,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             Assert.Equal(fakeEndpoint.Description, endpoint.Description);
         }
 
+
         [Fact]
         public void Endpoint_with_external_documentation()
         {

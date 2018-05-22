@@ -36,6 +36,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             Assert.Equal(FakeModule.Title, spec.Info.Title);
             Assert.Equal(FakeModule.ApiVersion, spec.Info.Version);
             Assert.Equal(FakeModule.TermsOfService, spec.Info.TermsOfService);
+            Assert.Equal(FakeModule.Tags, spec.Tags);
         }
 
         [Fact]
