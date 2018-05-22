@@ -19,9 +19,6 @@ namespace Nancy.Metadata.OpenApi.Model
         [JsonProperty("deprecated")]
         public bool Deprecated { get; set; }
 
-        [JsonProperty("format")]
-        public string Format { get; set; }
-
         [JsonProperty("schema")]
         public SchemaRef Schema { get; set; }
     }

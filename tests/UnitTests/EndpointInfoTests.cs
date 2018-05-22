@@ -55,7 +55,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             var fakeEndpoint = new FakeEndpoint();
 
             //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName).WithDeprecatedFlag();
+            var endpoint = new Endpoint(fakeEndpoint.OperationName).IsDeprecated();
 
             //Assert
             Assert.True(endpoint.IsDeprecated);
@@ -92,17 +92,16 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
                 fakeRequest.Description,
                 fakeRequest.Loc,
                 fakeRequest.Deprecated,
-                fakeRequest.isArray);
+                fakeRequest.IsArray);
 
             //Assert
             Assert.Equal(fakeRequest.Description, endpoint.RequestParameters[0].Description);
-            Assert.Equal(fakeRequest.Format, endpoint.RequestParameters[0].Format);
+            Assert.Null(endpoint.RequestParameters[0].Schema.Format);
             Assert.Equal(fakeRequest.Required, endpoint.RequestParameters[0].Required);
             Assert.Equal(fakeRequest.Name, endpoint.RequestParameters[0].Name);
             Assert.Equal(fakeRequest.Loc, endpoint.RequestParameters[0].In);
             Assert.Equal(fakeRequest.Type, endpoint.RequestParameters[0].Schema.Type);
         }
-
 
         [Fact]
         public void Endpoint_with_request_parameter_array()
@@ -122,11 +121,11 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
                 fakeRequest.Description,
                 fakeRequest.Loc,
                 fakeRequest.Deprecated,
-                fakeRequest.isArray); //Consider this request an array of strings
+                fakeRequest.IsArray); //Consider this request an array of strings
 
             //Assert
             Assert.Equal(fakeRequest.Description, endpoint.RequestParameters[0].Description);
-            Assert.Equal(fakeRequest.Format, endpoint.RequestParameters[0].Format);
+            Assert.Null(endpoint.RequestParameters[0].Schema.Item.Format);
             Assert.Equal(fakeRequest.Required, endpoint.RequestParameters[0].Required);
             Assert.Equal(fakeRequest.Name, endpoint.RequestParameters[0].Name);
             Assert.Equal(fakeRequest.Loc, endpoint.RequestParameters[0].In);

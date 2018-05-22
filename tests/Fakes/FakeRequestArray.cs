@@ -9,6 +9,6 @@
         public string Loc => "query";
         public bool Required => false;
         public bool Deprecated => false;
-        public bool isArray => true;
+        public bool IsArray => true;
     }
 }

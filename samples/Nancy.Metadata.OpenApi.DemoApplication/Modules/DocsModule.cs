@@ -10,7 +10,7 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
 
         public DocsModule(IRouteCacheProvider routeCacheProvider) :
             base(routeCacheProvider,
-                "/api/docs",
+                "/api/docs/openapi.json",
                 "Sample API documentation",
                 "v1.0",
                 host: Server,

@@ -8,6 +8,6 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.net45.Model
         public string PrimitiveProperty { get; set; }
 
         [JsonProperty("simpleModel")]
-        public SimpleRequestModel SimpleModel { get; set; } 
+        public SimpleRequestModel SimpleModel { get; set; }
     }
 }

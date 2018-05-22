@@ -128,7 +128,6 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
             return Response.AsJson(response);
         }
 
-
         private Response HelloWorld()
         {
             var response = new SimpleResponseModel

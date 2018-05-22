@@ -25,10 +25,10 @@ namespace Nancy.Metadata.OpenApi.Modules
         private readonly Server[] hosts;
         private readonly string apiBaseUrl;
         private readonly string termsOfService;
+        private readonly string[] tags;
         private Contact contact;
         private License license;
         private ExternalDocumentation externalDocs;
-        
 
         /// <summary>
         /// New Constructor established for use with Open Api version.
@@ -48,14 +48,16 @@ namespace Nancy.Metadata.OpenApi.Modules
             string apiVersion,
             string termsOfService = null,
             Server host = null,
-            string apiBaseUrl = API_BASE_URL) : this(
+            string apiBaseUrl = API_BASE_URL,
+            string[] tags = null) : this(
                     routeCacheProvider,
                     docsLocation,
                     title,
                     apiVersion,
                     termsOfService,
                     new Server[] { host },
-                    apiBaseUrl)
+                    apiBaseUrl,
+                    tags)
         {
         }
 
@@ -77,7 +79,8 @@ namespace Nancy.Metadata.OpenApi.Modules
             string apiVersion,
             string termsOfService = null,
             Server[] hosts = null,
-            string apiBaseUrl = API_BASE_URL)
+            string apiBaseUrl = API_BASE_URL,
+            string[] tags = null)
         {
             this.routeCacheProvider = routeCacheProvider;
             this.title = title;
@@ -85,6 +88,7 @@ namespace Nancy.Metadata.OpenApi.Modules
             this.termsOfService = termsOfService;
             this.hosts = hosts;
             this.apiBaseUrl = apiBaseUrl;
+            this.tags = tags; 
 
 #if NETSTANDARD1_6
             Get(docsLocation, r => GetDocumentation());
@@ -99,8 +103,8 @@ namespace Nancy.Metadata.OpenApi.Modules
         /// <param name="name"></param>
         /// <param name="email"></param>
         /// <param name="url"></param>
-        protected void WithContact(string name, string email, string url)
-            => contact = new Contact()
+        protected void WithContact(string name, string email, string url) =>
+            contact = new Contact()
             {
                 Name = name,
                 Email = email,
@@ -112,8 +116,8 @@ namespace Nancy.Metadata.OpenApi.Modules
         /// </summary>
         /// <param name="name"></param>
         /// <param name="url"></param>
-        protected void WithLicense(string name, string url)
-            => license = new License()
+        protected void WithLicense(string name, string url) =>
+            license = new License()
             {
                 Name = name,
                 Url = url
@@ -124,8 +128,8 @@ namespace Nancy.Metadata.OpenApi.Modules
         /// </summary>
         /// <param name="description"></param>
         /// <param name="url"></param>
-        protected void WithExternalDocument(string description, string url)
-            => externalDocs = new ExternalDocumentation()
+        protected void WithExternalDocument(string description, string url) => 
+            externalDocs = new ExternalDocumentation()
             {
                 Description = description,
                 Url = url
@@ -155,15 +159,16 @@ namespace Nancy.Metadata.OpenApi.Modules
         {
             openApiSpecification = new OpenApiSpecification
             {
-                Api = new Api
+                Info = new Info
                 {
                     Title = title,
                     Version = apiVersion,
                     TermsOfService = termsOfService,
                     Contact = contact,
-                    License = license
+                    License = license,
                 },
                 Servers = hosts,
+                Tags = tags,
                 ExternalDocs = externalDocs
             };
 

@@ -1,8 +1,8 @@
-﻿using Nancy.Metadata.OpenApi.Model;
+﻿using Nancy.Metadata.OpenApi.Core;
+using Nancy.Metadata.OpenApi.Model;
+using NJsonSchema;
 using System;
 using System.Collections.Generic;
-using NJsonSchema;
-using Nancy.Metadata.OpenApi.Core;
 
 namespace Nancy.Metadata.OpenApi.Fluent
 {
@@ -70,8 +70,10 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <param name="required"></param>
         /// <param name="description"></param>
         /// <param name="loc"></param>
+        /// <param name="deprecated"></param>
+        /// <param name="isArray"></param>
         /// <returns></returns>
-        public static Endpoint WithRequestParameter(this Endpoint endpointInfo, string name, string type = "string", 
+        public static Endpoint WithRequestParameter(this Endpoint endpointInfo, string name, string type = "string",
             string format = null, bool required = true, string description = null,
             string loc = "path", bool deprecated = false, bool isArray = false)
         {
@@ -80,13 +82,12 @@ namespace Nancy.Metadata.OpenApi.Fluent
                 endpointInfo.RequestParameters = new List<RequestParameter>();
             }
 
-            var schema = GetFormatPerType(type, isArray);
+            var schema = GetSchemaByType(type, isArray);
 
             endpointInfo.RequestParameters.Add(new RequestParameter
             {
                 Required = required,
                 Description = description,
-                Format = format,
                 In = loc,
                 Name = name,
                 Deprecated = deprecated,
@@ -106,7 +107,8 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <param name="required"></param>
         /// <param name="loc"></param>
         /// <returns></returns>
-        public static Endpoint WithRequestModel(this Endpoint endpointInfo, Type requestType, string name = "body", string description = null, bool required = true, string loc = "body")
+        public static Endpoint WithRequestModel(this Endpoint endpointInfo, Type requestType, string name = "body", 
+            string description = null, bool required = true, string loc = "body")
         {
             if (endpointInfo.RequestParameters == null)
             {
@@ -133,7 +135,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// </summary>
         /// <param name="endpointInfo"></param>
         /// <param name="description"></param>
-        /// <param name="contentType"></param>
+        /// <param name="tags"></param>
         /// <returns></returns>
         public static Endpoint WithDescription(this Endpoint endpointInfo, string description, params string[] tags)
         {
@@ -163,10 +165,11 @@ namespace Nancy.Metadata.OpenApi.Fluent
         }
 
         /// <summary>
-        /// Create new Response model with Schema Ref property and Description.
+        /// Add an external documentation object to the endpoint operation.
         /// </summary>
+        /// <param name="endpointInfo"></param>
+        /// <param name="url"></param>
         /// <param name="description"></param>
-        /// <param name="responseType"></param>
         /// <returns></returns>
         public static Endpoint WithExternalDocumentation(this Endpoint endpointInfo, string url, string description)
         {
@@ -184,7 +187,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// </summary>
         /// <param name="endpointInfo"></param>
         /// <returns></returns>
-        public static Endpoint WithDeprecatedFlag(this Endpoint endpointInfo)
+        public static Endpoint IsDeprecated(this Endpoint endpointInfo)
         {
             endpointInfo.IsDeprecated = true;
 
@@ -192,31 +195,29 @@ namespace Nancy.Metadata.OpenApi.Fluent
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="description"></param>
         /// <param name="responseType"></param>
         /// <returns></returns>
-        private static Model.Response GenerateResponseInfo(string description, Type responseType)
-           => new Model.Response
-           {
-               Schema = new SchemaRef
-               {
-                   Ref = $"#/components/schemas/{GetOrSaveSchemaReference(responseType)}"
-               },
-               Description = description
-           };
-
-        /// <summary>
-        /// Generate new Response model with Description only.
-        /// </summary>
-        /// <param name="description"></param>
-        /// <returns></returns>
-        private static Model.Response GenerateResponseInfo(string description)
-            => new Model.Response
+        private static Model.Response GenerateResponseInfo(string description, Type responseType = null)
+        {
+            if (responseType is Type)
+            { 
+                return new Model.Response
+                {
+                    Schema = new SchemaRef
+                    {
+                        Ref = $"#/components/schemas/{GetOrSaveSchemaReference(responseType)}"
+                    },
+                    Description = description
+                };
+            }
+            else
             {
-                Description = description
-            };
+                return new Model.Response { Description = description };
+            }
+        }
 
         /// <summary>
         /// Look up schema on schema cache, if not present add a new key.
@@ -250,53 +251,63 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <param name="type">The type defined for the parameter, check: https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#dataTypeFormat for guidelines</param>
         /// <param name="isArray">a boolean that determines the location of the properties on the structure.</param>
         /// <returns></returns>
-        private static SchemaRef GetFormatPerType(string type, bool isArray)
+        private static SchemaRef GetSchemaByType(string type, bool isArray)
         {
-            SchemaRef  schema;
+            SchemaRef schema;
             string format = null;
 
-            switch (type) //formats as defined by OAS: 
+            switch (type.ToLowerInvariant()) //formats as defined by OAS:
             {
                 case "string":
                     type = "string";
                     format = null;
                     break;
+
                 case var t when t.Contains("int"): //int, integer
                     type = "integer";
                     format = "int32";
                     break;
+
                 case "long":
                     type = "integer";
                     format = "int64";
                     break;
+
                 case "float":
                     type = "number";
                     format = "float";
                     break;
+
                 case "double":
                     type = "number";
                     format = "double";
                     break;
+
                 case "byte":
                     type = "string";
                     format = "byte";
                     break;
+
                 case "binary":
                     type = "string";
                     format = "binary";
                     break;
+
                 case var t when t.Contains("bool"): //bool, boolean
                     type = "boolean";
                     format = null;
                     break;
-                case "date": 
+
+                case "date":
                     type = "string";
                     format = "date";
                     break;
+
                 case "datetime":
                     type = "string";
                     format = "date-time";
                     break;
+
                 case "password":
                     type = "string";
                     format = "password";
@@ -309,7 +320,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
             }
             else
             {
-                schema = new SchemaRef() { Type = type , Format = format};
+                schema = new SchemaRef() { Type = type, Format = format };
             }
 
             return schema;
