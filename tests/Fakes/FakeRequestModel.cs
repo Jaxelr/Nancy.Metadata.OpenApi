@@ -6,5 +6,6 @@
         public string Description => "Request description";
         public string Loc => "body";
         public bool Required => false;
+        public string contentType => "application/json";
     }
 }

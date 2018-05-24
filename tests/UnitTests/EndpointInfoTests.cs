@@ -145,17 +145,15 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             var endpoint = new Endpoint(fakeEndpoint.OperationName)
                 .WithRequestModel(
                     typeof(FakeRequestModel),
-                    fakeRequest.Name,
+                    fakeRequest.contentType,
                     fakeRequest.Description,
-                    fakeRequest.Required,
-                    fakeRequest.Loc);
+                    fakeRequest.Required);
 
             //Assert
-            Assert.Equal(fakeRequest.Description, endpoint.RequestParameters[0].Description);
-            Assert.Equal(fakeRequest.Required, endpoint.RequestParameters[0].Required);
-            Assert.Equal(fakeRequest.Name, endpoint.RequestParameters[0].Name);
-            Assert.Equal(fakeRequest.Loc, endpoint.RequestParameters[0].In);
-            Assert.Contains(nameof(FakeRequestModel), endpoint.RequestParameters[0].Schema.Ref);
+            Assert.Equal(fakeRequest.Description, endpoint.RequestBody.Description);
+            Assert.Equal(fakeRequest.Required, endpoint.RequestBody.Required);
+            Assert.True(endpoint.RequestBody.Content.ContainsKey(fakeRequest.contentType));
+            Assert.Contains(nameof(FakeRequestModel), endpoint.RequestBody.Content[fakeRequest.contentType].Ref);
         }
 
         [Fact]
