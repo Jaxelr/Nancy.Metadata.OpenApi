@@ -107,25 +107,25 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <param name="required"></param>
         /// <param name="loc"></param>
         /// <returns></returns>
-        public static Endpoint WithRequestModel(this Endpoint endpointInfo, Type requestType, string name = "body", 
-            string description = null, bool required = true, string loc = "body")
+        public static Endpoint WithRequestModel(this Endpoint endpointInfo, Type requestType, string contentType = null, string description = null, bool required = true)
         {
-            if (endpointInfo.RequestParameters == null)
+            if (contentType is null)
             {
-                endpointInfo.RequestParameters = new List<RequestParameter>();
+                contentType = @"application/json";
             }
 
-            endpointInfo.RequestParameters.Add(new RequestParameter
+            endpointInfo.RequestBody = new RequestBody
             {
                 Required = required,
                 Description = description,
-                In = loc,
-                Name = name,
-                Schema = new SchemaRef
+                Content = new Dictionary<string, SchemaRef>
                 {
-                    Ref = $"#/components/schemas/{GetOrSaveSchemaReference(requestType)}"
+                    {
+                        contentType,
+                        new SchemaRef() { Ref = $"#/components/schemas/{GetOrSaveSchemaReference(requestType)}"}
+                    }
                 }
-            });
+            };
 
             return endpointInfo;
         }
