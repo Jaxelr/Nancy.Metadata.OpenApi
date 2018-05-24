@@ -170,7 +170,7 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
                 .With(info => info.WithResponseModel("200", typeof(SimpleResponseModel), "Simple Response Model")
                     .WithResponseModel("400", typeof(ValidationFailedResponseModel), "Validation Failed Model")
                     .WithSummary("Simple POST example with request model")
-                    .WithRequestModel(typeof(SimpleRequestModel)));
+                    .WithRequestModel(typeof(SimpleRequestModel), contentType: "application/json", description: "Simple Request Model"));
 
             Describe["PostRequestWithNestedModel"] = desc => new OpenApiRouteMetadata(desc)
                     .With(info => info.WithResponseModel("200", typeof(SimpleResponseModel), "Simple Response Model")

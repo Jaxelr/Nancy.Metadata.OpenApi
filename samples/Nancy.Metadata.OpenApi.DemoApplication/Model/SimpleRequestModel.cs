@@ -9,10 +9,9 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Model
         [Required]
         public string Name { get; set; }
 
-        [JsonProperty("array1")]
-        public List<string> FirstArray { get; set; }
+        public IEnumerable<string> FirstArray { get; set; }
 
-        [JsonProperty("array2")]
-        public List<string> SecondArray { get; set; }
+        public IEnumerable<string> SecondArray { get; set; }
+
     }
 }
