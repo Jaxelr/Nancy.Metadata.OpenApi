@@ -45,13 +45,16 @@ public class DocsModule : OpenApiDocsModuleBase //We must inherit from the OpenA
     public static Server Server 
         => new Server() { Description = "My Descripton", Url = "http://localhost:5000/" };
 
+    public static string[] Tags => new string[] { "sample", "openapi" };
+    
     public DocsModule(IRouteCacheProvider routeCacheProvider) :
         base(routeCacheProvider,
         "/api/docs/openapi.json",       //Document location path
         "My API ",                      //Api Title 
         "v1.0",                         //Version of the Api
         Server,
-        "/api")                         //Base url
+        "/api",                         //Base url
+        Tags)                           //Document Tags
     {
     }
 }
@@ -64,9 +67,11 @@ public class DocsModule : OpenApiDocsModuleBase //We must inherit from the OpenA
 {
     public static Server Server 
         => new Server() { Description = "My Descripton", Url = "http://localhost:5001/" };
+        
+    public static string[] Tags => new string[] { "sample", "openapi" };
 
     public DocsModule(IRouteCacheProvider routeCacheProvider) :
-        base(routeCacheProvider, "/api/docs/openapi.json", "My API 2", "v1.1", Server, "/api")
+        base(routeCacheProvider, "/api/docs/openapi.json", "My API 2", "v1.1", Server, "/api", Tags)
     {
         //Optional information.
         WithContact("Contact Information", "jaxelrojas@email.com", "https://jaxelr.github.io");
