@@ -6,7 +6,7 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
 {
     public class DocsModule : OpenApiDocsModuleBase
     {
-        public static Server Server => new Server() { Description = "My Descripton", Url = "http://localhost:19562/" };
+        public static Server Server => new Server() { Description = "My Description", Url = "http://localhost:19562/" };
 
         public DocsModule(IRouteCacheProvider routeCacheProvider) :
             base(routeCacheProvider,
@@ -23,7 +23,7 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
             WithLicense("MIT", "https://opensource.org/licenses/MIT");
 
             //Optional Information.
-            WithExternalDocument("This is an external doc, maybe a tutorial or a spec doc.", "https://jaxelr.github.io");
+            WithExternalDocument("This is an external doc, maybe a tutorial or a specification doc.", "https://jaxelr.github.io");
 
             Get("/", async (x, ct) => await Response.AsRedirect("/index.html"));
         }

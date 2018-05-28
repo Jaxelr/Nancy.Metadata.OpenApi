@@ -31,7 +31,7 @@ namespace Nancy.Metadata.OpenApi.Modules
         private ExternalDocumentation externalDocs;
 
         /// <summary>
-        /// New Constructor established for use with Open Api version.
+        /// New Constructor established for use with Open Api version
         /// </summary>
         /// <param name="routeCacheProvider"></param>
         /// <param name="docsLocation"></param>
@@ -42,6 +42,7 @@ namespace Nancy.Metadata.OpenApi.Modules
         /// <param name="contact"></param>
         /// <param name="license"></param>
         /// <param name="apiBaseUrl"></param>
+        /// <param name="tags"></param>
         protected OpenApiDocsModuleBase(IRouteCacheProvider routeCacheProvider,
             string docsLocation,
             string title,
@@ -62,7 +63,8 @@ namespace Nancy.Metadata.OpenApi.Modules
         }
 
         /// <summary>
-        /// Constructor that contains multiple objects.
+        /// Constructor that contains relevant doc information to generate the root endpoint 
+        /// it also invokes the GetDocumentation on the specified path
         /// </summary>
         /// <param name="routeCacheProvider"></param>
         /// <param name="docsLocation"></param>
@@ -73,6 +75,7 @@ namespace Nancy.Metadata.OpenApi.Modules
         /// <param name="contact"></param>
         /// <param name="license"></param>
         /// <param name="apiBaseUrl"></param>
+        /// <param name="tags"></param>
         protected OpenApiDocsModuleBase(IRouteCacheProvider routeCacheProvider,
             string docsLocation,
             string title,
@@ -153,7 +156,7 @@ namespace Nancy.Metadata.OpenApi.Modules
         }
 
         /// <summary>
-        /// This operation generates the specification into the openApiSpecification variable.
+        /// This operation generates the specification upon the openApiSpecification variable.
         /// </summary>
         private void GenerateSpecification()
         {

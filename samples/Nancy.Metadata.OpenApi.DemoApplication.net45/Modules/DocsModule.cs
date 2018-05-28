@@ -6,7 +6,7 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.net45.Modules
 {
     public class DocsModule : OpenApiDocsModuleBase
     {
-        public static Server Server => new Server() { Description = "My Descripton", Url = "http://localhost:5000/" };
+        public static Server Server => new Server() { Description = "My Description", Url = "http://localhost:5000/" };
 
         public DocsModule(IRouteCacheProvider routeCacheProvider) :
         base(routeCacheProvider,
