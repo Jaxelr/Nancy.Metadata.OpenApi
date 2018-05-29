@@ -19,11 +19,17 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.net45.Modules
             Post["PostRequestWithNestedModel", "/hello/nestedmodel"] = r => HelloNestedModel();
         }
 
+        private Response HelloPost() => Response.AsJson(new SimpleResponseModel { Hello = "Hello Post!" });
+
+        private Response Hello(string name) => Response.AsJson(new SimpleResponseModel { Hello = $"Hello, {name}" });
+
+        private Response HelloWorld() => Response.AsJson(new SimpleResponseModel { Hello = "Hello World!" });
+
         private Response HelloNestedModel()
         {
-            NestedRequestModel model = this.Bind<NestedRequestModel>();
+            var model = this.Bind<NestedRequestModel>();
 
-            SimpleResponseModel response = new SimpleResponseModel
+            var response = new SimpleResponseModel
             {
                 Hello = $"Hello, {model.SimpleModel.Name}. We got your name from nested object"
             };
@@ -33,31 +39,11 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.net45.Modules
 
         private Response HelloModel()
         {
-            SimpleRequestModel model = this.Bind<SimpleRequestModel>();
+            var model = this.Bind<SimpleRequestModel>();
 
-            SimpleResponseModel response = new SimpleResponseModel
+            var response = new SimpleResponseModel
             {
                 Hello = $"Hello, {model.Name}"
-            };
-
-            return Response.AsJson(response);
-        }
-
-        private Response HelloPost()
-        {
-            SimpleResponseModel response = new SimpleResponseModel
-            {
-                Hello = "Hello Post!"
-            };
-
-            return Response.AsJson(response);
-        }
-
-        private Response Hello(string name)
-        {
-            SimpleResponseModel response = new SimpleResponseModel
-            {
-                Hello = $"Hello, {name}"
             };
 
             return Response.AsJson(response);
@@ -68,16 +54,6 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.net45.Modules
             var response = new SimpleResponseModel
             {
                 Hello = names.Aggregate((curr, next) => string.Concat(curr, ", ", next))
-            };
-
-            return Response.AsJson(response);
-        }
-
-        private Response HelloWorld()
-        {
-            SimpleResponseModel response = new SimpleResponseModel
-            {
-                Hello = "Hello World!"
             };
 
             return Response.AsJson(response);

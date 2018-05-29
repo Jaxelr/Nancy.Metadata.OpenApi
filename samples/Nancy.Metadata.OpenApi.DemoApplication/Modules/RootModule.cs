@@ -20,11 +20,19 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
             Post("/hello/nestedmodel", r => HelloNestedModel(), name: "PostRequestWithNestedModel");
         }
 
+        private Response HelloCount(int number) => Response.AsJson(new SimpleResponseModel { Hello = $"Hello, {number + 1}" });
+
+        private Response HelloPost() => Response.AsJson(new SimpleResponseModel { Hello = "Hello Post!" });
+
+        private Response Hello(string name) => Response.AsJson(new SimpleResponseModel { Hello = $"Hello, {name}" });
+
+        private Response HelloWorld() => Response.AsJson(new SimpleResponseModel { Hello = "Hello World!" });
+
         private Response HelloNestedModel()
         {
             try
             {
-                NestedRequestModel model = this.BindAndValidate<NestedRequestModel>();
+                var model = this.BindAndValidate<NestedRequestModel>();
 
                 if (!ModelValidationResult.IsValid)
                 {
@@ -88,51 +96,11 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
             }
         }
 
-        private Response HelloPost()
-        {
-            var response = new SimpleResponseModel
-            {
-                Hello = "Hello Post!"
-            };
-
-            return Response.AsJson(response);
-        }
-
-        private Response Hello(string name)
-        {
-            var response = new SimpleResponseModel
-            {
-                Hello = $"Hello, {name}"
-            };
-
-            return Response.AsJson(response);
-        }
-
         private Response Hello(string[] names)
         {
             var response = new SimpleResponseModel
             {
                 Hello = names.Aggregate((curr, next) => string.Concat(curr, ", ", next))
-            };
-
-            return Response.AsJson(response);
-        }
-
-        private Response HelloCount(int number)
-        {
-            var response = new SimpleResponseModel
-            {
-                Hello = $"Hello, {number + 1}"
-            };
-
-            return Response.AsJson(response);
-        }
-
-        private Response HelloWorld()
-        {
-            var response = new SimpleResponseModel
-            {
-                Hello = "Hello World!"
             };
 
             return Response.AsJson(response);
