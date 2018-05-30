@@ -15,8 +15,6 @@ namespace Nancy.Metadata.OpenApi.Modules
         private const string TITLE = "My Title";
         private const string HOST = "localhost:5000";
         private const string HOST_DESCRIPTION = "My Localhost";
-        private const string API_BASE_URL = "/";
-        private Server defaultServer = new Server { Url = HOST, Description = HOST_DESCRIPTION };
 
         private OpenApiSpecification openApiSpecification;
         private readonly IRouteCacheProvider routeCacheProvider;
@@ -30,8 +28,30 @@ namespace Nancy.Metadata.OpenApi.Modules
         private License license;
         private ExternalDocumentation externalDocs;
 
+
         /// <summary>
-        /// New Constructor established for use with Open Api version
+        /// Constructor with minimal amount of values required values.
+        /// </summary>
+        /// <param name="routeCacheProvider"></param>
+        /// <param name="docsLocation"></param>
+        /// <param name="title"></param>
+        /// <param name="apiVersion"></param>
+        public OpenApiDocsModuleBase(IRouteCacheProvider routeCacheProvider,
+            string docsLocation,
+            string title,
+            string apiVersion) : this(routeCacheProvider, 
+                docsLocation, 
+                title, 
+                apiVersion, 
+                null, 
+                new Server { Url = HOST, Description = HOST_DESCRIPTION }, 
+                null)
+
+        {
+        }
+
+        /// <summary>
+        /// Constructor established for use with Open Api version as a basic version
         /// </summary>
         /// <param name="routeCacheProvider"></param>
         /// <param name="docsLocation"></param>
@@ -41,7 +61,6 @@ namespace Nancy.Metadata.OpenApi.Modules
         /// <param name="host"></param>
         /// <param name="contact"></param>
         /// <param name="license"></param>
-        /// <param name="apiBaseUrl"></param>
         /// <param name="tags"></param>
         protected OpenApiDocsModuleBase(IRouteCacheProvider routeCacheProvider,
             string docsLocation,
@@ -49,7 +68,6 @@ namespace Nancy.Metadata.OpenApi.Modules
             string apiVersion,
             string termsOfService = null,
             Server host = null,
-            string apiBaseUrl = API_BASE_URL,
             string[] tags = null) : this(
                     routeCacheProvider,
                     docsLocation,
@@ -57,7 +75,6 @@ namespace Nancy.Metadata.OpenApi.Modules
                     apiVersion,
                     termsOfService,
                     new Server[] { host },
-                    apiBaseUrl,
                     tags)
         {
         }
@@ -74,7 +91,6 @@ namespace Nancy.Metadata.OpenApi.Modules
         /// <param name="hosts"></param>
         /// <param name="contact"></param>
         /// <param name="license"></param>
-        /// <param name="apiBaseUrl"></param>
         /// <param name="tags"></param>
         protected OpenApiDocsModuleBase(IRouteCacheProvider routeCacheProvider,
             string docsLocation,
@@ -82,7 +98,6 @@ namespace Nancy.Metadata.OpenApi.Modules
             string apiVersion,
             string termsOfService = null,
             Server[] hosts = null,
-            string apiBaseUrl = API_BASE_URL,
             string[] tags = null)
         {
             this.routeCacheProvider = routeCacheProvider;
@@ -90,7 +105,6 @@ namespace Nancy.Metadata.OpenApi.Modules
             this.apiVersion = apiVersion;
             this.termsOfService = termsOfService;
             this.hosts = hosts;
-            this.apiBaseUrl = apiBaseUrl;
             this.tags = tags; 
 
 #if NETSTANDARD1_6

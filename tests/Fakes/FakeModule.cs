@@ -21,7 +21,6 @@ namespace Nancy.Metadata.OpenApi.Tests.Fakes
                 ApiVersion,
                 termsOfService: TermsOfService,
                 host: Server,
-                apiBaseUrl: ApiBaseUrl,
                 tags: Tags)
         {
         }

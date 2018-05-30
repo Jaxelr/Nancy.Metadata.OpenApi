@@ -13,8 +13,7 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
                 "/api/docs/openapi.json",
                 "Sample API documentation",
                 "v1.0",
-                host: Server,
-                apiBaseUrl: "/api")
+                host: Server)
         {
             //Optional information.
             WithContact("Contact Information", "jaxelrojas@email.com", "https://jaxelr.github.io");

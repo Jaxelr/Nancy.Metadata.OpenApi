@@ -13,8 +13,7 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.net45.Modules
         "/api/docs/openapi.json",
         "Sample API documentation",
         "v1.0",
-        host: Server,
-        apiBaseUrl: "/api")
+        host: Server)
         {
             Get["/"] = _ => Response.AsRedirect("/Content/index.html");
         }
