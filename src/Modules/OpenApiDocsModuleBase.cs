@@ -21,13 +21,11 @@ namespace Nancy.Metadata.OpenApi.Modules
         private readonly string title;
         private readonly string apiVersion;
         private readonly Server[] hosts;
-        private readonly string apiBaseUrl;
         private readonly string termsOfService;
         private readonly string[] tags;
         private Contact contact;
         private License license;
         private ExternalDocumentation externalDocs;
-
 
         /// <summary>
         /// Constructor with minimal amount of values required values.
@@ -39,12 +37,12 @@ namespace Nancy.Metadata.OpenApi.Modules
         public OpenApiDocsModuleBase(IRouteCacheProvider routeCacheProvider,
             string docsLocation,
             string title,
-            string apiVersion) : this(routeCacheProvider, 
-                docsLocation, 
-                title, 
-                apiVersion, 
-                null, 
-                new Server { Url = HOST, Description = HOST_DESCRIPTION }, 
+            string apiVersion) : this(routeCacheProvider,
+                docsLocation,
+                title,
+                apiVersion,
+                null,
+                new Server { Url = HOST, Description = HOST_DESCRIPTION },
                 null)
 
         {
@@ -80,7 +78,7 @@ namespace Nancy.Metadata.OpenApi.Modules
         }
 
         /// <summary>
-        /// Constructor that contains relevant doc information to generate the root endpoint 
+        /// Constructor that contains relevant doc information to generate the root endpoint
         /// it also invokes the GetDocumentation on the specified path
         /// </summary>
         /// <param name="routeCacheProvider"></param>
@@ -105,7 +103,7 @@ namespace Nancy.Metadata.OpenApi.Modules
             this.apiVersion = apiVersion;
             this.termsOfService = termsOfService;
             this.hosts = hosts;
-            this.tags = tags; 
+            this.tags = tags;
 
 #if NETSTANDARD1_6
             Get(docsLocation, r => GetDocumentation());
@@ -145,7 +143,7 @@ namespace Nancy.Metadata.OpenApi.Modules
         /// </summary>
         /// <param name="description"></param>
         /// <param name="url"></param>
-        protected void WithExternalDocument(string description, string url) => 
+        protected void WithExternalDocument(string description, string url) =>
             externalDocs = new ExternalDocumentation()
             {
                 Description = description,
