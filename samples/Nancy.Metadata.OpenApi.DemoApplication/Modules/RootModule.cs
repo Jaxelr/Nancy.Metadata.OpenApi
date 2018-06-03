@@ -122,12 +122,12 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
 
             Describe["SimpleRequestWithNumericParameter"] = desc => new OpenApiRouteMetadata(desc)
                 .With(i => i.WithResponseModel("200", typeof(SimpleResponseModel), "Sample response")
-                .WithRequestParameter("number", type: "integer", loc: "path")
+                .WithRequestParameter("number", type: typeof(int), loc: "path")
                 .WithSummary("Simple GET with numeric parameters"));
 
             Describe["SimpleRequestWithParameterArray"] = desc => new OpenApiRouteMetadata(desc)
                 .With(i => i.WithResponseModel("200", typeof(SimpleResponseModel), "Sample response")
-                .WithRequestParameter("names", isArray: true, type: "string")
+                .WithRequestParameter("names", isArray: true, type:typeof(string))
                 .WithSummary("Simple GET with array parameters"));
 
             Describe["SimplePostRequest"] = desc => new OpenApiRouteMetadata(desc)

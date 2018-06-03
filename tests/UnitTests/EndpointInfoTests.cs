@@ -101,7 +101,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             Assert.Equal(fakeRequest.Required, endpoint.RequestParameters[0].Required);
             Assert.Equal(fakeRequest.Name, endpoint.RequestParameters[0].Name);
             Assert.Equal(fakeRequest.Loc, endpoint.RequestParameters[0].In);
-            Assert.Equal(fakeRequest.Type, endpoint.RequestParameters[0].Schema.Type);
+            Assert.Equal(fakeRequest.Type.Name.ToLowerInvariant(), endpoint.RequestParameters[0].Schema.Type);
         }
 
         [Fact]
@@ -131,7 +131,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             Assert.Equal(fakeRequest.Name, endpoint.RequestParameters[0].Name);
             Assert.Equal(fakeRequest.Loc, endpoint.RequestParameters[0].In);
             Assert.Equal(ARRAY, endpoint.RequestParameters[0].Schema.Type);
-            Assert.Equal(fakeRequest.Type, endpoint.RequestParameters[0].Schema.Item.Type);
+            Assert.Equal(fakeRequest.Type.Name.ToLowerInvariant(), endpoint.RequestParameters[0].Schema.Item.Type);
         }
 
         [Fact]

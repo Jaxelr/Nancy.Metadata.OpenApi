@@ -73,13 +73,18 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <param name="deprecated"></param>
         /// <param name="isArray"></param>
         /// <returns></returns>
-        public static Endpoint WithRequestParameter(this Endpoint endpointInfo, string name, string type = "string",
+        public static Endpoint WithRequestParameter(this Endpoint endpointInfo, string name, Type type = null,
             string format = null, bool required = true, string description = null,
             string loc = "path", bool deprecated = false, bool isArray = false)
         {
             if (endpointInfo.RequestParameters == null)
             {
                 endpointInfo.RequestParameters = new List<RequestParameter>();
+            }
+            
+            if (type is null)
+            {
+                type = typeof(string);
             }
 
             var schema = GetSchemaByType(type, isArray);
@@ -251,76 +256,67 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <param name="type">The type defined for the parameter, check: https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#dataTypeFormat for guidelines</param>
         /// <param name="isArray">a boolean that determines the location of the properties on the structure.</param>
         /// <returns></returns>
-        private static SchemaRef GetSchemaByType(string type, bool isArray)
+        private static SchemaRef GetSchemaByType(Type type, bool isArray)
         {
             SchemaRef schema;
-            string format = null;
+            string schemaType = null, format = null;
 
-            switch (type.ToLowerInvariant()) //formats as defined by OAS:
+            switch (Type.GetTypeCode(type)) //formats as defined by OAS:
             {
-                case "string":
-                    type = "string";
+                case TypeCode.String:
+                    schemaType = "string";
                     format = null;
                     break;
 
-                case var t when t.Contains("int"): //int, integer
-                    type = "integer";
+                case TypeCode.Int16:
+                case TypeCode.Int32:  //single, integer
+                    schemaType = "integer";
                     format = "int32";
                     break;
 
-                case "long":
-                    type = "integer";
+                case TypeCode.Int64:
+                    schemaType = "integer";
                     format = "int64";
                     break;
 
-                case "float":
-                    type = "number";
+                case TypeCode.Decimal:
+                    schemaType = "number";
                     format = "float";
                     break;
 
-                case "double":
-                    type = "number";
+                case TypeCode.Double:
+                    schemaType = "number";
                     format = "double";
                     break;
 
-                case "byte":
-                    type = "string";
+                case TypeCode.Byte:
+                    schemaType = "string";
                     format = "byte";
                     break;
 
-                case "binary":
-                    type = "string";
-                    format = "binary";
-                    break;
-
-                case var t when t.Contains("bool"): //bool, boolean
-                    type = "boolean";
+                case TypeCode.Boolean: 
+                    schemaType = "boolean";
                     format = null;
                     break;
 
-                case "date":
-                    type = "string";
-                    format = "date";
-                    break;
-
-                case "datetime":
-                    type = "string";
+                case TypeCode.DateTime:
+                    schemaType = "string";
                     format = "date-time";
                     break;
 
-                case "password":
-                    type = "string";
-                    format = "password";
+                default:
+                    schemaType = "string";
+                    format = null;
                     break;
             }
 
             if (isArray)
             {
-                schema = new SchemaRef() { Item = new Item() { Type = type, Format = format }, Type = "array" };
+                schema = new SchemaRef() { Item = new Item() { Type = schemaType, Format = format }, Type = "array" };
             }
             else
             {
-                schema = new SchemaRef() { Type = type, Format = format };
+                schema = new SchemaRef() { Type = schemaType, Format = format };
             }
 
             return schema;

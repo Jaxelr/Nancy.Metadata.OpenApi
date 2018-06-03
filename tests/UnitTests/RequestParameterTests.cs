@@ -1,6 +1,7 @@
 ﻿using Nancy.Metadata.OpenApi.Fluent;
 using Nancy.Metadata.OpenApi.Model;
 using Nancy.Metadata.OpenApi.Tests.Fakes;
+using System;
 using Xunit;
 
 namespace Nancy.Metadata.OpenApi.Tests.UnitTests
@@ -31,7 +32,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             Assert.Equal(fakeRequest.Required, endpoint.RequestParameters[0].Required);
             Assert.Equal(fakeRequest.Name, endpoint.RequestParameters[0].Name);
             Assert.Equal(fakeRequest.Loc, endpoint.RequestParameters[0].In);
-            Assert.Equal(fakeRequest.Type, endpoint.RequestParameters[0].Schema.Type);
+            Assert.Equal(fakeRequest.Type.Name.ToLowerInvariant(), endpoint.RequestParameters[0].Schema.Type);
         }
 
         [Fact]
@@ -47,7 +48,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             var endpoint = new Endpoint(fakeEndpoint.OperationName)
                 .WithRequestParameter(
                 fakeRequest.Name,
-                INT,
+                typeof(int),
                 fakeRequest.Format,
                 fakeRequest.Required,
                 fakeRequest.Description,
@@ -70,14 +71,13 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             var fakeEndpoint = new FakeEndpoint();
             var fakeRequest = new FakeRequest();
             const string INT = "integer";
-            const string LONG = "long";
             const string BYTES = "int64";
 
             //Act
             var endpoint = new Endpoint(fakeEndpoint.OperationName)
                 .WithRequestParameter(
                 fakeRequest.Name,
-                LONG,
+                typeof(long),
                 fakeRequest.Format,
                 fakeRequest.Required,
                 fakeRequest.Description,
@@ -106,7 +106,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             var endpoint = new Endpoint(fakeEndpoint.OperationName)
                 .WithRequestParameter(
                 fakeRequest.Name,
-                FLOAT,
+                typeof(decimal),
                 fakeRequest.Format,
                 fakeRequest.Required,
                 fakeRequest.Description,
@@ -135,7 +135,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             var endpoint = new Endpoint(fakeEndpoint.OperationName)
                 .WithRequestParameter(
                 fakeRequest.Name,
-                DOUBLE,
+                typeof(double),
                 fakeRequest.Format,
                 fakeRequest.Required,
                 fakeRequest.Description,
@@ -163,7 +163,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             var endpoint = new Endpoint(fakeEndpoint.OperationName)
                 .WithRequestParameter(
                 fakeRequest.Name,
-                BYTE,
+                typeof(byte),
                 fakeRequest.Format,
                 fakeRequest.Required,
                 fakeRequest.Description,
@@ -175,36 +175,8 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             Assert.Equal(fakeRequest.Required, endpoint.RequestParameters[0].Required);
             Assert.Equal(fakeRequest.Name, endpoint.RequestParameters[0].Name);
             Assert.Equal(fakeRequest.Loc, endpoint.RequestParameters[0].In);
-            Assert.Equal(fakeRequest.Type, endpoint.RequestParameters[0].Schema.Type);
+            Assert.Equal(fakeRequest.Type.Name.ToLowerInvariant(), endpoint.RequestParameters[0].Schema.Type);
             Assert.Equal(BYTE, endpoint.RequestParameters[0].Schema.Format);
-        }
-
-        [Fact]
-        public void Request_parameter_binary()
-        {
-            //Arrange
-            var fakeEndpoint = new FakeEndpoint();
-            var fakeRequest = new FakeRequest();
-            const string BINARY = "binary";
-
-            //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName)
-                .WithRequestParameter(
-                fakeRequest.Name,
-                BINARY,
-                fakeRequest.Format,
-                fakeRequest.Required,
-                fakeRequest.Description,
-                fakeRequest.Loc,
-                fakeRequest.Deprecated);
-
-            //Assert
-            Assert.Equal(fakeRequest.Description, endpoint.RequestParameters[0].Description);
-            Assert.Equal(fakeRequest.Required, endpoint.RequestParameters[0].Required);
-            Assert.Equal(fakeRequest.Name, endpoint.RequestParameters[0].Name);
-            Assert.Equal(fakeRequest.Loc, endpoint.RequestParameters[0].In);
-            Assert.Equal(fakeRequest.Type, endpoint.RequestParameters[0].Schema.Type);
-            Assert.Equal(BINARY, endpoint.RequestParameters[0].Schema.Format);
         }
 
         [Fact]
@@ -219,7 +191,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             var endpoint = new Endpoint(fakeEndpoint.OperationName)
                 .WithRequestParameter(
                 fakeRequest.Name,
-                BOOLEAN,
+                typeof(bool),
                 fakeRequest.Format,
                 fakeRequest.Required,
                 fakeRequest.Description,
@@ -236,48 +208,18 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
         }
 
         [Fact]
-        public void Request_parameter_date()
-        {
-            //Arrange
-            var fakeEndpoint = new FakeEndpoint();
-            var fakeRequest = new FakeRequest();
-            const string DATE = "date";
-
-            //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName)
-                .WithRequestParameter(
-                fakeRequest.Name,
-                DATE,
-                fakeRequest.Format,
-                fakeRequest.Required,
-                fakeRequest.Description,
-                fakeRequest.Loc,
-                fakeRequest.Deprecated);
-
-            //Assert
-            Assert.Equal(fakeRequest.Description, endpoint.RequestParameters[0].Description);
-            Assert.Equal(fakeRequest.Required, endpoint.RequestParameters[0].Required);
-            Assert.Equal(fakeRequest.Name, endpoint.RequestParameters[0].Name);
-            Assert.Equal(fakeRequest.Loc, endpoint.RequestParameters[0].In);
-            Assert.Equal(fakeRequest.Type, endpoint.RequestParameters[0].Schema.Type);
-            Assert.Equal(DATE, endpoint.RequestParameters[0].Schema.Format);
-            Assert.Equal(fakeRequest.Type, endpoint.RequestParameters[0].Schema.Type);
-        }
-
-        [Fact]
         public void Request_parameter_datetime()
         {
             //Arrange
             var fakeEndpoint = new FakeEndpoint();
             var fakeRequest = new FakeRequest();
-            const string DATETIME = "datetime";
             const string DATE_TIME = "date-time";
 
             //Act
             var endpoint = new Endpoint(fakeEndpoint.OperationName)
                 .WithRequestParameter(
                 fakeRequest.Name,
-                DATETIME,
+                typeof(DateTime),
                 fakeRequest.Format,
                 fakeRequest.Required,
                 fakeRequest.Description,
@@ -289,38 +231,9 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             Assert.Equal(fakeRequest.Required, endpoint.RequestParameters[0].Required);
             Assert.Equal(fakeRequest.Name, endpoint.RequestParameters[0].Name);
             Assert.Equal(fakeRequest.Loc, endpoint.RequestParameters[0].In);
-            Assert.Equal(fakeRequest.Type, endpoint.RequestParameters[0].Schema.Type);
+            Assert.Equal(fakeRequest.Type.Name.ToLowerInvariant(), endpoint.RequestParameters[0].Schema.Type);
             Assert.Equal(DATE_TIME, endpoint.RequestParameters[0].Schema.Format);
-            Assert.Equal(fakeRequest.Type, endpoint.RequestParameters[0].Schema.Type);
-        }
-
-        [Fact]
-        public void Request_parameter_password()
-        {
-            //Arrange
-            var fakeEndpoint = new FakeEndpoint();
-            var fakeRequest = new FakeRequest();
-            const string PASSWORD = "password";
-
-            //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName)
-                .WithRequestParameter(
-                fakeRequest.Name,
-                PASSWORD,
-                fakeRequest.Format,
-                fakeRequest.Required,
-                fakeRequest.Description,
-                fakeRequest.Loc,
-                fakeRequest.Deprecated);
-
-            //Assert
-            Assert.Equal(fakeRequest.Description, endpoint.RequestParameters[0].Description);
-            Assert.Equal(fakeRequest.Required, endpoint.RequestParameters[0].Required);
-            Assert.Equal(fakeRequest.Name, endpoint.RequestParameters[0].Name);
-            Assert.Equal(fakeRequest.Loc, endpoint.RequestParameters[0].In);
-            Assert.Equal(fakeRequest.Type, endpoint.RequestParameters[0].Schema.Type);
-            Assert.Equal(PASSWORD, endpoint.RequestParameters[0].Schema.Format);
-            Assert.Equal(fakeRequest.Type, endpoint.RequestParameters[0].Schema.Type);
+            Assert.Equal(fakeRequest.Type.Name.ToLowerInvariant(), endpoint.RequestParameters[0].Schema.Type);
         }
     }
 }
