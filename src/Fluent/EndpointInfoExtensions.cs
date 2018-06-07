@@ -118,12 +118,8 @@ namespace Nancy.Metadata.OpenApi.Fluent
             {
                 Required = required,
                 Description = description,
-                Content = new Dictionary<string, SchemaRef>
-                {
-                    {
-                        contentType,
-                        new SchemaRef() { Ref = $"#/components/schemas/{GetOrSaveSchemaReference(requestType)}"}
-                    }
+                Content = new Dictionary<string, MediaTypeObject> {
+                    {contentType, new MediaTypeObject() { Schema = new SchemaRef() { Ref = $"#/components/schemas/{GetOrSaveSchemaReference(requestType)}" } } }
                 }
             };
 

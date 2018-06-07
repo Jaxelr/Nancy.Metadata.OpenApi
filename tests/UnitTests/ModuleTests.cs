@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Text;
 using Xunit;
+using System.Linq;
 
 namespace Nancy.Metadata.OpenApi.Tests.UnitTests
 {
@@ -36,7 +37,11 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             Assert.Equal(FakeModule.Title, spec.Info.Title);
             Assert.Equal(FakeModule.ApiVersion, spec.Info.Version);
             Assert.Equal(FakeModule.TermsOfService, spec.Info.TermsOfService);
-            Assert.Equal(FakeModule.Tags, spec.Tags);
+            Assert.True(FakeModule.Tags.All(t => spec.Tags.Any(
+                               s => t.Name == s.Name &&
+                               t.Description == s.Description &&
+                               t.ExternalDocumentation == s.ExternalDocumentation
+                           )));
         }
 
         [Fact]
