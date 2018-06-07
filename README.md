@@ -1,5 +1,7 @@
 # Nancy.Metadata.OpenApi [![Mit License][mit-img]][mit]
 
+This is a forked version of [Jaxelr/Nancy.Metadata.OpenApi](https://github.com/Jaxelr/Nancy.Metadata.OpenApi)
+
 _Now_ compatible to Nancy 1.X and Nancy 2.0!
 
 You can find the latest specifications of [OpenApi here](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.1.md) 

@@ -25,7 +25,7 @@ namespace Nancy.Metadata.OpenApi.Modules
         private readonly Server[] hosts;
         private readonly string apiBaseUrl;
         private readonly string termsOfService;
-        private readonly string[] tags;
+        private readonly Tag[] tags;
         private Contact contact;
         private License license;
         private ExternalDocumentation externalDocs;
@@ -50,7 +50,7 @@ namespace Nancy.Metadata.OpenApi.Modules
             string termsOfService = null,
             Server host = null,
             string apiBaseUrl = API_BASE_URL,
-            string[] tags = null) : this(
+            Tag[] tags = null) : this(
                     routeCacheProvider,
                     docsLocation,
                     title,
@@ -83,7 +83,7 @@ namespace Nancy.Metadata.OpenApi.Modules
             string termsOfService = null,
             Server[] hosts = null,
             string apiBaseUrl = API_BASE_URL,
-            string[] tags = null)
+            Tag[] tags = null)
         {
             this.routeCacheProvider = routeCacheProvider;
             this.title = title;
