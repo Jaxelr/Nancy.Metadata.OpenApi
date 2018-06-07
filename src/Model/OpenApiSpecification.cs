@@ -22,7 +22,7 @@ namespace Nancy.Metadata.OpenApi.Model
         public Component Component { get; set; }
 
         [JsonProperty("tags")]
-        public string[] Tags { get; set; }
+        public Tag[] Tags { get; set; }
 
         [JsonProperty("externalDocs")]
         public ExternalDocumentation ExternalDocs { get; set; }
