@@ -153,7 +153,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             Assert.Equal(fakeRequest.Description, endpoint.RequestBody.Description);
             Assert.Equal(fakeRequest.Required, endpoint.RequestBody.Required);
             Assert.True(endpoint.RequestBody.Content.ContainsKey(fakeRequest.ContentType));
-            Assert.Contains(nameof(FakeRequestModel), endpoint.RequestBody.Content[fakeRequest.ContentType].Ref);
+            Assert.Contains(nameof(FakeRequestModel), endpoint.RequestBody.Content[fakeRequest.ContentType].Schema.Ref);
         }
 
         [Fact]

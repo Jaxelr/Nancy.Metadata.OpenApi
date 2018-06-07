@@ -7,13 +7,15 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
     public class DocsModule : OpenApiDocsModuleBase
     {
         public static Server Server => new Server() { Description = "My Description", Url = "http://localhost:19562/" };
+        public static Tag[] Tag = new Tag[] { new Tag() { Name = "Sample", Description = "This Describes a Sample Tag Info Description" } };
 
         public DocsModule(IRouteCacheProvider routeCacheProvider) :
             base(routeCacheProvider,
                 "/api/docs/openapi.json",
                 "Sample API documentation",
                 "v1.0",
-                host: Server)
+                host: Server,
+                tags: Tag)
         {
             //Optional information.
             WithContact("Contact Information", "jaxelrojas@email.com", "https://jaxelr.github.io");

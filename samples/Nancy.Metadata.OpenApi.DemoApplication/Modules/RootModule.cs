@@ -113,38 +113,45 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
         {
             Describe["SimpleRequest"] = desc => new OpenApiRouteMetadata(desc)
                 .With(i => i.WithResponseModel("200", typeof(SimpleResponseModel), "Sample response")
+                            .WithDescription("This is a simple request", "Sample")
                             .WithSummary("Simple GET example"));
 
             Describe["SimpleRequestWithParameter"] = desc => new OpenApiRouteMetadata(desc)
                 .With(i => i.WithResponseModel("200", typeof(SimpleResponseModel), "Sample response")
+                            .WithDescription("This is a simple request with a parameter", "Sample")
                             .WithRequestParameter("name")
                             .WithSummary("Simple GET with parameters"));
 
             Describe["SimpleRequestWithNumericParameter"] = desc => new OpenApiRouteMetadata(desc)
                 .With(i => i.WithResponseModel("200", typeof(SimpleResponseModel), "Sample response")
-                .WithRequestParameter("number", type: typeof(int), loc: "path")
-                .WithSummary("Simple GET with numeric parameters"));
+                            .WithDescription("This is a simple request with numeric parameter", "Sample")
+                            .WithRequestParameter("number", type: typeof(int), loc: "path")
+                            .WithSummary("Simple GET with numeric parameters"));
 
             Describe["SimpleRequestWithParameterArray"] = desc => new OpenApiRouteMetadata(desc)
                 .With(i => i.WithResponseModel("200", typeof(SimpleResponseModel), "Sample response")
-                .WithRequestParameter("names", isArray: true, type:typeof(string))
-                .WithSummary("Simple GET with array parameters"));
+                            .WithRequestParameter("names", isArray: true, type: typeof(string))
+                            .WithDescription("This is a simple request with a parameter array", "Sample")
+                            .WithSummary("Simple GET with array parameters"));
 
             Describe["SimplePostRequest"] = desc => new OpenApiRouteMetadata(desc)
                 .With(info => info.WithResponseModel("200", typeof(SimpleResponseModel), "Sample response")
-                    .WithSummary("Simple POST example"));
+                            .WithDescription("This is a post request", "Sample")
+                            .WithSummary("Simple POST example"));
 
             Describe["PostRequestWithModel"] = desc => new OpenApiRouteMetadata(desc)
                 .With(info => info.WithResponseModel("200", typeof(SimpleResponseModel), "Simple Response Model")
-                    .WithResponseModel("400", typeof(ValidationFailedResponseModel), "Validation Failed Model")
-                    .WithSummary("Simple POST example with request model")
-                    .WithRequestModel(typeof(SimpleRequestModel), contentType: "application/json", description: "Simple Request Model"));
+                            .WithDescription("This is post request with a response model", "Sample")
+                            .WithResponseModel("400", typeof(ValidationFailedResponseModel), "Validation Failed Model")
+                            .WithSummary("Simple POST example with request model")
+                            .WithRequestModel(typeof(SimpleRequestModel), contentType: "application/json", description: "Simple Request Model"));
 
             Describe["PostRequestWithNestedModel"] = desc => new OpenApiRouteMetadata(desc)
                     .With(info => info.WithResponseModel("200", typeof(SimpleResponseModel), "Simple Response Model")
-                    .WithResponseModel("400", typeof(ValidationFailedResponseModel), "Validation Failed Model")
-                    .WithSummary("Simple POST example with nested request model")
-                    .WithRequestModel(typeof(NestedRequestModel)));
+                            .WithDescription("This is post request with a nested model", "Sample")
+                            .WithResponseModel("400", typeof(ValidationFailedResponseModel), "Validation Failed Model")
+                            .WithSummary("Simple POST example with nested request model")
+                            .WithRequestModel(typeof(NestedRequestModel)));
         }
     }
 }
