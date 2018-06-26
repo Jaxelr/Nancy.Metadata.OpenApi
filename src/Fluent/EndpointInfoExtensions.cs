@@ -2,7 +2,9 @@
 using Nancy.Metadata.OpenApi.Model;
 using NJsonSchema;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Nancy.Metadata.OpenApi.Fluent
 {
@@ -71,11 +73,10 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <param name="description"></param>
         /// <param name="loc"></param>
         /// <param name="deprecated"></param>
-        /// <param name="isArray"></param>
         /// <returns></returns>
         public static Endpoint WithRequestParameter(this Endpoint endpointInfo, string name, Type type = null,
             string format = null, bool required = true, string description = null,
-            string loc = "path", bool deprecated = false, bool isArray = false)
+            string loc = "path", bool deprecated = false)
         {
             if (endpointInfo.RequestParameters == null)
             {
@@ -87,7 +88,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
                 type = typeof(string);
             }
 
-            var schema = GetSchemaByType(type, isArray);
+            var schema = GetSchemaByType(type);
 
             endpointInfo.RequestParameters.Add(new RequestParameter
             {
@@ -250,10 +251,28 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// Matches the type, format and item (if array) to the schema specified on the parameter.
         /// </summary>
         /// <param name="type">The type defined for the parameter, check: https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#dataTypeFormat for guidelines</param>
-        /// <param name="isArray">a boolean that determines the location of the properties on the structure.</param>
         /// <returns></returns>
-        private static SchemaRef GetSchemaByType(Type type, bool isArray)
+        private static SchemaRef GetSchemaByType(Type type)
         {
+            bool isArray = false;
+
+            if (type.IsArray)
+            {
+                type = type.GetElementType();
+                isArray = true;
+            }
+
+            if (typeof(IEnumerable).IsAssignableFrom(type) && (type != typeof(string)))
+            {
+#if NET45
+
+                type = type.GetType().GetGenericArguments()[0];
+#elif NETSTANDARD1_6
+                type = type.GetTypeInfo().GetGenericArguments()[0];
+#endif
+                isArray = true;
+            }
+
             SchemaRef schema;
             string schemaType = null, format = null;
 
@@ -290,7 +309,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
                     format = "byte";
                     break;
 
-                case TypeCode.Boolean: 
+                case TypeCode.Boolean:
                     schemaType = "boolean";
                     format = null;
                     break;

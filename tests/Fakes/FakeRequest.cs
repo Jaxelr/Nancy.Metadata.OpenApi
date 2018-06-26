@@ -11,6 +11,5 @@ namespace Nancy.Metadata.OpenApi.Tests.Fakes
         public string Loc => "query";
         public bool Required => false;
         public bool Deprecated => false;
-        public bool IsArray => false;
     }
 }

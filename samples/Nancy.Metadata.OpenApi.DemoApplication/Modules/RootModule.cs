@@ -130,7 +130,7 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
 
             Describe["SimpleRequestWithParameterArray"] = desc => new OpenApiRouteMetadata(desc)
                 .With(i => i.WithResponseModel("200", typeof(SimpleResponseModel), "Sample response")
-                            .WithRequestParameter("names", isArray: true, type: typeof(string))
+                            .WithRequestParameter("names", type: typeof(string[]))
                             .WithDescription("This is a simple request with a parameter array", "Sample")
                             .WithSummary("Simple GET with array parameters"));
 

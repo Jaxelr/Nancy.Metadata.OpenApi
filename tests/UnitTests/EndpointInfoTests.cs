@@ -92,8 +92,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
                 fakeRequest.Required,
                 fakeRequest.Description,
                 fakeRequest.Loc,
-                fakeRequest.Deprecated,
-                fakeRequest.IsArray);
+                fakeRequest.Deprecated);
 
             //Assert
             Assert.Equal(fakeRequest.Description, endpoint.RequestParameters[0].Description);
@@ -121,8 +120,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
                 fakeRequest.Required,
                 fakeRequest.Description,
                 fakeRequest.Loc,
-                fakeRequest.Deprecated,
-                fakeRequest.IsArray); //Consider this request an array of strings
+                fakeRequest.Deprecated); 
 
             //Assert
             Assert.Equal(fakeRequest.Description, endpoint.RequestParameters[0].Description);
@@ -131,7 +129,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             Assert.Equal(fakeRequest.Name, endpoint.RequestParameters[0].Name);
             Assert.Equal(fakeRequest.Loc, endpoint.RequestParameters[0].In);
             Assert.Equal(ARRAY, endpoint.RequestParameters[0].Schema.Type);
-            Assert.Equal(fakeRequest.Type.Name.ToLowerInvariant(), endpoint.RequestParameters[0].Schema.Item.Type);
+            Assert.Equal(fakeRequest.Type.GetElementType().Name.ToLowerInvariant(), endpoint.RequestParameters[0].Schema.Item.Type);
         }
 
         [Fact]
