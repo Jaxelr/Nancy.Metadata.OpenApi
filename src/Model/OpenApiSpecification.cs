@@ -15,6 +15,9 @@ namespace Nancy.Metadata.OpenApi.Model
         [JsonProperty("servers")]
         public Server[] Servers { get; set; }
 
+        [JsonProperty("security")]
+        public IDictionary<string, IEnumerable<string>> Security { get; set; }
+
         [JsonProperty("paths")]
         public IDictionary<string, Dictionary<string, Endpoint>> PathInfos { get; set; }
 
