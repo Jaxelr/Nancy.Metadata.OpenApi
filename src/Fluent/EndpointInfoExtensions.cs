@@ -23,7 +23,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <returns></returns>
         public static Endpoint WithResponseModel(this Endpoint endpointInfo, string statusCode, Type modelType, string description = null)
         {
-            if (endpointInfo.ResponseInfos == null)
+            if (endpointInfo.ResponseInfos is null)
             {
                 endpointInfo.ResponseInfos = new Dictionary<string, Model.Response>();
             }
@@ -52,7 +52,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <returns></returns>
         public static Endpoint WithResponse(this Endpoint endpointInfo, string statusCode, string description)
         {
-            if (endpointInfo.ResponseInfos == null)
+            if (endpointInfo.ResponseInfos is null)
             {
                 endpointInfo.ResponseInfos = new Dictionary<string, Model.Response>();
             }
@@ -78,7 +78,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
             string format = null, bool required = true, string description = null,
             string loc = "path", bool deprecated = false)
         {
-            if (endpointInfo.RequestParameters == null)
+            if (endpointInfo.RequestParameters is null)
             {
                 endpointInfo.RequestParameters = new List<RequestParameter>();
             }
@@ -141,7 +141,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <returns></returns>
         public static Endpoint WithDescription(this Endpoint endpointInfo, string description, params string[] tags)
         {
-            if (endpointInfo.Tags == null)
+            if (endpointInfo.Tags is null)
             {
                 if (tags.Length > 0)
                 {
@@ -265,7 +265,6 @@ namespace Nancy.Metadata.OpenApi.Fluent
             if (typeof(IEnumerable).IsAssignableFrom(type) && (type != typeof(string)))
             {
 #if NET45
-
                 type = type.GetType().GetGenericArguments()[0];
 #elif NETSTANDARD1_6
                 type = type.GetTypeInfo().GetGenericArguments()[0];
