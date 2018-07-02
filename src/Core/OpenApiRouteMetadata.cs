@@ -8,7 +8,7 @@ namespace Nancy.Metadata.OpenApi.Core
         public OpenApiRouteMetadata(string path, string method, string name)
         {
             Path = path;
-            Method = method.ToLower();
+            Method = method.ToLowerInvariant();
             Name = name;
         }
 
