@@ -22,6 +22,9 @@ namespace Nancy.Metadata.OpenApi.Model
         [JsonProperty("bearerFormat")]
         public string BearerFormat { get; set; }
 
+        [JsonProperty("flows")]
+        public OAuth2 Flows { get; set; }
+
         [JsonProperty("openIdConnect")]
         public string OpenIdConnectUrl { get; set; }
     }

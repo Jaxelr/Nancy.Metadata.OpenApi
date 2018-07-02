@@ -2,7 +2,7 @@
 
 namespace Nancy.Metadata.OpenApi.Model
 {
-    public class OAuth
+    public class OAuth2
     {
         [JsonProperty("implicit")]
         public Flow Implicit { get; set; }
