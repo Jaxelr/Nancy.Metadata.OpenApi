@@ -1,10 +1,7 @@
 ﻿using Nancy.Metadata.OpenApi.Core;
 using Nancy.Metadata.OpenApi.Model;
-using NJsonSchema;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 
 namespace Nancy.Metadata.OpenApi.Fluent
 {
@@ -82,13 +79,13 @@ namespace Nancy.Metadata.OpenApi.Fluent
             {
                 endpointInfo.RequestParameters = new List<RequestParameter>();
             }
-            
+
             if (type is null)
             {
                 type = typeof(string);
             }
 
-            var schema = GetSchemaByType(type);
+            var schema = SchemaGenerator.GetSchemaByType(type);
 
             endpointInfo.RequestParameters.Add(new RequestParameter
             {
@@ -120,12 +117,14 @@ namespace Nancy.Metadata.OpenApi.Fluent
                 contentType = @"application/json";
             }
 
+            string Ref = $"#/components/schemas/{SchemaGenerator.GetOrSaveSchemaReference(requestType)}";
+
             endpointInfo.RequestBody = new RequestBody
             {
                 Required = required,
                 Description = description,
-                Content = new Dictionary<string, MediaTypeObject> {
-                    {contentType, new MediaTypeObject() { Schema = new SchemaRef() { Ref = $"#/components/schemas/{GetOrSaveSchemaReference(requestType)}" } } }
+                Content = new Dictionary<string, MediaTypeObject> { { contentType, new MediaTypeObject() { Schema = new SchemaRef() { Ref = Ref } } }
+
                 }
             };
 
@@ -196,96 +195,6 @@ namespace Nancy.Metadata.OpenApi.Fluent
             return endpointInfo;
         }
 
-
-        /// <summary>
-        /// Add documentation pertinent to basic authentication on the endpoint
-        /// </summary>
-        /// <param name="endpointInfo"></param>
-        /// <param name="description"></param>
-        /// <returns></returns>
-        public static Endpoint WithBasicAuthentication(this Endpoint endpointInfo, string description = null)
-        {
-            if (endpointInfo.Security is null)
-            {
-                endpointInfo.Security = new Model.Security()
-                {
-                    Type = "http",
-                    Scheme = "basic",
-                    Description = description
-                };
-            }
-
-            return endpointInfo;
-        }
-
-        /// <summary>
-        /// Add documentation pertinent to custom key authentication on the endpoint
-        /// </summary>
-        /// <param name="endpointInfo"></param>
-        /// <param name="name"></param>
-        /// <param name="location">Plausible values are cookie, header and query</param>
-        /// <param name="description"></param>
-        /// <returns></returns>
-        public static Endpoint WithApiKeyAuthentication(this Endpoint endpointInfo, string name, string location, string description = null)
-        {
-            if (endpointInfo.Security is null)
-            {
-                endpointInfo.Security = new Model.Security()
-                {
-                    Type = "apiKey",
-                    Name = name,
-                    In = location,
-                    Description = description
-                };
-            }
-
-            return endpointInfo;
-        }
-
-        /// <summary>
-        /// Add documentation pertinent to bearer (jwt) authentication on the endpoint
-        /// </summary>
-        /// <param name="endpointInfo"></param>
-        /// <param name="bearerFormat">The format of the bearer</param>
-        /// <param name="description"></param>
-        /// <returns></returns>
-        public static Endpoint WithBearerAuthentication(this Endpoint endpointInfo, string bearerFormat, string description = null)
-        {
-            if (endpointInfo.Security is null)
-            {
-                endpointInfo.Security = new Model.Security()
-                {
-                    Type = "http",
-                    Scheme = "bearer",
-                    Description = description
-                };
-            }
-
-            return endpointInfo;
-        }
-
-        /// <summary>
-        /// Add documentation pertinent to OpenId authentication on the endpoint
-        /// </summary>
-        /// <param name="endpointInfo"></param>
-        /// <param name="url">A valid url to refer the client</param>
-        /// <param name="description"></param>
-        /// <returns></returns>
-        public static Endpoint WithOpenIdConnectAuthentication(this Endpoint endpointInfo, string url, string description = null)
-        {
-            if (endpointInfo.Security is null)
-            {
-                endpointInfo.Security = new Model.Security()
-                {
-                    Type = "openIdConnect",
-                    OpenIdConnectUrl = url,
-                    Description = description
-                };
-            }
-
-            return endpointInfo;
-        }
-
         /// <summary>
         ///
         /// </summary>
@@ -295,12 +204,12 @@ namespace Nancy.Metadata.OpenApi.Fluent
         private static Model.Response GenerateResponseInfo(string description, Type responseType = null)
         {
             if (responseType is Type)
-            { 
+            {
                 return new Model.Response
                 {
                     Schema = new SchemaRef
                     {
-                        Ref = $"#/components/schemas/{GetOrSaveSchemaReference(responseType)}"
+                        Ref = $"#/components/schemas/{SchemaGenerator.GetOrSaveSchemaReference(responseType)}"
                     },
                     Description = description
                 };
@@ -309,121 +218,6 @@ namespace Nancy.Metadata.OpenApi.Fluent
             {
                 return new Model.Response { Description = description };
             }
-        }
-
-        /// <summary>
-        /// Look up schema on schema cache, if not present add a new key.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        private static string GetOrSaveSchemaReference(Type type)
-        {
-            string key = type.FullName;
-
-            if (SchemaCache.Cache.ContainsKey(key))
-            {
-                return key;
-            }
-
-            var taskSchema = JsonSchema4.FromTypeAsync(type, new NJsonSchema.Generation.JsonSchemaGeneratorSettings
-            {
-                SchemaType = SchemaType.OpenApi3,
-                TypeNameGenerator = new TypeNameGenerator(),
-                SchemaNameGenerator = new TypeNameGenerator()
-            });
-
-            SchemaCache.Cache[key] = taskSchema.Result;
-
-            return key;
-        }
-
-        /// <summary>
-        /// Matches the type, format and item (if array) to the schema specified on the parameter.
-        /// </summary>
-        /// <param name="type">The type defined for the parameter, check: https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#dataTypeFormat for guidelines</param>
-        /// <returns></returns>
-        private static SchemaRef GetSchemaByType(Type type)
-        {
-            bool isArray = false;
-
-            if (type.IsArray)
-            {
-                type = type.GetElementType();
-                isArray = true;
-            }
-
-            if (typeof(IEnumerable).IsAssignableFrom(type) && (type != typeof(string)))
-            {
-#if NET45
-                type = type.GetType().GetGenericArguments()[0];
-#elif NETSTANDARD1_6
-                type = type.GetTypeInfo().GetGenericArguments()[0];
-#endif
-                isArray = true;
-            }
-
-            SchemaRef schema;
-            string schemaType = null, format = null;
-
-            switch (Type.GetTypeCode(type)) //formats as defined by OAS:
-            {
-                case TypeCode.String:
-                    schemaType = "string";
-                    format = null;
-                    break;
-
-                case TypeCode.Int16:
-                case TypeCode.Int32:  //single, integer
-                    schemaType = "integer";
-                    format = "int32";
-                    break;
-
-                case TypeCode.Int64:
-                    schemaType = "integer";
-                    format = "int64";
-                    break;
-
-                case TypeCode.Decimal:
-                    schemaType = "number";
-                    format = "float";
-                    break;
-
-                case TypeCode.Double:
-                    schemaType = "number";
-                    format = "double";
-                    break;
-
-                case TypeCode.Byte:
-                    schemaType = "string";
-                    format = "byte";
-                    break;
-
-                case TypeCode.Boolean:
-                    schemaType = "boolean";
-                    format = null;
-                    break;
-
-                case TypeCode.DateTime:
-                    schemaType = "string";
-                    format = "date-time";
-                    break;
-
-                default:
-                    schemaType = "string";
-                    format = null;
-                    break;
-            }
-
-            if (isArray)
-            {
-                schema = new SchemaRef() { Item = new Item() { Type = schemaType, Format = format }, Type = "array" };
-            }
-            else
-            {
-                schema = new SchemaRef() { Type = schemaType, Format = format };
-            }
-
-            return schema;
         }
     }
 }
