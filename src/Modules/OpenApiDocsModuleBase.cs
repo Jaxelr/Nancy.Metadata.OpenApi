@@ -105,7 +105,7 @@ namespace Nancy.Metadata.OpenApi.Modules
             this.hosts = hosts;
             this.tags = tags;
 
-#if NETSTANDARD1_6
+#if NETSTANDARD2_0
             Get(docsLocation, r => GetDocumentation());
 #else
             Get[docsLocation] = r => GetDocumentation();
