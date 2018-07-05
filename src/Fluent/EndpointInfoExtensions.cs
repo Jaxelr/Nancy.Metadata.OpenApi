@@ -105,10 +105,9 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// </summary>
         /// <param name="endpointInfo"></param>
         /// <param name="requestType"></param>
-        /// <param name="name"></param>
+        /// <param name="contentType"></param>
         /// <param name="description"></param>
         /// <param name="required"></param>
-        /// <param name="loc"></param>
         /// <returns></returns>
         public static Endpoint WithRequestModel(this Endpoint endpointInfo, Type requestType, string contentType = null, string description = null, bool required = true)
         {
