@@ -156,7 +156,7 @@ namespace Nancy.Metadata.OpenApi.Modules
         /// <returns></returns>
         public virtual Response GetDocumentation()
         {
-            if (openApiSpecification == null)
+            if (openApiSpecification is null)
             {
                 GenerateSpecification();
             }
@@ -191,10 +191,10 @@ namespace Nancy.Metadata.OpenApi.Modules
             IEnumerable<OpenApiRouteMetadata> metadata = routeCacheProvider.GetCache().RetrieveMetadata<OpenApiRouteMetadata>();
 
             var endpoints = new Dictionary<string, Dictionary<string, Endpoint>>();
-
+            
             foreach (OpenApiRouteMetadata m in metadata)
             {
-                if (m == null)
+                if (m is null)
                 {
                     continue;
                 }
@@ -211,25 +211,67 @@ namespace Nancy.Metadata.OpenApi.Modules
 
                 endpoints[path].Add(m.Method, m.Info);
 
-                // add definitions
-                if (openApiSpecification.Component == null)
+                // add component definitions
+                if (openApiSpecification.Component is null)
                 {
                     openApiSpecification.Component = new Component();
 
-                    if (openApiSpecification.Component.ModelDefinitions == null)
+                    if (openApiSpecification.Component.ModelDefinitions is null)
                     {
                         openApiSpecification.Component.ModelDefinitions = new Dictionary<string, NJsonSchema.JsonSchema4>();
                     }
                 }
 
-                foreach (string key in SchemaCache.Cache.Keys)
+                //Components added here from Cache
+                foreach (string key in SchemaCache.ComponentCache.Keys)
                 {
                     if (openApiSpecification.Component.ModelDefinitions.ContainsKey(key))
                     {
                         continue;
                     }
 
-                    openApiSpecification.Component.ModelDefinitions.Add(key, SchemaCache.Cache[key]);
+                    openApiSpecification.Component.ModelDefinitions.Add(key, SchemaCache.ComponentCache[key]);
+                }
+
+                //Security Schemes Added here from Cache
+                foreach (string key in SchemaCache.SecurityCache.Keys)
+                {
+                    //Since we could have all unsecured components, the Security Scheme is optional.
+                    if (openApiSpecification.Component.SecuritySchemes is null)
+                    {
+                        openApiSpecification.Component.SecuritySchemes = new Dictionary<string, SecurityScheme>();
+                    }
+
+                    if (openApiSpecification.Component.SecuritySchemes.ContainsKey(key))
+                    {
+                        continue;
+                    }
+
+                    openApiSpecification.Component.SecuritySchemes.Add(key, SchemaCache.SecurityCache[key]);
+                }
+
+                //Security Requirements from the list defined by endpoint.
+                if (m.Info.Security is List<Model.Security> list)
+                {
+                    foreach (var sec in list)
+                    {
+                        if (openApiSpecification.Security is null)
+                        {
+                            openApiSpecification.Security = new List<Model.Security>();
+                        }
+
+                        if (openApiSpecification.Security.Contains(sec))
+                        {
+                            continue;
+                        }
+
+                        openApiSpecification.Security.Add(sec);
+                    }
+                }
+                else
+                {
+                    //If no Security was defined on each operation we assign nothing for now.
+                    m.Info.Security = new List<Model.Security>();
                 }
             }
 

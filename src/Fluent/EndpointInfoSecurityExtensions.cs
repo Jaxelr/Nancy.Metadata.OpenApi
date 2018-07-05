@@ -1,4 +1,6 @@
-﻿using Nancy.Metadata.OpenApi.Model;
+﻿using Nancy.Metadata.OpenApi.Core;
+using Nancy.Metadata.OpenApi.Model;
+using System.Collections.Generic;
 
 namespace Nancy.Metadata.OpenApi.Fluent
 {
@@ -12,17 +14,17 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <returns></returns>
         public static Endpoint WithBasicAuthentication(this Endpoint endpointInfo, string description = null)
         {
-            if (endpointInfo.Security is null)
-            {
-                endpointInfo.Security = new Model.Security()
-                {
-                    Type = "http",
-                    Scheme = "basic",
-                    Description = description
-                };
-            }
+            string securityKey = "basic";
 
-            return endpointInfo;
+            var security = new SecurityScheme()
+            {
+                Type = "http",
+                Scheme = "basic",
+                Name = securityKey,
+                Description = description
+            };
+
+            return SaveAuthentication(endpointInfo, securityKey, security);
         }
 
         /// <summary>
@@ -35,18 +37,15 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <returns></returns>
         public static Endpoint WithApiKeyAuthentication(this Endpoint endpointInfo, string name, string location, string description = null)
         {
-            if (endpointInfo.Security is null)
+            var security = new SecurityScheme()
             {
-                endpointInfo.Security = new Model.Security()
-                {
-                    Type = "apiKey",
-                    Name = name,
-                    In = location,
-                    Description = description
-                };
-            }
+                Type = "apiKey",
+                Name = name,
+                In = location,
+                Description = description
+            };
 
-            return endpointInfo;
+            return SaveAuthentication(endpointInfo, name, security);
         }
 
         /// <summary>
@@ -58,17 +57,17 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <returns></returns>
         public static Endpoint WithBearerAuthentication(this Endpoint endpointInfo, string bearerFormat, string description = null)
         {
-            if (endpointInfo.Security is null)
-            {
-                endpointInfo.Security = new Model.Security()
-                {
-                    Type = "http",
-                    Scheme = "bearer",
-                    Description = description
-                };
-            }
+            string securityKey = "bearer";
 
-            return endpointInfo;
+            var security = new SecurityScheme()
+            {
+                Type = "http",
+                Scheme = "bearer",
+                Name = securityKey,
+                Description = description
+            };
+
+            return SaveAuthentication(endpointInfo, securityKey, security);
         }
 
         /// <summary>
@@ -80,15 +79,70 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <returns></returns>
         public static Endpoint WithOpenIdConnectAuthentication(this Endpoint endpointInfo, string url, string description = null)
         {
+            string securityKey = "openIdConnect";
+
+            var security = new SecurityScheme()
+            {
+                Type = "openIdConnect",
+                OpenIdConnectUrl = url,
+                Name = securityKey,
+                Description = description
+            };
+
+            return SaveAuthentication(endpointInfo, securityKey, security);
+        }
+
+        public static Endpoint WithOAuth2Authentication(this Endpoint endpointInfo, string authorizationUrl, string flow,
+            string tokenUrl, string description = null, string refreshUrl = null, params string[] scopes)
+        {
+            string securityKey = "oauth2";
+            var flowspec = new Flow()
+            {
+                AuthorizationUrl = authorizationUrl,
+                TokenUrl = tokenUrl,
+                RefreshUrl = refreshUrl,
+                Scopes = scopes
+            };
+
+            var oauth2 = new OAuth2();
+
+            switch (flow.ToLowerInvariant())
+            {
+                case "implicit":
+                    oauth2.Implicit = flowspec;
+                    break;
+                case "authorizationcode":
+                    oauth2.AuthorizationCode = flowspec;
+                    break;
+                case "clientcredentials":
+                    oauth2.ClientCredentials = flowspec;
+                    break;
+                case "password":
+                    oauth2.Password = flowspec;
+                    break;
+            }
+
+            var security = new SecurityScheme()
+            {
+                Type = "oauth2",
+                Flows = oauth2,
+                Name = securityKey,
+                Description = description
+            };
+
+            return SaveAuthentication(endpointInfo, securityKey, security);
+        }
+
+        private static Endpoint SaveAuthentication(this Endpoint endpointInfo, string key, SecurityScheme security, params string[] scopes)
+        {
             if (endpointInfo.Security is null)
             {
-                endpointInfo.Security = new Model.Security()
-                {
-                    Type = "openIdConnect",
-                    OpenIdConnectUrl = url,
-                    Description = description
-                };
+                endpointInfo.Security = new List<Model.Security>();
             }
+
+            endpointInfo.Security.Add(new Model.Security() { Key = key, Scopes = scopes });
+
+            SchemaGenerator.GetOrSaveSecurity(security);
 
             return endpointInfo;
         }

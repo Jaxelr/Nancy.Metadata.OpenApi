@@ -9,14 +9,13 @@ namespace Nancy.Metadata.OpenApi.Model
         public string OpenApiVersion => "3.0.0";
 
         [JsonProperty("info")]
-        public Info Info
-        { get; set; }
+        public Info Info { get; set; }
 
         [JsonProperty("servers")]
         public Server[] Servers { get; set; }
 
-        [JsonProperty("security")]
-        public IDictionary<string, IEnumerable<string>> Security { get; set; }
+        [JsonProperty("security"), JsonConverter(typeof(Core.CustomJsonConverter))]
+        public IList<Security> Security { get; set; }
 
         [JsonProperty("paths")]
         public IDictionary<string, Dictionary<string, Endpoint>> PathInfos { get; set; }
@@ -25,7 +24,7 @@ namespace Nancy.Metadata.OpenApi.Model
         public Component Component { get; set; }
 
         [JsonProperty("tags")]
-        public Tag[] Tags { get; set; }
+        public IEnumerable<Tag> Tags { get; set; }
 
         [JsonProperty("externalDocs")]
         public ExternalDocumentation ExternalDocs { get; set; }

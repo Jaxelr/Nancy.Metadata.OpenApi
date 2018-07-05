@@ -10,5 +10,8 @@ namespace Nancy.Metadata.OpenApi.Model
 
         [JsonProperty("schemas")]
         public IDictionary<string, NJsonSchema.JsonSchema4> ModelDefinitions { get; set; }
+
+        [JsonProperty("securitySchemes")]
+        public IDictionary<string, SecurityScheme> SecuritySchemes { get; set; }
     }
 }

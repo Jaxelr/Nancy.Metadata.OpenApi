@@ -15,6 +15,6 @@ namespace Nancy.Metadata.OpenApi.Model
         public string RefreshUrl { get; set; }
 
         [JsonProperty("scopes")]
-        public IDictionary<string, IEnumerable<string>> Scopes { get; set; }
+        public string[] Scopes { get; set; }
     }
 }

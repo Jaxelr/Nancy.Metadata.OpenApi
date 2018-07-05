@@ -16,7 +16,7 @@ namespace Nancy.Metadata.OpenApi.Core
         {
             string key = type.FullName;
 
-            if (SchemaCache.Cache.ContainsKey(key))
+            if (SchemaCache.ComponentCache.ContainsKey(key))
             {
                 return key;
             }
@@ -28,7 +28,26 @@ namespace Nancy.Metadata.OpenApi.Core
                 SchemaNameGenerator = new TypeNameGenerator()
             });
 
-            SchemaCache.Cache[key] = taskSchema.Result;
+            SchemaCache.ComponentCache[key] = taskSchema.Result;
+
+            return key;
+        }
+
+        /// <summary>
+        /// Saves the Security Schemes on the Cache Dictionary also returns the key used.
+        /// </summary>
+        /// <param name="securityScheme"></param>
+        /// <returns></returns>
+        internal static string GetOrSaveSecurity(SecurityScheme securityScheme)
+        {
+            string key = securityScheme.Name;
+
+            if (SchemaCache.SecurityCache.ContainsKey(key))
+            {
+                return key;
+            }
+
+            SchemaCache.SecurityCache[key] = securityScheme;
 
             return key;
         }
