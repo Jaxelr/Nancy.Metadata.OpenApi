@@ -12,7 +12,7 @@ before_build:
   - cmd: dotnet --version
 build_script:
   - cmd: dotnet build ./src/Nancy.Metadata.OpenApi.csproj -v quiet
-  - cmd: dotnet publish ./src/Nancy.Metadata.OpenApi.csproj -v quiet -f=netstandard1.6
+  - cmd: dotnet publish ./src/Nancy.Metadata.OpenApi.csproj -v quiet -f=netstandard2.0
 test_script:
   - cmd: dotnet test ./tests/Nancy.Metadata.OpenApi.Tests.csproj 
 artifacts:
