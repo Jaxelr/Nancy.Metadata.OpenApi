@@ -64,6 +64,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
                 Type = "http",
                 Scheme = "bearer",
                 Name = securityKey,
+                BearerFormat = bearerFormat,
                 Description = description
             };
 
