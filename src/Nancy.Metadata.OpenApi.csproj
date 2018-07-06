@@ -2,15 +2,15 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
-    <Version>0.5.2</Version>
-    <PackageVersion>0.5.2</PackageVersion>
+    <Version>0.6.0</Version>
+    <PackageVersion>0.6.0</PackageVersion>
     <PackageId>Nancy.Metadata.OpenApi</PackageId>
-    <Copyright>Copyright 2017</Copyright>
+    <Copyright>Copyright 2018</Copyright>
     <Authors>Jaxel Rojas</Authors>
     <AssemblyName>Nancy.Metadata.OpenApi</AssemblyName>
     <RootNamespace>Nancy.Metadata.OpenApi</RootNamespace>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Fix data structure for Tags and MediaTypeObject</PackageReleaseNotes>
+    <PackageReleaseNotes>Added endpoint authentication logic. Upgraded to netstandard 2.0</PackageReleaseNotes>
     <PackageTags>openapi;nancy;metadata</PackageTags>
     <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/Jaxelr/Nancy.Metadata.OpenApi</PackageProjectUrl>
