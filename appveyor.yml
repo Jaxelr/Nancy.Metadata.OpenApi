@@ -23,7 +23,8 @@ skip_commits:
 deploy:
 - provider: NuGet
     on:
-    appveyor_repo_tag: true
+        branch: develop
+        appveyor_repo_tag: true
   server: https://www.myget.org/F/nancy-metadata-openapi/api/v2/package
   api_key:
     secure: 6xhHSsDvB9arsrSDLuynnbxaVS+BwaoJU96RfQenc5FOnUYvP8SHM6kbvrmpvja2
