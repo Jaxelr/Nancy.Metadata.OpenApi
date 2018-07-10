@@ -80,18 +80,45 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Content\swagger-ui-bundle.js.map" />
-    <None Include="Content\swagger-ui-standalone-preset.js.map" />
-    <None Include="Content\swagger-ui.css.map" />
-    <None Include="Content\swagger-ui.js.map" />
+    <None Include="Content\swagger-ui-bundle.js.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\swagger-ui-standalone-preset.js.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\swagger-ui.css.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\swagger-ui.js.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\index.html" />
-    <Content Include="Content\swagger-ui-bundle.js" />
-    <Content Include="Content\swagger-ui-standalone-preset.js" />
-    <Content Include="Content\swagger-ui.css" />
-    <Content Include="Content\swagger-ui.js" />
+    <Content Include="Content\favicon-16x16.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\favicon-32x32.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\index.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\oauth2-redirect.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\swagger-ui-bundle.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\swagger-ui-standalone-preset.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\swagger-ui.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\swagger-ui.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Nancy.Metadata.OpenApi.csproj">

@@ -24,16 +24,14 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             using (var memoryStream = new MemoryStream())
             {
                 response.Contents.Invoke(memoryStream);
-                body = Encoding.ASCII.GetString(memoryStream.GetBuffer());
+                body = Encoding.UTF8.GetString(memoryStream.GetBuffer());
             }
 
             var spec = JsonConvert.DeserializeObject<OpenApiSpecification>(body);
 
             //Assert
-            Assert.NotNull(spec.Info);
-            Assert.NotNull(spec.Servers);
-            Assert.Equal(FakeModule.Server.Description, spec.Servers[0].Description);
-            Assert.Equal(FakeModule.Server.Url, spec.Servers[0].Url);
+            Assert.All(spec.Servers, item => Assert.Contains(item.Description, FakeModule.Server.Description));
+            Assert.All(spec.Servers, item => Assert.Contains(item.Url, FakeModule.Server.Url));
             Assert.Equal(FakeModule.Title, spec.Info.Title);
             Assert.Equal(FakeModule.ApiVersion, spec.Info.Version);
             Assert.Equal(FakeModule.TermsOfService, spec.Info.TermsOfService);
@@ -61,14 +59,12 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             using (var memoryStream = new MemoryStream())
             {
                 response.Contents.Invoke(memoryStream);
-                body = Encoding.ASCII.GetString(memoryStream.GetBuffer());
+                body = Encoding.UTF8.GetString(memoryStream.GetBuffer());
             }
 
             var spec = JsonConvert.DeserializeObject<OpenApiSpecification>(body);
 
             //Assert
-            Assert.NotNull(spec.Info);
-            Assert.NotNull(spec.Info.Contact);
             Assert.Equal(contact.Name, spec.Info.Contact.Name);
             Assert.Equal(contact.Email, spec.Info.Contact.Email);
             Assert.Equal(contact.Url, spec.Info.Contact.Url);
@@ -91,13 +87,12 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             using (var memoryStream = new MemoryStream())
             {
                 response.Contents.Invoke(memoryStream);
-                body = Encoding.ASCII.GetString(memoryStream.GetBuffer());
+                body = Encoding.UTF8.GetString(memoryStream.GetBuffer());
             }
 
             var spec = JsonConvert.DeserializeObject<OpenApiSpecification>(body);
 
             //Assert
-            Assert.NotNull(spec.ExternalDocs);
             Assert.Equal(doc.Description, spec.ExternalDocs.Description);
             Assert.Equal(doc.Url, spec.ExternalDocs.Url);
         }
@@ -119,14 +114,12 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             using (var memoryStream = new MemoryStream())
             {
                 response.Contents.Invoke(memoryStream);
-                body = Encoding.ASCII.GetString(memoryStream.GetBuffer());
+                body = Encoding.UTF8.GetString(memoryStream.GetBuffer());
             }
 
             var spec = JsonConvert.DeserializeObject<OpenApiSpecification>(body);
 
             //Assert
-            Assert.NotNull(spec.Info);
-            Assert.NotNull(spec.Info.License);
             Assert.Equal(lic.Name, spec.Info.License.Name);
             Assert.Equal(lic.Url, spec.Info.License.Url);
         }

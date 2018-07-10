@@ -9,12 +9,12 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.net45
         {
             string url = "http://localhost:5000";
 
-            //var hostConfigs = new HostConfiguration()
-            //{
-            //    UrlReservations = new UrlReservations() { CreateAutomatically = true }
-            //};
+            var hostConfigs = new HostConfiguration()
+            {
+                UrlReservations = new UrlReservations() { CreateAutomatically = true }
+            };
 
-            NancyHost host = new NancyHost(new Uri(url));
+            NancyHost host = new NancyHost(hostConfigs, new Uri(url));
             host.Start();
 
             Console.WriteLine("Nancy host is listening at {0}", url);

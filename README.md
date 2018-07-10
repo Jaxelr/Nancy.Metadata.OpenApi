@@ -62,7 +62,7 @@ public class DocsModule : OpenApiDocsModuleBase //We must inherit from the OpenA
 
 We could optionally, if the information is needed, add Contact, License and External Docs information:
 
-``` c#
+```c#
 public class DocsModule : OpenApiDocsModuleBase //We must inherit from the OpenApiDocsModuleBase
 {
     public static Server Server 
@@ -80,7 +80,7 @@ public class DocsModule : OpenApiDocsModuleBase //We must inherit from the OpenA
         WithLicense("MIT", "https://opensource.org/licenses/MIT");
 
         //Optional Information.
-        WithExternalDocument("This is an external doc, maybe a tutorial or a spec doc.", "https://jaxelr.github.io")
+        WithExternalDocument("This is a tutorial or a spec doc.", "https://jaxelr.github.io")
     }
 }
 ```
@@ -130,7 +130,7 @@ Thats pretty much it, the docs endpoint defined above would generate some valid 
 
 For a working example, clone this repo and see the sample app that uses the Swagger-UI site as a validator.
 
-## Work to be done
+## Working Progress
 
 Open Api specifies optional objects that havent been implemented at the library level. Check the [Current Development Project](https://github.com/Jaxelr/Nancy.Metadata.OpenApi/projects) for more details.
 
