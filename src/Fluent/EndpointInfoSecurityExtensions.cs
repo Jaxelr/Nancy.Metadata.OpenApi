@@ -1,6 +1,7 @@
 ﻿using Nancy.Metadata.OpenApi.Core;
 using Nancy.Metadata.OpenApi.Model;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Nancy.Metadata.OpenApi.Fluent
 {
@@ -78,14 +79,27 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <param name="url">A valid url to refer the client</param>
         /// <param name="description"></param>
         /// <returns></returns>
-        public static Endpoint WithOpenIdConnectAuthentication(this Endpoint endpointInfo, string url, string description = null)
+        public static Endpoint WithOpenIdConnectAuthentication(this Endpoint endpointInfo, string authorizationUrl, string flow,
+            string tokenUrl, string openIdConnectUrl, string description = null, string refreshUrl = null, params string[] scopes)
         {
             string securityKey = "openIdConnect";
+
+            var flowspec = new Flow()
+            {
+                AuthorizationUrl = authorizationUrl,
+                TokenUrl = tokenUrl,
+                RefreshUrl = refreshUrl,
+                Scopes = scopes
+            };
+
+            var oauth2 = MatchFlow(flowspec, flow);
+
 
             var security = new SecurityScheme()
             {
                 Type = "openIdConnect",
-                OpenIdConnectUrl = url,
+                OpenIdConnectUrl = openIdConnectUrl,
+                Flows = oauth2,
                 Name = securityKey,
                 Description = description
             };
@@ -97,6 +111,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
             string tokenUrl, string description = null, string refreshUrl = null, params string[] scopes)
         {
             string securityKey = "oauth2";
+
             var flowspec = new Flow()
             {
                 AuthorizationUrl = authorizationUrl,
@@ -105,8 +120,22 @@ namespace Nancy.Metadata.OpenApi.Fluent
                 Scopes = scopes
             };
 
-            var oauth2 = new OAuth2();
+            var oauth2 = MatchFlow(flowspec, flow);
 
+            var security = new SecurityScheme()
+            {
+                Type = "oauth2",
+                Flows = oauth2,
+                Name = securityKey,
+                Description = description
+            };
+
+            return SaveAuthentication(endpointInfo, securityKey, security);
+        }
+
+        private static OAuth2 MatchFlow(Flow flowspec, string flow)
+        {
+            var oauth2 = new OAuth2();
             switch (flow.ToLowerInvariant())
             {
                 case "implicit":
@@ -123,15 +152,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
                     break;
             }
 
-            var security = new SecurityScheme()
-            {
-                Type = "oauth2",
-                Flows = oauth2,
-                Name = securityKey,
-                Description = description
-            };
-
-            return SaveAuthentication(endpointInfo, securityKey, security);
+            return oauth2;
         }
 
         private static Endpoint SaveAuthentication(this Endpoint endpointInfo, string key, SecurityScheme security, params string[] scopes)

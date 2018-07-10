@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Nancy.Metadata.OpenApi.Core
 {
-    public class CustomJsonConverter : JsonConverter
+    public class CustomCollectionJsonConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType) => typeof(IEnumerable).IsAssignableFrom(objectType);
 

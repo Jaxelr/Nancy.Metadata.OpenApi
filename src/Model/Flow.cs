@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System.Collections.Generic;
 
 namespace Nancy.Metadata.OpenApi.Model
 {
@@ -14,7 +13,7 @@ namespace Nancy.Metadata.OpenApi.Model
         [JsonProperty("refreshUrl")]
         public string RefreshUrl { get; set; }
 
-        [JsonProperty("scopes")]
+        [JsonProperty("scopes"), JsonConverter(typeof(Core.CustomArrayJsonConverter))]
         public string[] Scopes { get; set; }
     }
 }

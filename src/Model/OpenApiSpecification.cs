@@ -14,7 +14,7 @@ namespace Nancy.Metadata.OpenApi.Model
         [JsonProperty("servers")]
         public Server[] Servers { get; set; }
 
-        [JsonProperty("security"), JsonConverter(typeof(Core.CustomJsonConverter))]
+        [JsonProperty("security"), JsonConverter(typeof(Core.CustomCollectionJsonConverter))]
         public IList<Security> Security { get; set; }
 
         [JsonProperty("paths")]
