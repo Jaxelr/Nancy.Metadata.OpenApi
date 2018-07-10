@@ -82,21 +82,31 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
         public void Endpoint_with_openId_authentication()
         {
             //Arrange
+            //Arrange
             var fakeEndpoint = new FakeEndpoint();
             string type = "openIdConnect";
             string name = "openIdConnect";
-            string url = "http://www.fakeaddress.com/myopenidconnectpoint";
-            string description = "Open Id Connect Authentication Sample";
+            string authUrl = "http://www.fakymcfake.com/authorization";
+            string tokenUrl = "http://www.fakymcfake.com/tokenAuth";
+            string refreshUrl = "http://www.fakymcfake.com/refresh";
+            string openIdurl = "http://www.fakeaddress.com/myopenidconnectpoint";
+            string flow = "implicit";
+            string description = "OAuth2 Authentication Sample";
+            string[] scopes = new string[] { "read", "write" };
 
             //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName).WithOpenIdConnectAuthentication(url, description);
+            var endpoint = new Endpoint(fakeEndpoint.OperationName).WithOpenIdConnectAuthentication(authUrl, flow, tokenUrl, openIdurl, description, refreshUrl, scopes);
             bool success = SchemaCache.SecurityCache.TryGetValue(name, out SecurityScheme securityScheme);
 
             //Assert
             Assert.True(success);
             Assert.Equal(securityScheme.Name, name);
             Assert.Equal(securityScheme.Type, type);
-            Assert.Equal(securityScheme.OpenIdConnectUrl, url);
+            Assert.Equal(securityScheme.OpenIdConnectUrl, openIdurl);
+            Assert.Equal(securityScheme.Flows.Implicit.AuthorizationUrl, authUrl);
+            Assert.Equal(securityScheme.Flows.Implicit.TokenUrl, tokenUrl);
+            Assert.Equal(securityScheme.Flows.Implicit.RefreshUrl, refreshUrl);
+            Assert.Equal(securityScheme.Flows.Implicit.Scopes, scopes);
             Assert.Equal(securityScheme.Description, description);
         }
 
@@ -110,7 +120,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             string authUrl = "http://www.fakymcfake.com/authorization";
             string tokenUrl = "http://www.fakymcfake.com/tokenAuth";
             string refreshUrl = "http://www.fakymcfake.com/refresh";
-            string flow = "implicit";
+            string flow = "clientCredentials";
             string description = "OAuth2 Authentication Sample";
             string[] scopes = new string[] { "read", "write" };
 
@@ -123,10 +133,10 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             Assert.True(success);
             Assert.Equal(securityScheme.Name, name);
             Assert.Equal(securityScheme.Type, type);
-            Assert.Equal(securityScheme.Flows.Implicit.AuthorizationUrl, authUrl);
-            Assert.Equal(securityScheme.Flows.Implicit.TokenUrl, tokenUrl);
-            Assert.Equal(securityScheme.Flows.Implicit.RefreshUrl, refreshUrl);
-            Assert.Equal(securityScheme.Flows.Implicit.Scopes, scopes);
+            Assert.Equal(securityScheme.Flows.ClientCredentials.AuthorizationUrl, authUrl);
+            Assert.Equal(securityScheme.Flows.ClientCredentials.TokenUrl, tokenUrl);
+            Assert.Equal(securityScheme.Flows.ClientCredentials.RefreshUrl, refreshUrl);
+            Assert.Equal(securityScheme.Flows.ClientCredentials.Scopes, scopes);
             Assert.Equal(securityScheme.Description, description);
         }
     }
