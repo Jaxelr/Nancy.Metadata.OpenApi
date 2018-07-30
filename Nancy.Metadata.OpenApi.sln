@@ -19,7 +19,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{97BBDED1-2E8D-44FE-BE27-9D42ED8E2E6C}"
 	ProjectSection(SolutionItems) = preProject
 		.github\CONTRIBUTING.md = .github\CONTRIBUTING.md
-		.github\ISSUE_TEMPLATE.md = .github\ISSUE_TEMPLATE.md
 		.github\PULL_REQUEST_TEMPLATE.md = .github\PULL_REQUEST_TEMPLATE.md
 	EndProjectSection
 EndProject
@@ -32,6 +31,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{F263DB03-E191-4663-B0A0-A3436A58B483}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy.Metadata.OpenApi.DemoApplication.net45", "samples\Nancy.Metadata.OpenApi.DemoApplication.net45\Nancy.Metadata.OpenApi.DemoApplication.net45.csproj", "{A537003B-2A76-4A0D-8F08-7D66EC17E2F8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ISSUE_TEMPLATE", "ISSUE_TEMPLATE", "{9373F2A7-E823-4BEC-A06C-F148841FC1ED}"
+	ProjectSection(SolutionItems) = preProject
+		.github\ISSUE_TEMPLATE\Bug_report.md = .github\ISSUE_TEMPLATE\Bug_report.md
+		.github\ISSUE_TEMPLATE\Feature_request.md = .github\ISSUE_TEMPLATE\Feature_request.md
+		.github\ISSUE_TEMPLATE\Support.md = .github\ISSUE_TEMPLATE\Support.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +71,7 @@ Global
 		{97BBDED1-2E8D-44FE-BE27-9D42ED8E2E6C} = {178C30E6-3F69-41B0-A1B9-B3D43F67871F}
 		{2208CC8E-3A44-4B16-BD1A-9C0D2A30F213} = {683860E0-2FE8-495B-9382-DEE218444210}
 		{A537003B-2A76-4A0D-8F08-7D66EC17E2F8} = {F263DB03-E191-4663-B0A0-A3436A58B483}
+		{9373F2A7-E823-4BEC-A06C-F148841FC1ED} = {97BBDED1-2E8D-44FE-BE27-9D42ED8E2E6C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F45BFF81-AF91-404F-A965-03B41882CAF0}
