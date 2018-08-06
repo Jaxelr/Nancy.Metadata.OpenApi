@@ -145,6 +145,10 @@ namespace Nancy.Metadata.OpenApi.Fluent
                 {
                     endpointInfo.Tags = tags;
                 }
+                else
+                {
+                    endpointInfo.Tags = null;
+                }
             }
 
             endpointInfo.Description = description;
