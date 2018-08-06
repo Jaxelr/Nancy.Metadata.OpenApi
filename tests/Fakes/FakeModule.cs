@@ -11,19 +11,37 @@ namespace Nancy.Metadata.OpenApi.Tests.Fakes
         public static string Title = "Sample API Documentation";
         public static string ApiVersion = "v1.0";
         public static string ApiBaseUrl = "/";
-        public static string TermsOfService = "blah blah blah";
-        public static Tag[] Tags = { new Tag() { Name = "Default" } };
+
+        public FakeModule(IRouteCacheProvider routeCacheProvider, Tag[] Tags) :
+            base(routeCacheProvider,
+                DocsLocation,
+                Title,
+                ApiVersion,
+                host: Server,
+                tags: Tags)
+        {
+        }
+
 
         public FakeModule(IRouteCacheProvider routeCacheProvider) :
             base(routeCacheProvider,
                 DocsLocation,
                 Title,
                 ApiVersion,
-                termsOfService: TermsOfService,
-                host: Server,
-                tags: Tags)
+                host: Server)
         {
         }
+
+        public FakeModule(IRouteCacheProvider routeCacheProvider, string TermsOfService) :
+            base(routeCacheProvider,
+                DocsLocation,
+                Title,
+                ApiVersion,
+                termsOfService: TermsOfService,
+                host: Server)
+        {
+        }
+
 
         public void FillContact(string name, string email, string url) => WithContact(name, email, url);
 

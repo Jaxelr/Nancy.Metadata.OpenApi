@@ -21,7 +21,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             string description = "Basic Custom Authentication Sample";
 
             //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName).WithApiKeyAuthentication(name, location, description);
+            var endpoint = new Endpoint(fakeEndpoint.Operation).WithApiKeyAuthentication(name, location, description);
             bool success = SchemaCache.SecurityCache.TryGetValue(name, out SecurityScheme securityScheme);
 
             //Assert
@@ -42,7 +42,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             string description = "Basic Authentication Sample";
 
             //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName).WithBasicAuthentication(description);
+            var endpoint = new Endpoint(fakeEndpoint.Operation).WithBasicAuthentication(description);
             bool success = SchemaCache.SecurityCache.TryGetValue(scheme, out SecurityScheme securityScheme);
 
             //Assert
@@ -65,7 +65,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             string description = "Bearer Auth Sample";
 
             //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName).WithBearerAuthentication(bearerFormat, description);
+            var endpoint = new Endpoint(fakeEndpoint.Operation).WithBearerAuthentication(bearerFormat, description);
             bool success = SchemaCache.SecurityCache.TryGetValue(scheme, out SecurityScheme securityScheme);
 
             //Assert
@@ -95,7 +95,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             string[] scopes = new string[] { "read", "write" };
 
             //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName).WithOpenIdConnectAuthentication(authUrl, flow, tokenUrl, openIdurl, description, refreshUrl, scopes);
+            var endpoint = new Endpoint(fakeEndpoint.Operation).WithOpenIdConnectAuthentication(authUrl, flow, tokenUrl, openIdurl, description, refreshUrl, scopes);
             bool success = SchemaCache.SecurityCache.TryGetValue(name, out SecurityScheme securityScheme);
 
             //Assert
@@ -126,7 +126,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
 
 
             //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName).WithOAuth2Authentication(authUrl, flow, tokenUrl, description, refreshUrl, scopes);
+            var endpoint = new Endpoint(fakeEndpoint.Operation).WithOAuth2Authentication(authUrl, flow, tokenUrl, description, refreshUrl, scopes);
             bool success = SchemaCache.SecurityCache.TryGetValue(name, out SecurityScheme securityScheme);
 
             //Assert

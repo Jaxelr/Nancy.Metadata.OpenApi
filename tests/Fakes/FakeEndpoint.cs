@@ -2,7 +2,9 @@
 {
     public class FakeEndpoint
     {
-        public string OperationName => "FakeOperation";
+        public string Operation => "FakeOperation";
+        public string Method => "GET";
+        public string Path => "/Dummy";
         public string Description => "Sample Description";
         public string Summary => "Operation Summary";
         public string[] Tags => new[] { "Tag1", "Tag2" };

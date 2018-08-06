@@ -16,7 +16,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             var fakeRequest = new FakeRequest();
 
             //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName)
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
                 .WithRequestParameter(
                 fakeRequest.Name,
                 fakeRequest.Type,
@@ -45,7 +45,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             const string BYTES = "int32";
 
             //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName)
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
                 .WithRequestParameter(
                 fakeRequest.Name,
                 typeof(int),
@@ -74,7 +74,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             const string BYTES = "int64";
 
             //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName)
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
                 .WithRequestParameter(
                 fakeRequest.Name,
                 typeof(long),
@@ -103,7 +103,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             const string FLOAT = "float";
 
             //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName)
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
                 .WithRequestParameter(
                 fakeRequest.Name,
                 typeof(decimal),
@@ -132,7 +132,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             const string DOUBLE = "double";
 
             //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName)
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
                 .WithRequestParameter(
                 fakeRequest.Name,
                 typeof(double),
@@ -160,7 +160,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             const string BYTE = "byte";
 
             //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName)
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
                 .WithRequestParameter(
                 fakeRequest.Name,
                 typeof(byte),
@@ -188,7 +188,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             const string BOOLEAN = "boolean";
 
             //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName)
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
                 .WithRequestParameter(
                 fakeRequest.Name,
                 typeof(bool),
@@ -216,7 +216,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             const string DATE_TIME = "date-time";
 
             //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName)
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
                 .WithRequestParameter(
                 fakeRequest.Name,
                 typeof(DateTime),

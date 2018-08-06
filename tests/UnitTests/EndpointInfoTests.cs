@@ -14,7 +14,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             var fakeEndpoint = new FakeEndpoint();
 
             //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName).WithSummary(fakeEndpoint.Summary);
+            var endpoint = new Endpoint(fakeEndpoint.Operation).WithSummary(fakeEndpoint.Summary);
 
             //Assert
             Assert.Equal(fakeEndpoint.Summary, endpoint.Summary);
@@ -27,12 +27,46 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             var fakeEndpoint = new FakeEndpoint();
 
             //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName).WithDescription(fakeEndpoint.Description);
+            var endpoint = new Endpoint(fakeEndpoint.Operation).WithDescription(fakeEndpoint.Description);
 
             //Assert
             Assert.Equal(fakeEndpoint.Description, endpoint.Description);
         }
 
+        [Fact]
+        public void Endpoint_with_description_and_tags()
+        {
+            //Arrange
+            var fakeEndpoint = new FakeEndpoint();
+
+            //Act
+            var endpoint = new Endpoint(fakeEndpoint.Operation).WithDescription(fakeEndpoint.Description, fakeEndpoint.Tags);
+
+            //Assert
+            Assert.Equal(fakeEndpoint.Description, endpoint.Description);
+            Assert.Equal(fakeEndpoint.Tags, endpoint.Tags);
+        }
+
+        [Fact]
+        public void Endpoint_with_description_and_existing_tag_exists()
+        {
+            //Arrange
+            var fakeEndpoint = new FakeEndpoint();
+            string[] sampleTag = new string[] { "Sample 1" };
+
+            //Act
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
+            {
+                Tags = sampleTag
+            };
+
+            endpoint.WithDescription(fakeEndpoint.Description, fakeEndpoint.Tags);
+
+            //Assert
+            Assert.Equal(fakeEndpoint.Description, endpoint.Description);
+            Assert.Equal(sampleTag, endpoint.Tags);
+            Assert.NotEqual(fakeEndpoint.Tags, endpoint.Tags);
+        }
 
         [Fact]
         public void Endpoint_with_external_documentation()
@@ -41,7 +75,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             var fakeEndpoint = new FakeEndpoint();
 
             //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName)
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
                 .WithExternalDocumentation(fakeEndpoint.ExternalDocsUrl, fakeEndpoint.ExternalDocs);
 
             //Assert
@@ -56,24 +90,10 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             var fakeEndpoint = new FakeEndpoint();
 
             //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName).IsDeprecated();
+            var endpoint = new Endpoint(fakeEndpoint.Operation).IsDeprecated();
 
             //Assert
             Assert.True(endpoint.IsDeprecated);
-        }
-
-        [Fact]
-        public void Endpoint_with_description_and_tags()
-        {
-            //Arrange
-            var fakeEndpoint = new FakeEndpoint();
-
-            //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName).WithDescription(fakeEndpoint.Description, fakeEndpoint.Tags);
-
-            //Assert
-            Assert.Equal(fakeEndpoint.Description, endpoint.Description);
-            Assert.Equal(fakeEndpoint.Tags, endpoint.Tags);
         }
 
         [Fact]
@@ -84,10 +104,83 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             var fakeRequest = new FakeRequest();
 
             //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName)
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
                 .WithRequestParameter(
                 fakeRequest.Name,
                 fakeRequest.Type,
+                fakeRequest.Format,
+                fakeRequest.Required,
+                fakeRequest.Description,
+                fakeRequest.Loc,
+                fakeRequest.Deprecated);
+
+            //Assert
+            Assert.Equal(fakeRequest.Description, endpoint.RequestParameters[0].Description);
+            Assert.Null(endpoint.RequestParameters[0].Schema.Format);
+            Assert.Equal(fakeRequest.Required, endpoint.RequestParameters[0].Required);
+            Assert.Equal(fakeRequest.Name, endpoint.RequestParameters[0].Name);
+            Assert.Equal(fakeRequest.Loc, endpoint.RequestParameters[0].In);
+            Assert.Equal(fakeRequest.Type.Name.ToLowerInvariant(), endpoint.RequestParameters[0].Schema.Type);
+        }
+
+        [Fact]
+        public void Endpoint_with_multiple_request_parameters()
+        {
+            //Arrange
+            var fakeEndpoint = new FakeEndpoint();
+            var fakeRequest = new FakeRequest();
+            string Param2 = "Param2";
+
+            //Act
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
+                .WithRequestParameter
+                (
+                    fakeRequest.Name,
+                    fakeRequest.Type,
+                    fakeRequest.Format,
+                    fakeRequest.Required,
+                    fakeRequest.Description,
+                    fakeRequest.Loc,
+                    fakeRequest.Deprecated
+                )
+                .WithRequestParameter
+                (
+                    Param2,
+                    fakeRequest.Type,
+                    fakeRequest.Format,
+                    fakeRequest.Required,
+                    fakeRequest.Description,
+                    fakeRequest.Loc,
+                    fakeRequest.Deprecated
+                );
+
+            //Assert
+            Assert.Equal(fakeRequest.Description, endpoint.RequestParameters[0].Description);
+            Assert.Null(endpoint.RequestParameters[0].Schema.Format);
+            Assert.Equal(fakeRequest.Required, endpoint.RequestParameters[0].Required);
+            Assert.Equal(fakeRequest.Name, endpoint.RequestParameters[0].Name);
+            Assert.Equal(fakeRequest.Loc, endpoint.RequestParameters[0].In);
+            Assert.Equal(fakeRequest.Type.Name.ToLowerInvariant(), endpoint.RequestParameters[0].Schema.Type);
+            Assert.Equal(fakeRequest.Description, endpoint.RequestParameters[1].Description);
+            Assert.Null(endpoint.RequestParameters[1].Schema.Format);
+            Assert.Equal(fakeRequest.Required, endpoint.RequestParameters[1].Required);
+            Assert.Equal(Param2, endpoint.RequestParameters[1].Name);
+            Assert.Equal(fakeRequest.Loc, endpoint.RequestParameters[1].In);
+            Assert.Equal(fakeRequest.Type.Name.ToLowerInvariant(), endpoint.RequestParameters[1].Schema.Type);
+        }
+
+        [Fact]
+        public void Endpoint_with_request_parameter_null_type()
+        {
+            //Arrange
+            var fakeEndpoint = new FakeEndpoint();
+            var fakeRequest = new FakeRequest();
+
+            //Act
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
+                .WithRequestParameter(
+                fakeRequest.Name,
+                null,
                 fakeRequest.Format,
                 fakeRequest.Required,
                 fakeRequest.Description,
@@ -112,7 +205,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             const string ARRAY = "array";
 
             //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName)
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
                 .WithRequestParameter(
                 fakeRequest.Name,
                 fakeRequest.Type,
@@ -120,7 +213,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
                 fakeRequest.Required,
                 fakeRequest.Description,
                 fakeRequest.Loc,
-                fakeRequest.Deprecated); 
+                fakeRequest.Deprecated);
 
             //Assert
             Assert.Equal(fakeRequest.Description, endpoint.RequestParameters[0].Description);
@@ -140,10 +233,32 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             var fakeRequest = new FakeRequestModel();
 
             //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName)
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
                 .WithRequestModel(
                     typeof(FakeRequestModel),
                     fakeRequest.ContentType,
+                    fakeRequest.Description,
+                    fakeRequest.Required);
+
+            //Assert
+            Assert.Equal(fakeRequest.Description, endpoint.RequestBody.Description);
+            Assert.Equal(fakeRequest.Required, endpoint.RequestBody.Required);
+            Assert.True(endpoint.RequestBody.Content.ContainsKey(fakeRequest.ContentType));
+            Assert.Contains(nameof(FakeRequestModel), endpoint.RequestBody.Content[fakeRequest.ContentType].Schema.Ref);
+        }
+
+        [Fact]
+        public void Endpoint_with_request_model_empty_content_type()
+        {
+            //Arrange
+            var fakeEndpoint = new FakeEndpoint();
+            var fakeRequest = new FakeRequestModel();
+
+            //Act
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
+                .WithRequestModel(
+                    typeof(FakeRequestModel),
+                    null,
                     fakeRequest.Description,
                     fakeRequest.Required);
 
@@ -162,11 +277,11 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             var fakeResponseModel = new FakeResponseModel();
 
             //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName)
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
                 .WithResponseModel(fakeResponseModel.StatusCode, typeof(FakeResponseModel), fakeResponseModel.Description);
 
             //Assert
-            Assert.Equal(fakeEndpoint.OperationName, endpoint.OperationId);
+            Assert.Equal(fakeEndpoint.Operation, endpoint.OperationId);
             Assert.NotNull(endpoint.ResponseInfos[fakeResponseModel.StatusCode]);
             Assert.Equal(fakeResponseModel.Description, endpoint.ResponseInfos[fakeResponseModel.StatusCode].Description);
             Assert.Contains(nameof(FakeResponseModel), endpoint.ResponseInfos[fakeResponseModel.StatusCode].Schema.Ref);
@@ -180,13 +295,36 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             var fakeResponseModel = new FakeResponseModel();
 
             //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName)
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
                 .WithDefaultResponse(typeof(FakeResponseModel), fakeResponseModel.Description);
 
             //Assert
-            Assert.Equal(fakeEndpoint.OperationName, endpoint.OperationId);
+            Assert.Equal(fakeEndpoint.Operation, endpoint.OperationId);
             Assert.NotNull(endpoint.ResponseInfos[fakeResponseModel.StatusCode]);
             Assert.Equal(fakeResponseModel.Description, endpoint.ResponseInfos[fakeResponseModel.StatusCode].Description);
+            Assert.Contains(nameof(FakeResponseModel), endpoint.ResponseInfos[fakeResponseModel.StatusCode].Schema.Ref);
+        }
+
+        [Fact]
+        public void Endpoint_with_multiple_response_models()
+        {
+            //Arrange
+            var fakeEndpoint = new FakeEndpoint();
+            var fakeResponseModel = new FakeResponseModel();
+            string NewResource = "201";
+            string NewResourceDescription = "New Resource Created";
+
+            //Act
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
+                .WithResponseModel(fakeResponseModel.StatusCode, typeof(FakeResponseModel), fakeResponseModel.Description)
+                .WithResponseModel(NewResource, typeof(FakeResponseModel), NewResourceDescription);
+
+            //Assert
+            Assert.Equal(fakeEndpoint.Operation, endpoint.OperationId);
+            Assert.NotNull(endpoint.ResponseInfos[fakeResponseModel.StatusCode]);
+            Assert.NotNull(endpoint.ResponseInfos[NewResource]);
+            Assert.Equal(fakeResponseModel.Description, endpoint.ResponseInfos[fakeResponseModel.StatusCode].Description);
+            Assert.Equal(NewResourceDescription, endpoint.ResponseInfos[NewResource].Description);
             Assert.Contains(nameof(FakeResponseModel), endpoint.ResponseInfos[fakeResponseModel.StatusCode].Schema.Ref);
         }
 
@@ -198,13 +336,35 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             var fakeResponse = new FakeResponse();
 
             //Act
-            var endpoint = new Endpoint(fakeEndpoint.OperationName)
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
                 .WithResponse(fakeResponse.StatusCode, fakeResponse.Description);
 
             //Assert
-            Assert.Equal(fakeEndpoint.OperationName, endpoint.OperationId);
+            Assert.Equal(fakeEndpoint.Operation, endpoint.OperationId);
             Assert.NotNull(endpoint.ResponseInfos[fakeResponse.StatusCode]);
             Assert.Equal(fakeResponse.Description, endpoint.ResponseInfos[fakeResponse.StatusCode].Description);
+        }
+
+        [Fact]
+        public void Endpoint_with_multiple_response()
+        {
+            //Arrange
+            var fakeEndpoint = new FakeEndpoint();
+            var fakeResponse = new FakeResponse();
+            string badRequest = "400";
+            string badRequestDesc = "Bad Request Made";
+
+            //Act
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
+                .WithResponse(fakeResponse.StatusCode, fakeResponse.Description)
+                .WithResponse(badRequest, badRequestDesc);
+
+            //Assert
+            Assert.Equal(fakeEndpoint.Operation, endpoint.OperationId);
+            Assert.NotNull(endpoint.ResponseInfos[fakeResponse.StatusCode]);
+            Assert.Equal(fakeResponse.Description, endpoint.ResponseInfos[fakeResponse.StatusCode].Description);
+            Assert.NotNull(endpoint.ResponseInfos[badRequest]);
+            Assert.Equal(badRequestDesc, endpoint.ResponseInfos[badRequest].Description);
         }
     }
 }

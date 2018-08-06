@@ -34,13 +34,66 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             Assert.All(spec.Servers, item => Assert.Contains(item.Url, FakeModule.Server.Url));
             Assert.Equal(FakeModule.Title, spec.Info.Title);
             Assert.Equal(FakeModule.ApiVersion, spec.Info.Version);
-            Assert.Equal(FakeModule.TermsOfService, spec.Info.TermsOfService);
-            Assert.True(FakeModule.Tags.All(t => spec.Tags.Any(
+        }
+
+        [Fact]
+        public void Generate_docs_with_tags()
+        {
+            //Arrange
+            Tag[] Tags = { new Tag() { Name = "Default" } };
+            var module = new FakeModule(new DefaultRouteCacheProvider(() => new FakeRouteCache()), Tags);
+
+            //Act
+            var response = module.GetDocumentation();
+            string body;
+
+            using (var memoryStream = new MemoryStream())
+            {
+                response.Contents.Invoke(memoryStream);
+                body = Encoding.UTF8.GetString(memoryStream.GetBuffer());
+            }
+
+            var spec = JsonConvert.DeserializeObject<OpenApiSpecification>(body);
+
+            //Assert
+            Assert.All(spec.Servers, item => Assert.Contains(item.Description, FakeModule.Server.Description));
+            Assert.All(spec.Servers, item => Assert.Contains(item.Url, FakeModule.Server.Url));
+            Assert.Equal(FakeModule.Title, spec.Info.Title);
+            Assert.Equal(FakeModule.ApiVersion, spec.Info.Version);
+            Assert.True(Tags.All(t => spec.Tags.Any(
                                s => t.Name == s.Name &&
                                t.Description == s.Description &&
                                t.ExternalDocumentation == s.ExternalDocumentation
                            )));
         }
+
+        [Fact]
+        public void Generate_docs_with_terms_of_services()
+        {
+            //Arrange
+            string TermsOfService = "blah blah blah";
+            var module = new FakeModule(new DefaultRouteCacheProvider(() => new FakeRouteCache()), TermsOfService);
+
+            //Act
+            var response = module.GetDocumentation();
+            string body;
+
+            using (var memoryStream = new MemoryStream())
+            {
+                response.Contents.Invoke(memoryStream);
+                body = Encoding.UTF8.GetString(memoryStream.GetBuffer());
+            }
+
+            var spec = JsonConvert.DeserializeObject<OpenApiSpecification>(body);
+
+            //Assert
+            Assert.All(spec.Servers, item => Assert.Contains(item.Description, FakeModule.Server.Description));
+            Assert.All(spec.Servers, item => Assert.Contains(item.Url, FakeModule.Server.Url));
+            Assert.Equal(FakeModule.Title, spec.Info.Title);
+            Assert.Equal(FakeModule.ApiVersion, spec.Info.Version);
+            Assert.Equal(TermsOfService, spec.Info.TermsOfService);
+        }
+
 
         [Fact]
         public void Generate_docs_with_contact_info()
