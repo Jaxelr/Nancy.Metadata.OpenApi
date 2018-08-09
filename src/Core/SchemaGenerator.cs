@@ -69,7 +69,7 @@ namespace Nancy.Metadata.OpenApi.Core
 
             if (typeof(IEnumerable).IsAssignableFrom(type) && (type != typeof(string)))
             {
-                type = type.GetType().GetGenericArguments()[0];
+                type = type.GetGenericArguments()[0];
                 isCollection = true;
             }
 

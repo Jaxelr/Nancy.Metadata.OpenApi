@@ -110,7 +110,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
         public static Endpoint WithOAuth2Authentication(this Endpoint endpointInfo, string authorizationUrl, string flow,
             string tokenUrl, string description = null, string refreshUrl = null, params string[] scopes)
         {
-            string securityKey = "oauth2";
+            string securityKey = string.Concat("oauth2", flow);
 
             var flowspec = new Flow()
             {

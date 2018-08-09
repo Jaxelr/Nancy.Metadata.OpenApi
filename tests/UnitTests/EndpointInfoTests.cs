@@ -226,6 +226,35 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
         }
 
         [Fact]
+        public void Endpoint_with_request_parameter_collection()
+        {
+            //Arrange
+            var fakeEndpoint = new FakeEndpoint();
+            var fakeRequest = new FakeRequestCollection();
+            const string ARRAY = "array";
+
+            //Act
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
+                .WithRequestParameter(
+                fakeRequest.Name,
+                fakeRequest.Type,
+                fakeRequest.Format,
+                fakeRequest.Required,
+                fakeRequest.Description,
+                fakeRequest.Loc,
+                fakeRequest.Deprecated);
+
+            //Assert
+            Assert.Equal(fakeRequest.Description, endpoint.RequestParameters[0].Description);
+            Assert.Null(endpoint.RequestParameters[0].Schema.Item.Format);
+            Assert.Equal(fakeRequest.Required, endpoint.RequestParameters[0].Required);
+            Assert.Equal(fakeRequest.Name, endpoint.RequestParameters[0].Name);
+            Assert.Equal(fakeRequest.Loc, endpoint.RequestParameters[0].In);
+            Assert.Equal(ARRAY, endpoint.RequestParameters[0].Schema.Type);
+            Assert.Equal(fakeRequest.Type.GenericTypeArguments[0].Name.ToLowerInvariant(), endpoint.RequestParameters[0].Schema.Item.Type);
+        }
+
+        [Fact]
         public void Endpoint_with_request_model()
         {
             //Arrange

@@ -53,6 +53,32 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             Assert.Equal(securityScheme.Description, description);
         }
 
+        [Fact]
+        public void Endpoint_with_basic_authentication_twice()
+        {
+            //Arrange
+            var fakeEndpoint = new FakeEndpoint();
+            string scheme = "basic";
+            string type = "http";
+            string description = "Basic Authentication Sample";
+
+            //Act
+            SchemaCache.SecurityCache.Clear(); //This test requires that the size of the Schema Cache is 0 at the start.
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
+                .WithBasicAuthentication(description)
+                .WithBasicAuthentication(description); 
+            bool success = SchemaCache.SecurityCache.TryGetValue(scheme, out SecurityScheme securityScheme);
+
+            //Assert
+            Assert.True(success);
+            Assert.Equal(1, SchemaCache.SecurityCache.Count);
+            Assert.Equal(securityScheme.Name, scheme);
+            Assert.Equal(securityScheme.Scheme, scheme);
+            Assert.Equal(securityScheme.Type, type);
+            Assert.Equal(securityScheme.Description, description);
+        }
+
+
 
         [Fact]
         public void Endpoint_with_bearer_authentication()
@@ -111,17 +137,17 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
         }
 
         [Fact]
-        public void Endpoint_with_oauth2_authentication()
+        public void Endpoint_with_oauth2_authentication_client_credentials()
         {
             //Arrange
             var fakeEndpoint = new FakeEndpoint();
             string type = "oauth2";
-            string name = "oauth2";
             string authUrl = "http://www.fakymcfake.com/authorization";
             string tokenUrl = "http://www.fakymcfake.com/tokenAuth";
             string refreshUrl = "http://www.fakymcfake.com/refresh";
             string flow = "clientCredentials";
-            string description = "OAuth2 Authentication Sample";
+            string name = string.Concat(type, flow);
+            string description = "OAuth2 Authentication with Client Credentials Sample";
             string[] scopes = new string[] { "read", "write" };
 
 
@@ -137,6 +163,66 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             Assert.Equal(securityScheme.Flows.ClientCredentials.TokenUrl, tokenUrl);
             Assert.Equal(securityScheme.Flows.ClientCredentials.RefreshUrl, refreshUrl);
             Assert.Equal(securityScheme.Flows.ClientCredentials.Scopes, scopes);
+            Assert.Equal(securityScheme.Description, description);
+        }
+
+        [Fact]
+        public void Endpoint_with_oauth2_authentication_authorization_code()
+        {
+            //Arrange
+            var fakeEndpoint = new FakeEndpoint();
+            string type = "oauth2";
+            string authUrl = "http://www.fakymcfake.com/authorization";
+            string tokenUrl = "http://www.fakymcfake.com/tokenAuth";
+            string refreshUrl = "http://www.fakymcfake.com/refresh";
+            string flow = "authorizationcode";
+            string name = string.Concat(type, flow);
+            string description = "OAuth2 Authentication with Authorization Code Sample";
+            string[] scopes = new string[] { "read", "write" };
+
+
+            //Act
+            var endpoint = new Endpoint(fakeEndpoint.Operation).WithOAuth2Authentication(authUrl, flow, tokenUrl, description, refreshUrl, scopes);
+            bool success = SchemaCache.SecurityCache.TryGetValue(name, out SecurityScheme securityScheme);
+
+            //Assert
+            Assert.True(success);
+            Assert.Equal(securityScheme.Name, name);
+            Assert.Equal(securityScheme.Type, type);
+            Assert.Equal(securityScheme.Flows.AuthorizationCode.AuthorizationUrl, authUrl);
+            Assert.Equal(securityScheme.Flows.AuthorizationCode.TokenUrl, tokenUrl);
+            Assert.Equal(securityScheme.Flows.AuthorizationCode.RefreshUrl, refreshUrl);
+            Assert.Equal(securityScheme.Flows.AuthorizationCode.Scopes, scopes);
+            Assert.Equal(securityScheme.Description, description);
+        }
+
+        [Fact]
+        public void Endpoint_with_oauth2_authentication_password()
+        {
+            //Arrange
+            var fakeEndpoint = new FakeEndpoint();
+            string type = "oauth2";
+            string authUrl = "http://www.fakymcfake.com/authorization";
+            string tokenUrl = "http://www.fakymcfake.com/tokenAuth";
+            string refreshUrl = "http://www.fakymcfake.com/refresh";
+            string flow = "password";
+            string name = string.Concat(type, flow);
+            string description = "OAuth2 Authentication with Password Sample";
+            string[] scopes = new string[] { "read", "write" };
+
+
+            //Act
+            var endpoint = new Endpoint(fakeEndpoint.Operation).WithOAuth2Authentication(authUrl, flow, tokenUrl, description, refreshUrl, scopes);
+            bool success = SchemaCache.SecurityCache.TryGetValue(name, out SecurityScheme securityScheme);
+
+            //Assert
+            Assert.True(success);
+            Assert.Equal(securityScheme.Name, name);
+            Assert.Equal(securityScheme.Type, type);
+            Assert.Equal(securityScheme.Flows.Password.AuthorizationUrl, authUrl);
+            Assert.Equal(securityScheme.Flows.Password.TokenUrl, tokenUrl);
+            Assert.Equal(securityScheme.Flows.Password.RefreshUrl, refreshUrl);
+            Assert.Equal(securityScheme.Flows.Password.Scopes, scopes);
             Assert.Equal(securityScheme.Description, description);
         }
     }
