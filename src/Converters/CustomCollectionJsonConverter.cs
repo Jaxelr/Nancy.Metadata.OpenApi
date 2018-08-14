@@ -8,7 +8,7 @@ namespace Nancy.Metadata.OpenApi.Core
 {
     public class CustomCollectionJsonConverter : JsonConverter
     {
-        public override bool CanConvert(Type objectType) => typeof(IEnumerable).IsAssignableFrom(objectType);
+        public override bool CanConvert(Type objectType) => typeof(IEnumerable<Model.Security>).IsAssignableFrom(objectType);
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) =>
             throw new NotImplementedException();
