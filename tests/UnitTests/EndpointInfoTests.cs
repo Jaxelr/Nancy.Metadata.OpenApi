@@ -25,7 +25,6 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             Assert.Equal(metadata.Name, fakeRouteDescription.Name);
         }
 
-
         [Fact]
         public void Generate_method_description()
         {

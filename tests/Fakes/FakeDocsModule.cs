@@ -22,7 +22,6 @@ namespace Nancy.Metadata.OpenApi.Tests.Fakes
         {
         }
 
-
         public FakeDocsModule(IRouteCacheProvider routeCacheProvider) :
             base(routeCacheProvider,
                 DocsLocation,
@@ -41,7 +40,6 @@ namespace Nancy.Metadata.OpenApi.Tests.Fakes
                 host: Server)
         {
         }
-
 
         public void FillContact(string name, string email, string url) => WithContact(name, email, url);
 

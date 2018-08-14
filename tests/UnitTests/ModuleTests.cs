@@ -3,9 +3,9 @@ using Nancy.Metadata.OpenApi.Tests.Fakes;
 using Nancy.Routing;
 using Newtonsoft.Json;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Xunit;
-using System.Linq;
 
 namespace Nancy.Metadata.OpenApi.Tests.UnitTests
 {
@@ -93,7 +93,6 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             Assert.Equal(FakeDocsModule.ApiVersion, spec.Info.Version);
             Assert.Equal(TermsOfService, spec.Info.TermsOfService);
         }
-
 
         [Fact]
         public void Generate_docs_with_contact_info()

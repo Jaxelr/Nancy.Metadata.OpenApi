@@ -1,7 +1,7 @@
-﻿using Nancy.Metadata.OpenApi.Model;
+﻿using Nancy.Metadata.OpenApi.Core;
 using Nancy.Metadata.OpenApi.Fluent;
+using Nancy.Metadata.OpenApi.Model;
 using Nancy.Metadata.OpenApi.Tests.Fakes;
-using Nancy.Metadata.OpenApi.Core;
 using Xunit;
 
 namespace Nancy.Metadata.OpenApi.Tests.UnitTests
@@ -13,7 +13,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
         {
             //Arrange
             var fakeEndpoint = new FakeEndpoint();
-            
+
             //This is defined by the standard
             string name = "my_custom_api_key";
             string type = "apiKey";
@@ -66,7 +66,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             SchemaCache.SecurityCache.Clear(); //This test requires that the size of the Schema Cache is 0 at the start.
             var endpoint = new Endpoint(fakeEndpoint.Operation)
                 .WithBasicAuthentication(description)
-                .WithBasicAuthentication(description); 
+                .WithBasicAuthentication(description);
             bool success = SchemaCache.SecurityCache.TryGetValue(scheme, out SecurityScheme securityScheme);
 
             //Assert
@@ -77,8 +77,6 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             Assert.Equal(securityScheme.Type, type);
             Assert.Equal(securityScheme.Description, description);
         }
-
-
 
         [Fact]
         public void Endpoint_with_bearer_authentication()
@@ -102,7 +100,6 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             Assert.Equal(securityScheme.Type, type);
             Assert.Equal(securityScheme.Description, description);
         }
-
 
         [Fact]
         public void Endpoint_with_openId_authentication()
@@ -150,7 +147,6 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             string description = "OAuth2 Authentication with Client Credentials Sample";
             string[] scopes = new string[] { "read", "write" };
 
-
             //Act
             var endpoint = new Endpoint(fakeEndpoint.Operation).WithOAuth2Authentication(authUrl, flow, tokenUrl, description, refreshUrl, scopes);
             bool success = SchemaCache.SecurityCache.TryGetValue(name, out SecurityScheme securityScheme);
@@ -179,7 +175,6 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             string name = string.Concat(type, flow);
             string description = "OAuth2 Authentication with Authorization Code Sample";
             string[] scopes = new string[] { "read", "write" };
-
 
             //Act
             var endpoint = new Endpoint(fakeEndpoint.Operation).WithOAuth2Authentication(authUrl, flow, tokenUrl, description, refreshUrl, scopes);
@@ -210,7 +205,6 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             string description = "OAuth2 Authentication with Password Sample";
             string[] scopes = new string[] { "read", "write" };
 
-
             //Act
             var endpoint = new Endpoint(fakeEndpoint.Operation).WithOAuth2Authentication(authUrl, flow, tokenUrl, description, refreshUrl, scopes);
             bool success = SchemaCache.SecurityCache.TryGetValue(name, out SecurityScheme securityScheme);
@@ -227,5 +221,3 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
         }
     }
 }
-
-
