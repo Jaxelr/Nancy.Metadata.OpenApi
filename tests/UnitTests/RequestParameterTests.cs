@@ -235,5 +235,32 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             Assert.Equal(DATE_TIME, endpoint.RequestParameters[0].Schema.Format);
             Assert.Equal(fakeRequest.Type.Name.ToLowerInvariant(), endpoint.RequestParameters[0].Schema.Type);
         }
+
+        [Fact]
+        public void Request_parameter_object()
+        {
+            //Arrange
+            var fakeEndpoint = new FakeEndpoint();
+            var fakeRequest = new FakeRequest();
+
+            //Act
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
+                .WithRequestParameter(
+                fakeRequest.Name,
+                typeof(object),
+                fakeRequest.Format,
+                fakeRequest.Required,
+                fakeRequest.Description,
+                fakeRequest.Loc,
+                fakeRequest.Deprecated);
+
+            //Assert
+            Assert.Equal(fakeRequest.Description, endpoint.RequestParameters[0].Description);
+            Assert.Null(endpoint.RequestParameters[0].Schema.Format);
+            Assert.Equal(fakeRequest.Required, endpoint.RequestParameters[0].Required);
+            Assert.Equal(fakeRequest.Name, endpoint.RequestParameters[0].Name);
+            Assert.Equal(fakeRequest.Loc, endpoint.RequestParameters[0].In);
+            Assert.Equal(fakeRequest.Type.Name.ToLowerInvariant(), endpoint.RequestParameters[0].Schema.Type);
+        }
     }
 }
