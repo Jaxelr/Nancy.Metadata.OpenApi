@@ -15,7 +15,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
         public void Generate_docs()
         {
             //Arrange
-            var module = new FakeModule(new DefaultRouteCacheProvider(() => new FakeRouteCache()));
+            var module = new FakeDocsModule(new DefaultRouteCacheProvider(() => new FakeRouteCache()));
 
             //Act
             var response = module.GetDocumentation();
@@ -30,10 +30,10 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             var spec = JsonConvert.DeserializeObject<OpenApiSpecification>(body);
 
             //Assert
-            Assert.All(spec.Servers, item => Assert.Contains(item.Description, FakeModule.Server.Description));
-            Assert.All(spec.Servers, item => Assert.Contains(item.Url, FakeModule.Server.Url));
-            Assert.Equal(FakeModule.Title, spec.Info.Title);
-            Assert.Equal(FakeModule.ApiVersion, spec.Info.Version);
+            Assert.All(spec.Servers, item => Assert.Contains(item.Description, FakeDocsModule.Server.Description));
+            Assert.All(spec.Servers, item => Assert.Contains(item.Url, FakeDocsModule.Server.Url));
+            Assert.Equal(FakeDocsModule.Title, spec.Info.Title);
+            Assert.Equal(FakeDocsModule.ApiVersion, spec.Info.Version);
         }
 
         [Fact]
@@ -41,7 +41,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
         {
             //Arrange
             Tag[] Tags = { new Tag() { Name = "Default" } };
-            var module = new FakeModule(new DefaultRouteCacheProvider(() => new FakeRouteCache()), Tags);
+            var module = new FakeDocsModule(new DefaultRouteCacheProvider(() => new FakeRouteCache()), Tags);
 
             //Act
             var response = module.GetDocumentation();
@@ -56,10 +56,10 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             var spec = JsonConvert.DeserializeObject<OpenApiSpecification>(body);
 
             //Assert
-            Assert.All(spec.Servers, item => Assert.Contains(item.Description, FakeModule.Server.Description));
-            Assert.All(spec.Servers, item => Assert.Contains(item.Url, FakeModule.Server.Url));
-            Assert.Equal(FakeModule.Title, spec.Info.Title);
-            Assert.Equal(FakeModule.ApiVersion, spec.Info.Version);
+            Assert.All(spec.Servers, item => Assert.Contains(item.Description, FakeDocsModule.Server.Description));
+            Assert.All(spec.Servers, item => Assert.Contains(item.Url, FakeDocsModule.Server.Url));
+            Assert.Equal(FakeDocsModule.Title, spec.Info.Title);
+            Assert.Equal(FakeDocsModule.ApiVersion, spec.Info.Version);
             Assert.True(Tags.All(t => spec.Tags.Any(
                                s => t.Name == s.Name &&
                                t.Description == s.Description &&
@@ -72,7 +72,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
         {
             //Arrange
             string TermsOfService = "blah blah blah";
-            var module = new FakeModule(new DefaultRouteCacheProvider(() => new FakeRouteCache()), TermsOfService);
+            var module = new FakeDocsModule(new DefaultRouteCacheProvider(() => new FakeRouteCache()), TermsOfService);
 
             //Act
             var response = module.GetDocumentation();
@@ -87,10 +87,10 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             var spec = JsonConvert.DeserializeObject<OpenApiSpecification>(body);
 
             //Assert
-            Assert.All(spec.Servers, item => Assert.Contains(item.Description, FakeModule.Server.Description));
-            Assert.All(spec.Servers, item => Assert.Contains(item.Url, FakeModule.Server.Url));
-            Assert.Equal(FakeModule.Title, spec.Info.Title);
-            Assert.Equal(FakeModule.ApiVersion, spec.Info.Version);
+            Assert.All(spec.Servers, item => Assert.Contains(item.Description, FakeDocsModule.Server.Description));
+            Assert.All(spec.Servers, item => Assert.Contains(item.Url, FakeDocsModule.Server.Url));
+            Assert.Equal(FakeDocsModule.Title, spec.Info.Title);
+            Assert.Equal(FakeDocsModule.ApiVersion, spec.Info.Version);
             Assert.Equal(TermsOfService, spec.Info.TermsOfService);
         }
 
@@ -99,7 +99,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
         public void Generate_docs_with_contact_info()
         {
             //Arrange
-            var module = new FakeModule(new DefaultRouteCacheProvider(() => new FakeRouteCache()));
+            var module = new FakeDocsModule(new DefaultRouteCacheProvider(() => new FakeRouteCache()));
             var contact = new FakeContact();
 
             //Act
@@ -127,7 +127,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
         public void Generate_docs_with_external_doc()
         {
             //Arrange
-            var module = new FakeModule(new DefaultRouteCacheProvider(() => new FakeRouteCache()));
+            var module = new FakeDocsModule(new DefaultRouteCacheProvider(() => new FakeRouteCache()));
             var doc = new FakeExternalDoc();
 
             //Act
@@ -154,7 +154,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
         public void Generate_docs_with_License()
         {
             //Arrange
-            var module = new FakeModule(new DefaultRouteCacheProvider(() => new FakeRouteCache()));
+            var module = new FakeDocsModule(new DefaultRouteCacheProvider(() => new FakeRouteCache()));
             var lic = new FakeLicense();
 
             //Act

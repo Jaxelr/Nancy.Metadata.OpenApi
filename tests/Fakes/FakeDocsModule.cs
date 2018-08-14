@@ -4,7 +4,7 @@ using Nancy.Routing;
 
 namespace Nancy.Metadata.OpenApi.Tests.Fakes
 {
-    public class FakeModule : OpenApiDocsModuleBase
+    public class FakeDocsModule : OpenApiDocsModuleBase
     {
         public static Server Server => new Server() { Description = "My Descripton", Url = "http://localhost:5000/" };
         public static string DocsLocation = "/api/docs";
@@ -12,7 +12,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Fakes
         public static string ApiVersion = "v1.0";
         public static string ApiBaseUrl = "/";
 
-        public FakeModule(IRouteCacheProvider routeCacheProvider, Tag[] Tags) :
+        public FakeDocsModule(IRouteCacheProvider routeCacheProvider, Tag[] Tags) :
             base(routeCacheProvider,
                 DocsLocation,
                 Title,
@@ -23,7 +23,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Fakes
         }
 
 
-        public FakeModule(IRouteCacheProvider routeCacheProvider) :
+        public FakeDocsModule(IRouteCacheProvider routeCacheProvider) :
             base(routeCacheProvider,
                 DocsLocation,
                 Title,
@@ -32,7 +32,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Fakes
         {
         }
 
-        public FakeModule(IRouteCacheProvider routeCacheProvider, string TermsOfService) :
+        public FakeDocsModule(IRouteCacheProvider routeCacheProvider, string TermsOfService) :
             base(routeCacheProvider,
                 DocsLocation,
                 Title,
