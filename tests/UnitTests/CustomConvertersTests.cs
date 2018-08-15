@@ -1,5 +1,6 @@
 ﻿using Nancy.Metadata.OpenApi.Core;
 using Newtonsoft.Json;
+using NJsonSchema;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -105,5 +106,20 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             Assert.Throws<NotImplementedException>(() => JsonConvert.DeserializeObject<List<Model.Security>>(response, converter));
         }
 
+        [Fact]
+        public void Type_name_generator_generate()
+        {
+            //Arrange
+            var generator = new TypeNameGenerator();
+            var schema = new JsonSchema4();
+            string typeNameHint = "My hint";
+            string[] reservedNames = new string[] { "Reserved", "Names" };
+
+            //Act
+            string response = generator.Generate(schema, typeNameHint, reservedNames);
+
+            //Assert
+            Assert.Equal(typeNameHint, response);
+        }
     }
 }
