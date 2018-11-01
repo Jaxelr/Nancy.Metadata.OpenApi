@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="altcover" Version="4.0.653" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
     <PackageReference Include="Nancy" Version="2.0.0-clinteastwood" />
     <PackageReference Include="Nancy.Testing" Version="2.0.0-clinteastwood" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
