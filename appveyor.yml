@@ -10,11 +10,14 @@ configuration:
   - Release
 before_build:
   - cmd: dotnet --version
+  - choco install codecov
 build_script:
   - cmd: dotnet build ./src/Nancy.Metadata.OpenApi.csproj -v quiet
   - cmd: dotnet publish ./src/Nancy.Metadata.OpenApi.csproj -v quiet -f=netstandard2.0
 test_script:
-  - cmd: dotnet test ./tests/Nancy.Metadata.OpenApi.Tests.csproj 
+  - cmd: dotnet test ./tests/Nancy.Metadata.OpenApi.Tests.csproj /p:AltCover=true
+after_test:
+  - codecov -f "./tests/coverage.xml" -t $(codecov_token)
 artifacts:
   - path: '**/*.nupkg'
 skip_commits:
