@@ -10,7 +10,7 @@
     <AssemblyName>Nancy.Metadata.OpenApi</AssemblyName>
     <RootNamespace>Nancy.Metadata.OpenApi</RootNamespace>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Added endpoint authentication logic. Upgraded to netstandard 2.0</PackageReleaseNotes>
+    <PackageReleaseNotes>Added Sourcelink.</PackageReleaseNotes>
     <PackageTags>openapi;nancy;metadata</PackageTags>
     <PackageProjectUrl>https://github.com/Jaxelr/Nancy.Metadata.OpenApi</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Jaxelr/Nancy.Metadata.OpenApi</RepositoryUrl>
