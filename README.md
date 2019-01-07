@@ -6,9 +6,10 @@ You can find the latest specifications of [OpenApi here](https://github.com/OAI/
 
 ## Builds
 
-| Appveyor  |
-| :---:     |
-| [![Build status][build-img]][build] |
+| Appveyor  | Branch | 
+| :---:     | :---: |
+| [![Build status][build-master-img]][build-master] | master |
+| [![Build status][build-develop-img]][build-develop] | develop |
 
 ## Packages
 
@@ -140,7 +141,10 @@ Check the [guidelines](https://github.com/Jaxelr/Nancy.Metadata.OpenApi/blob/mas
 
 [mit-img]: http://img.shields.io/badge/License-MIT-blue.svg
 [mit]: https://github.com/Jaxelr/Nancy.Metadata.OpenApi/blob/master/LICENSE
-[build]: https://ci.appveyor.com/project/Jaxelr/nancy-metadata-openapi
+[build-master-img]: https://ci.appveyor.com/api/projects/status/bk8fiqknunkegnv7/branch/master?svg=true
+[build-master]: https://ci.appveyor.com/project/Jaxelr/nancy-metadata-openapi/branch/master
+[build-develop-img]: https://ci.appveyor.com/api/projects/status/bk8fiqknunkegnv7/branch/develop?svg=true
+[build-develop]: https://ci.appveyor.com/project/Jaxelr/nancy-metadata-openapi/branch/develop
 [build-img]: https://ci.appveyor.com/api/projects/status/bk8fiqknunkegnv7?svg=true
 [nuget]: https://www.nuget.org/packages/Nancy.Metadata.OpenApi
 [nuget-img]: https://img.shields.io/nuget/v/Nancy.Metadata.OpenApi.svg
