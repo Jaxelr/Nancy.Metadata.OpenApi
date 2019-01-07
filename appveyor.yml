@@ -15,8 +15,7 @@ before_build:
 build_script:
   - cmd: dotnet build ./src/Nancy.Metadata.OpenApi.csproj -v quiet
   - cmd: dotnet build ./samples/Nancy.Metadata.OpenApi.DemoApplication/Nancy.Metadata.OpenApi.DemoApplication.csproj -v quiet
-  - cmd: msbuild ./samples/Nancy.Metadata.OpenApi.DemoApplication.net45/Nancy.Metadata.OpenApi.DemoApplication.net45.csproj -v:quiet
-  - cmd: dotnet publish ./src/Nancy.Metadata.OpenApi.csproj -v quiet -f=netstandard2.0
+    - cmd: dotnet publish ./src/Nancy.Metadata.OpenApi.csproj -v quiet -f=netstandard2.0
 test_script:
   - cmd: dotnet test ./tests/Nancy.Metadata.OpenApi.Tests.csproj /p:AltCover=true
 after_test:
