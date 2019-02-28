@@ -2,14 +2,14 @@
 
 _Now_ compatible to Nancy 1.X and Nancy 2.0!
 
-You can find the latest specifications of [OpenApi here](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.1.md) 
+You can find the latest specifications of [OpenApi here](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.1.md)
 
 ## Builds
 
-| Appveyor  | Branch | 
-| :---:     | :---: |
-| [![Build status][build-master-img]][build-master] | master |
-| [![Build status][build-develop-img]][build-develop] | develop |
+| Appveyor  | Branch | Coverage |
+| :---:     | :---: | :--: |
+| [![Build status][build-master-img]][build-master] | master | [![CodeCov][codecov-master-img]][codecov-master] |
+| [![Build status][build-develop-img]][build-develop] | develop | [![CodeCov][codecov-develop-img]][codecov-develop] |
 
 ## Packages
 
@@ -17,22 +17,21 @@ NuGet (Stable) | MyGet (Prerelease)
 :---: | :---:
 [![NuGet][nuget-img]][nuget] | [![MyGet][myget-img]][myget] |
 
+## Installation
 
-## Installation:
-
-Via nuget: 
+Via nuget:
 
 ``` powershell
-PM> Install-Package Nancy.Metadata.OpenApi 
+PM> Install-Package Nancy.Metadata.OpenApi
 ```
 
 You also need the Metadata library provided by Nancyfx:
 
 ``` powershell
-PM> Install-Package Nancy.Metadata.Modules 
+PM> Install-Package Nancy.Metadata.Modules
 ```
 
-## Usage:
+## Usage
 
 Define a docs module that will serve our OpenApi Json (currently only json is supported) document:
 
@@ -43,11 +42,11 @@ using Nancy.Metadata.OpenApi.Modules;
 public class DocsModule : OpenApiDocsModuleBase //We must inherit from the OpenApiDocsModuleBase
 {
     //Could be an array of Servers.
-    public static Server Server 
+    public static Server Server
         => new Server() { Description = "My Descripton", Url = "http://localhost:5000/" };
 
     public static string[] Tags => new string[] { "sample", "openapi" };
-    
+
     public DocsModule(IRouteCacheProvider routeCacheProvider) :
         base(routeCacheProvider,
         "/api/docs/openapi.json",       //Document location path
@@ -66,9 +65,9 @@ We could optionally, if the information is needed, add Contact, License and Exte
 ```c#
 public class DocsModule : OpenApiDocsModuleBase //We must inherit from the OpenApiDocsModuleBase
 {
-    public static Server Server 
+    public static Server Server
         => new Server() { Description = "My Descripton", Url = "http://localhost:5001/" };
-        
+
     public static string[] Tags => new string[] { "sample", "openapi" };
 
     public DocsModule(IRouteCacheProvider routeCacheProvider) :
@@ -90,8 +89,7 @@ Then, define the Nancy modules as you would usually do:
 
 ```c#
 
-//Example using Nancy v2 
-
+//Example using Nancy v2
 public class MyModule : NancyModule
 {
     public MyModule() : base("/api")
@@ -145,6 +143,10 @@ Check the [guidelines](https://github.com/Jaxelr/Nancy.Metadata.OpenApi/blob/mas
 [build-master]: https://ci.appveyor.com/project/Jaxelr/nancy-metadata-openapi/branch/master
 [build-develop-img]: https://ci.appveyor.com/api/projects/status/bk8fiqknunkegnv7/branch/develop?svg=true
 [build-develop]: https://ci.appveyor.com/project/Jaxelr/nancy-metadata-openapi/branch/develop
+[codecov-master-img]: https://codecov.io/gh/Jaxelr/Nancy.Metadata.OpenApi/branch/master/graph/badge.svg
+[codecov-master]: https://codecov.io/gh/Jaxelr/Nancy.Metadata.OpenApi/branch/master
+[codecov-develop-img]: https://codecov.io/gh/Jaxelr/Nancy.Metadata.OpenApi/branch/develop/graph/badge.svg
+[codecov-develop]: https://codecov.io/gh/Jaxelr/Nancy.Metadata.OpenApi/branch/develop
 [build-img]: https://ci.appveyor.com/api/projects/status/bk8fiqknunkegnv7?svg=true
 [nuget]: https://www.nuget.org/packages/Nancy.Metadata.OpenApi
 [nuget-img]: https://img.shields.io/nuget/v/Nancy.Metadata.OpenApi.svg
