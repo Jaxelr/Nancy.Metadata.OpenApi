@@ -28,7 +28,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="2.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
-    <PackageReference Include="Nancy" Version="2.0.0-clinteastwood" />
+    <PackageReference Include="Nancy" Version="2.0.0" />
     <PackageReference Include="Nancy.Metadata.Modules" Version="2.0.0-clinteastwood" />
     <PackageReference Include="Nancy.Validation.FluentValidation" Version="2.0.0-clinteastwood" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />

@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="altcover" Version="5.0.663" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
-    <PackageReference Include="Nancy" Version="2.0.0-clinteastwood" />
+    <PackageReference Include="Nancy" Version="2.0.0" />
     <PackageReference Include="Nancy.Testing" Version="2.0.0-clinteastwood" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="ReportGenerator" Version="4.0.5" />
