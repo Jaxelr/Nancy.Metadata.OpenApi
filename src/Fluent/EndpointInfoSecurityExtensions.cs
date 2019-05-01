@@ -1,7 +1,6 @@
-﻿using Nancy.Metadata.OpenApi.Core;
+﻿using System.Collections.Generic;
+using Nancy.Metadata.OpenApi.Core;
 using Nancy.Metadata.OpenApi.Model;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Nancy.Metadata.OpenApi.Fluent
 {
@@ -94,7 +93,6 @@ namespace Nancy.Metadata.OpenApi.Fluent
 
             var oauth2 = MatchFlow(flowspec, flow);
 
-
             var security = new SecurityScheme()
             {
                 Type = "openIdConnect",
@@ -141,12 +139,15 @@ namespace Nancy.Metadata.OpenApi.Fluent
                 case "implicit":
                     oauth2.Implicit = flowspec;
                     break;
+
                 case "authorizationcode":
                     oauth2.AuthorizationCode = flowspec;
                     break;
+
                 case "clientcredentials":
                     oauth2.ClientCredentials = flowspec;
                     break;
+
                 case "password":
                     oauth2.Password = flowspec;
                     break;
