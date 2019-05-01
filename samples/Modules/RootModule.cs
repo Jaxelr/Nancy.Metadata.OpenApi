@@ -4,6 +4,7 @@ using Nancy.Metadata.OpenApi.DemoApplication.Model;
 using Nancy.Metadata.OpenApi.Fluent;
 using Nancy.ModelBinding;
 using System.Linq;
+using System;
 
 namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
 {
@@ -54,7 +55,7 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
                      .AsJson(new ValidationFailedResponseModel("Model Binding Failed with Exception."))
                      .WithStatusCode(HttpStatusCode.BadRequest);
             }
-            catch (System.NullReferenceException)
+            catch (NullReferenceException)
             {
                 return Response
                 .AsJson(new ValidationFailedResponseModel("The body contains an invalid nested request model."))
@@ -88,7 +89,7 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
                      .AsJson(new ValidationFailedResponseModel("Model Binding Failed with Exception."))
                      .WithStatusCode(HttpStatusCode.BadRequest);
             }
-            catch (System.NullReferenceException)
+            catch (NullReferenceException)
             {
                 return Response
                 .AsJson(new ValidationFailedResponseModel("The body contains an invalid nested request model."))
