@@ -14,7 +14,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
         {
             //Arrange
             var endpoint = new FakeEndpoint();
-            var fakeRouteDescription = new RouteDescription(endpoint.Operation, endpoint.Method, endpoint.Path, null);
+            var fakeRouteDescription = new RouteDescription(endpoint.Operation, endpoint.Method, endpoint.Path, ctx => true, null);
 
             //Act
             var metadata = new OpenApiRouteMetadata(fakeRouteDescription);
@@ -31,7 +31,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             //Arrange
             var endpoint = new FakeEndpoint();
 
-            var fakeRouteDescription = new RouteDescription(endpoint.Operation, endpoint.Method, endpoint.Path, null);
+            var fakeRouteDescription = new RouteDescription(endpoint.Operation, endpoint.Method, endpoint.Path, ctx => true, null);
 
             //Act
             var metadata = new OpenApiRouteMetadata(fakeRouteDescription)
