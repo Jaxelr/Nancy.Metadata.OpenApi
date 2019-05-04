@@ -1,8 +1,10 @@
 # Nancy.Metadata.OpenApi [![Mit License][mit-img]][mit]
 
-_Now_ compatible to Nancy 1.X and Nancy 2.0!
+This library extends Nancy modules in order to produce a specification file that will follow the OpenAPI spec.
 
-You can find the latest specifications of [OpenApi here](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.1.md)
+You can find the latest specifications of [OpenAPI here](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md)
+
+This library targets Nancy 2.0, for previous versions that target Nancy 1.X check release that target version 0.7.0 and below.
 
 ## Builds
 
@@ -135,7 +137,7 @@ Open Api specifies optional objects that havent been implemented at the library 
 
 ## Contributing
 
-Check the [guidelines](https://github.com/Jaxelr/Nancy.Metadata.OpenApi/blob/master/.github/CONTRIBUTING.md) for a simple explanation on how you could help out.
+Check the [guidelines](https://github.com/Jaxelr/Nancy.Metadata.OpenApi/blob/master/.github/CONTRIBUTING.md) for a simple explanation on how you could contribute.
 
 [mit-img]: http://img.shields.io/badge/License-MIT-blue.svg
 [mit]: https://github.com/Jaxelr/Nancy.Metadata.OpenApi/blob/master/LICENSE
