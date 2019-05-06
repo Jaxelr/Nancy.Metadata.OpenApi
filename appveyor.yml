@@ -8,6 +8,8 @@ init:
   - cmd: git config --global core.autocrlf true
 configuration:
   - Release
+nuget:
+  disable_publish_on_pr: true  
 before_build:
   - cmd: dotnet --version
   - cmd: msbuild -version
