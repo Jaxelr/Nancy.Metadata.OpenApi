@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Nancy.Metadata.OpenApi.Core
 {
@@ -18,10 +18,10 @@ namespace Nancy.Metadata.OpenApi.Core
 
             if (value is IList<Model.Security> list)
             {
-                var jo = new JObject();
-
                 foreach (var t in list)
                 {
+                    var jo = new JObject();
+                    
                     var temp = JToken.FromObject(t.Scopes);
                     jo.Add(t.Key, temp);
                     j.Add(jo);
