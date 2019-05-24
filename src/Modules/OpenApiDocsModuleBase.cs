@@ -215,7 +215,7 @@ namespace Nancy.Metadata.OpenApi.Modules
 
                     if (openApiSpecification.Component.ModelDefinitions is null)
                     {
-                        openApiSpecification.Component.ModelDefinitions = new Dictionary<string, NJsonSchema.JsonSchema4>();
+                        openApiSpecification.Component.ModelDefinitions = new Dictionary<string, NJsonSchema.JsonSchema>();
                     }
                 }
 

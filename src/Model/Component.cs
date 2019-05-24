@@ -9,7 +9,7 @@ namespace Nancy.Metadata.OpenApi.Model
         // TODO: Properties of Array types are not properly generated
 
         [JsonProperty("schemas")]
-        public IDictionary<string, NJsonSchema.JsonSchema4> ModelDefinitions { get; set; }
+        public IDictionary<string, NJsonSchema.JsonSchema> ModelDefinitions { get; set; }
 
         [JsonProperty("securitySchemes")]
         public IDictionary<string, SecurityScheme> SecuritySchemes { get; set; }

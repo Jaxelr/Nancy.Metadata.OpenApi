@@ -21,11 +21,10 @@ namespace Nancy.Metadata.OpenApi.Core
                 return key;
             }
 
-            var taskSchema = JsonSchema4.FromTypeAsync(type, new NJsonSchema.Generation.JsonSchemaGeneratorSettings
+            var taskSchema = JsonSchema.FromTypeAsync(type, new NJsonSchema.Generation.JsonSchemaGeneratorSettings
             {
                 SchemaType = SchemaType.OpenApi3,
-                TypeNameGenerator = new TypeNameGenerator(),
-                SchemaNameGenerator = new TypeNameGenerator()
+                TypeNameGenerator = new TypeNameGenerator()
             });
 
             SchemaCache.ComponentCache[key] = taskSchema.Result;

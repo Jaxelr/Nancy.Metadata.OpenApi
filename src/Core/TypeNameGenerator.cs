@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Nancy.Metadata.OpenApi.Core
 {
-    public class TypeNameGenerator : ITypeNameGenerator, ISchemaNameGenerator
+    public class TypeNameGenerator : ITypeNameGenerator
     {
         /// <summary>
         /// This property uses Full Name to avoid collisions inside various namespaces.
@@ -20,6 +20,6 @@ namespace Nancy.Metadata.OpenApi.Core
         /// <param name="typeNameHint"></param>
         /// <param name="reservedTypeNames"></param>
         /// <returns></returns>
-        public string Generate(JsonSchema4 schema, string typeNameHint, IEnumerable<string> reservedTypeNames) => typeNameHint;
+        public string Generate(JsonSchema schema, string typeNameHint, IEnumerable<string> reservedTypeNames) => typeNameHint;
     }
 }

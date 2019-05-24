@@ -134,7 +134,7 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
         {
             //Arrange
             var generator = new TypeNameGenerator();
-            var schema = new JsonSchema4();
+            var schema = new JsonSchema();
             string typeNameHint = "My hint";
             string[] reservedNames = new string[] { "Reserved", "Names" };
 
