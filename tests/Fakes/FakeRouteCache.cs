@@ -1,7 +1,6 @@
-﻿using Nancy.Routing;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using Nancy.Routing;
 
 namespace Nancy.Metadata.OpenApi.Tests.Fakes
 {
@@ -15,8 +14,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Fakes
 
         public FakeRouteCache(Action<FakeRouteCacheConfigurator> closure)
         {
-            var configurator =
-                new FakeRouteCacheConfigurator(this);
+            var configurator = new FakeRouteCacheConfigurator(this);
 
             closure.Invoke(configurator);
         }
@@ -31,20 +29,6 @@ namespace Nancy.Metadata.OpenApi.Tests.Fakes
             {
                 this.routeCache = routeCache;
             }
-
-            private void AddRoutesToCache(IEnumerable<RouteDescription> routes, Type moduleType)
-            {
-                if (!routeCache.ContainsKey(moduleType))
-                {
-                    routeCache[moduleType] = new List<Tuple<int, RouteDescription>>();
-                }
-
-                routeCache[moduleType].AddRange(routes.Select((r, i) => new Tuple<int, RouteDescription>(i, r)));
-            }
-
-            public FakeRouteCacheConfigurator AddGetRoute(string path, Type moduleType) => this;
-
-            public FakeRouteCacheConfigurator AddGetRoute(string path, Type moduleType, Func<NancyContext, bool> condition) => this;
         }
     }
 }
