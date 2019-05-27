@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using Xunit;
 
-namespace Nancy.Metadata.OpenApi.Tests.UnitTests
+namespace Nancy.Metadata.OpenApi.Tests.Unit
 {
-    public class ModuleTests
+    public class ModuleFixtures
     {
         [Fact]
         public void Generate_docs()

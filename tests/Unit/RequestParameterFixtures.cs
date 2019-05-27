@@ -4,9 +4,9 @@ using Nancy.Metadata.OpenApi.Tests.Fakes;
 using System;
 using Xunit;
 
-namespace Nancy.Metadata.OpenApi.Tests.UnitTests
+namespace Nancy.Metadata.OpenApi.Tests.Unit
 {
-    public class RequestParameterTests
+    public class RequestParameterFixtures
     {
         [Fact]
         public void Request_parameter_string()

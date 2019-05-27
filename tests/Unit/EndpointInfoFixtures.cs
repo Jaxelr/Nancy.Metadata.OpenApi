@@ -5,9 +5,9 @@ using Nancy.Metadata.OpenApi.Tests.Fakes;
 using Nancy.Routing;
 using Xunit;
 
-namespace Nancy.Metadata.OpenApi.Tests.UnitTests
+namespace Nancy.Metadata.OpenApi.Tests.Unit
 {
-    public class EndpointInfoTests
+    public class EndpointInfoFixtures
     {
         [Fact]
         public void Generate_openapi_metadata()

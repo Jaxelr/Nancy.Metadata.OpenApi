@@ -1,13 +1,13 @@
-﻿using Nancy.Metadata.OpenApi.Core;
+﻿using System;
+using System.Collections.Generic;
+using Nancy.Metadata.OpenApi.Core;
 using Newtonsoft.Json;
 using NJsonSchema;
-using System;
-using System.Collections.Generic;
 using Xunit;
 
-namespace Nancy.Metadata.OpenApi.Tests.UnitTests
+namespace Nancy.Metadata.OpenApi.Tests.Unit
 {
-    public class CustomConvertersTests
+    public class CustomConvertersFixtures
     {
         private static string[] arrayScopes = { "read", "write" };
 
@@ -51,6 +51,22 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             Assert.True(shouldTrue);
             Assert.NotEmpty(response);
             Assert.All(arrayScopes, item => response.Contains(item));
+        }
+
+        [Fact]
+        public void Invoke_array_serializer_empty()
+        {
+            //Arrange
+            var converter = new CustomArrayJsonConverter();
+            const string NullJson = "null";
+
+            //Act
+            bool shouldTrue = converter.CanConvert(arrayScopes.GetType());
+            string response = JsonConvert.SerializeObject(null, Formatting.Indented, converter);
+
+            //Assert
+            Assert.True(shouldTrue);
+            Assert.Contains(NullJson, response);
         }
 
         [Fact]
@@ -98,6 +114,24 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             Assert.All(listScopes, item => response.Contains(item.Key));
         }
 
+
+        [Fact]
+        public void Invoke_collection_serializer_empty()
+        {
+            //Arrange
+            var converter = new CustomCollectionJsonConverter();
+            const string NullJson = "null";
+
+            //Act
+            bool shouldTrue = converter.CanConvert(listScopes.GetType());
+            string response = JsonConvert.SerializeObject(null, Formatting.Indented, converter);
+
+            //Assert
+            Assert.True(shouldTrue);
+            Assert.Contains(NullJson, response);
+        }
+
+
         [Fact]
         public void Invoke_collection_deserializer()
         {
@@ -111,7 +145,6 @@ namespace Nancy.Metadata.OpenApi.Tests.UnitTests
             //Assert
             Assert.Throws<NotImplementedException>(() => JsonConvert.DeserializeObject<List<Model.Security>>(response, converter));
         }
-
 
         [Fact]
         public void Invoke_multiple_collection_serializer()

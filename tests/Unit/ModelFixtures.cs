@@ -1,8 +1,8 @@
 ﻿using Xunit;
 
-namespace Nancy.Metadata.OpenApi.Tests.UnitTests
+namespace Nancy.Metadata.OpenApi.Tests.Unit
 {
-    public class ModelTests
+    public class ModelFixtures
     {
         [Theory]
         [InlineData("key1")]

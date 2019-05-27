@@ -4,9 +4,9 @@ using Nancy.Metadata.OpenApi.Model;
 using Nancy.Metadata.OpenApi.Tests.Fakes;
 using Xunit;
 
-namespace Nancy.Metadata.OpenApi.Tests.UnitTests
+namespace Nancy.Metadata.OpenApi.Tests.Unit
 {
-    public class EndpointInfoSecurityTests
+    public class EndpointInfoSecurityFixtures
     {
         [Fact]
         public void Endpoint_with_custom_authentication()
