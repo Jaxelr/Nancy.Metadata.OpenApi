@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
-    <Version>0.9.0</Version>
-    <PackageVersion>0.9.0</PackageVersion>
+    <Version>0.10.0</Version>
+    <PackageVersion>0.10.0</PackageVersion>
     <PackageId>Nancy.Metadata.OpenApi</PackageId>
     <Copyright>Copyright 2019</Copyright>
     <Authors>Jaxel Rojas</Authors>
@@ -20,7 +20,6 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-    
   </PropertyGroup>
 
   <ItemGroup>
