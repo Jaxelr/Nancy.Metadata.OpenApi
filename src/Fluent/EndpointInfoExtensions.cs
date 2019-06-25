@@ -1,7 +1,7 @@
-﻿using Nancy.Metadata.OpenApi.Core;
-using Nancy.Metadata.OpenApi.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Nancy.Metadata.OpenApi.Core;
+using Nancy.Metadata.OpenApi.Model;
 
 namespace Nancy.Metadata.OpenApi.Fluent
 {
@@ -65,14 +65,13 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <param name="endpointInfo"></param>
         /// <param name="name"></param>
         /// <param name="type"></param>
-        /// <param name="format"></param>
         /// <param name="required"></param>
         /// <param name="description"></param>
-        /// <param name="loc"></param>
+        /// <param name="loc">Plausible values are query, header, path or cookie</param>
         /// <param name="deprecated"></param>
         /// <returns></returns>
         public static Endpoint WithRequestParameter(this Endpoint endpointInfo, string name, Type type = null,
-            string format = null, bool required = true, string description = null,
+            bool required = true, string description = null,
             string loc = "path", bool deprecated = false)
         {
             if (endpointInfo.RequestParameters is null)
@@ -126,7 +125,6 @@ namespace Nancy.Metadata.OpenApi.Fluent
                 {
                     {
                         contentType, new MediaTypeObject() { Schema = new SchemaRef() { Ref = Ref } }
-
                     }
                 }
             };
