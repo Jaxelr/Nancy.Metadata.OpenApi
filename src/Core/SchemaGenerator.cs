@@ -1,7 +1,7 @@
-﻿using Nancy.Metadata.OpenApi.Model;
-using NJsonSchema;
-using System;
+﻿using System;
 using System.Collections;
+using Nancy.Metadata.OpenApi.Model;
+using NJsonSchema;
 
 namespace Nancy.Metadata.OpenApi.Core
 {
@@ -54,7 +54,7 @@ namespace Nancy.Metadata.OpenApi.Core
         /// <summary>
         /// Matches the type, format and item (if array) to the schema specified on the parameter.
         /// </summary>
-        /// <param name="type">The type defined for the parameter, check: https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#dataTypeFormat for guidelines</param>
+        /// <param name="type">The type defined for the parameter, check: https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#data-types for guidelines</param>
         /// <returns></returns>
         internal static SchemaRef GetSchemaByType(Type type)
         {
@@ -73,7 +73,7 @@ namespace Nancy.Metadata.OpenApi.Core
             }
 
             SchemaRef schema;
-            string schemaType = null, format = null;
+            string schemaType, format;
 
             switch (Type.GetTypeCode(type)) //formats as defined by OAS:
             {
@@ -126,11 +126,23 @@ namespace Nancy.Metadata.OpenApi.Core
 
             if (isCollection)
             {
-                schema = new SchemaRef() { Item = new Item() { Type = schemaType, Format = format }, Type = "array" };
+                schema = new SchemaRef()
+                {
+                    Item = new Item()
+                    {
+                        Type = schemaType,
+                        Format = format
+                    },
+                    Type = "array"
+                };
             }
             else
             {
-                schema = new SchemaRef() { Type = schemaType, Format = format };
+                schema = new SchemaRef()
+                {
+                    Type = schemaType,
+                    Format = format
+                };
             }
 
             return schema;
