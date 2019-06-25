@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Nancy.Metadata.OpenApi.Model
 {
@@ -9,5 +10,8 @@ namespace Nancy.Metadata.OpenApi.Model
 
         [JsonProperty("description")]
         public string Description { get; set; }
+
+        [JsonProperty("variables")]
+        public IDictionary<string, ServerVariable> Variables { get; set; }
     }
 }
