@@ -20,7 +20,6 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
                 .WithRequestParameter(
                 fakeRequest.Name,
                 fakeRequest.Type,
-                fakeRequest.Format,
                 fakeRequest.Required,
                 fakeRequest.Description,
                 fakeRequest.Loc,
@@ -49,7 +48,6 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
                 .WithRequestParameter(
                 fakeRequest.Name,
                 typeof(int),
-                fakeRequest.Format,
                 fakeRequest.Required,
                 fakeRequest.Description,
                 fakeRequest.Loc,
@@ -78,7 +76,6 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
                 .WithRequestParameter(
                 fakeRequest.Name,
                 typeof(long),
-                fakeRequest.Format,
                 fakeRequest.Required,
                 fakeRequest.Description,
                 fakeRequest.Loc,
@@ -107,7 +104,6 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
                 .WithRequestParameter(
                 fakeRequest.Name,
                 typeof(decimal),
-                fakeRequest.Format,
                 fakeRequest.Required,
                 fakeRequest.Description,
                 fakeRequest.Loc,
@@ -136,7 +132,6 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
                 .WithRequestParameter(
                 fakeRequest.Name,
                 typeof(double),
-                fakeRequest.Format,
                 fakeRequest.Required,
                 fakeRequest.Description,
                 fakeRequest.Loc,
@@ -164,7 +159,6 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
                 .WithRequestParameter(
                 fakeRequest.Name,
                 typeof(byte),
-                fakeRequest.Format,
                 fakeRequest.Required,
                 fakeRequest.Description,
                 fakeRequest.Loc,
@@ -192,7 +186,6 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
                 .WithRequestParameter(
                 fakeRequest.Name,
                 typeof(bool),
-                fakeRequest.Format,
                 fakeRequest.Required,
                 fakeRequest.Description,
                 fakeRequest.Loc,
@@ -220,7 +213,6 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
                 .WithRequestParameter(
                 fakeRequest.Name,
                 typeof(DateTime),
-                fakeRequest.Format,
                 fakeRequest.Required,
                 fakeRequest.Description,
                 fakeRequest.Loc,
@@ -248,7 +240,6 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
                 .WithRequestParameter(
                 fakeRequest.Name,
                 typeof(object),
-                fakeRequest.Format,
                 fakeRequest.Required,
                 fakeRequest.Description,
                 fakeRequest.Loc,

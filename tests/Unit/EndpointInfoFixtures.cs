@@ -147,7 +147,6 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
                 .WithRequestParameter(
                 fakeRequest.Name,
                 fakeRequest.Type,
-                fakeRequest.Format,
                 fakeRequest.Required,
                 fakeRequest.Description,
                 fakeRequest.Loc,
@@ -176,7 +175,6 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
                 (
                     fakeRequest.Name,
                     fakeRequest.Type,
-                    fakeRequest.Format,
                     fakeRequest.Required,
                     fakeRequest.Description,
                     fakeRequest.Loc,
@@ -186,7 +184,6 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
                 (
                     Param2,
                     fakeRequest.Type,
-                    fakeRequest.Format,
                     fakeRequest.Required,
                     fakeRequest.Description,
                     fakeRequest.Loc,
@@ -220,7 +217,6 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
                 .WithRequestParameter(
                 fakeRequest.Name,
                 null,
-                fakeRequest.Format,
                 fakeRequest.Required,
                 fakeRequest.Description,
                 fakeRequest.Loc,
@@ -248,7 +244,6 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
                 .WithRequestParameter(
                 fakeRequest.Name,
                 fakeRequest.Type,
-                fakeRequest.Format,
                 fakeRequest.Required,
                 fakeRequest.Description,
                 fakeRequest.Loc,
@@ -277,7 +272,6 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
                 .WithRequestParameter(
                 fakeRequest.Name,
                 fakeRequest.Type,
-                fakeRequest.Format,
                 fakeRequest.Required,
                 fakeRequest.Description,
                 fakeRequest.Loc,
