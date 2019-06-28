@@ -157,7 +157,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             Assert.Null(endpoint.RequestParameters[0].Schema.Format);
             Assert.Equal(fakeRequest.Required, endpoint.RequestParameters[0].Required);
             Assert.Equal(fakeRequest.Name, endpoint.RequestParameters[0].Name);
-            Assert.Equal(fakeRequest.Loc, endpoint.RequestParameters[0].In);
+            Assert.Equal(LocGenerator.GetLocByEnum(fakeRequest.Loc), endpoint.RequestParameters[0].In);
             Assert.Equal(fakeRequest.Type.Name.ToLowerInvariant(), endpoint.RequestParameters[0].Schema.Type);
         }
 
@@ -195,13 +195,13 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             Assert.Null(endpoint.RequestParameters[0].Schema.Format);
             Assert.Equal(fakeRequest.Required, endpoint.RequestParameters[0].Required);
             Assert.Equal(fakeRequest.Name, endpoint.RequestParameters[0].Name);
-            Assert.Equal(fakeRequest.Loc, endpoint.RequestParameters[0].In);
+            Assert.Equal(LocGenerator.GetLocByEnum(fakeRequest.Loc), endpoint.RequestParameters[0].In);
             Assert.Equal(fakeRequest.Type.Name.ToLowerInvariant(), endpoint.RequestParameters[0].Schema.Type);
             Assert.Equal(fakeRequest.Description, endpoint.RequestParameters[1].Description);
             Assert.Null(endpoint.RequestParameters[1].Schema.Format);
             Assert.Equal(fakeRequest.Required, endpoint.RequestParameters[1].Required);
             Assert.Equal(Param2, endpoint.RequestParameters[1].Name);
-            Assert.Equal(fakeRequest.Loc, endpoint.RequestParameters[1].In);
+            Assert.Equal(LocGenerator.GetLocByEnum(fakeRequest.Loc), endpoint.RequestParameters[1].In);
             Assert.Equal(fakeRequest.Type.Name.ToLowerInvariant(), endpoint.RequestParameters[1].Schema.Type);
         }
 
@@ -227,7 +227,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             Assert.Null(endpoint.RequestParameters[0].Schema.Format);
             Assert.Equal(fakeRequest.Required, endpoint.RequestParameters[0].Required);
             Assert.Equal(fakeRequest.Name, endpoint.RequestParameters[0].Name);
-            Assert.Equal(fakeRequest.Loc, endpoint.RequestParameters[0].In);
+            Assert.Equal(LocGenerator.GetLocByEnum(fakeRequest.Loc), endpoint.RequestParameters[0].In);
             Assert.Equal(fakeRequest.Type.Name.ToLowerInvariant(), endpoint.RequestParameters[0].Schema.Type);
         }
 
@@ -254,7 +254,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             Assert.Null(endpoint.RequestParameters[0].Schema.Item.Format);
             Assert.Equal(fakeRequest.Required, endpoint.RequestParameters[0].Required);
             Assert.Equal(fakeRequest.Name, endpoint.RequestParameters[0].Name);
-            Assert.Equal(fakeRequest.Loc, endpoint.RequestParameters[0].In);
+            Assert.Equal(LocGenerator.GetLocByEnum(fakeRequest.Loc), endpoint.RequestParameters[0].In);
             Assert.Equal(ARRAY, endpoint.RequestParameters[0].Schema.Type);
             Assert.Equal(fakeRequest.Type.GetElementType().Name.ToLowerInvariant(), endpoint.RequestParameters[0].Schema.Item.Type);
         }
@@ -282,7 +282,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             Assert.Null(endpoint.RequestParameters[0].Schema.Item.Format);
             Assert.Equal(fakeRequest.Required, endpoint.RequestParameters[0].Required);
             Assert.Equal(fakeRequest.Name, endpoint.RequestParameters[0].Name);
-            Assert.Equal(fakeRequest.Loc, endpoint.RequestParameters[0].In);
+            Assert.Equal(LocGenerator.GetLocByEnum(fakeRequest.Loc), endpoint.RequestParameters[0].In);
             Assert.Equal(ARRAY, endpoint.RequestParameters[0].Schema.Type);
             Assert.Equal(fakeRequest.Type.GenericTypeArguments[0].Name.ToLowerInvariant(), endpoint.RequestParameters[0].Schema.Item.Type);
         }

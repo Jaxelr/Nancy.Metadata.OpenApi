@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Nancy.Metadata.OpenApi.Core;
 
 namespace Nancy.Metadata.OpenApi.Tests.Fakes
 {
@@ -9,7 +10,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Fakes
         public string Description => "Request description";
         public Type Type => typeof(IEnumerable<string>);
         public string Format => "format";
-        public string Loc => "query";
+        public Loc Loc => Loc.Query;
         public bool Required => false;
         public bool Deprecated => false;
     }
