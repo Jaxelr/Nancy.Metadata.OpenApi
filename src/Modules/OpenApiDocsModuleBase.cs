@@ -10,9 +10,6 @@ namespace Nancy.Metadata.OpenApi.Modules
     public abstract class OpenApiDocsModuleBase : NancyModule
     {
         private const string CONTENT_TYPE = "application/json";
-        private const string DOCS_LOCATION = "/api/docs";
-        private const string API_VERSION = "1.0";
-        private const string TITLE = "My Title";
         private const string HOST = "localhost:5000";
         private const string HOST_DESCRIPTION = "My Localhost";
 
@@ -198,7 +195,7 @@ namespace Nancy.Metadata.OpenApi.Modules
 
                 string path = m.Path;
 
-                //OpenApi doesnt handle these special characters on the url path construction, but Nancy allows it.
+                // OpenApi doesnt handle these special characters on the url path construction, but Nancy allows it.
                 path = Regex.Replace(path, "[?:.*]", string.Empty);
 
                 if (!endpoints.ContainsKey(path))
@@ -219,7 +216,7 @@ namespace Nancy.Metadata.OpenApi.Modules
                     }
                 }
 
-                //Components added here from Cache
+                // Components added here from Cache
                 foreach (string key in SchemaCache.ComponentCache.Keys)
                 {
                     if (openApiSpecification.Component.ModelDefinitions.ContainsKey(key))
@@ -230,10 +227,10 @@ namespace Nancy.Metadata.OpenApi.Modules
                     openApiSpecification.Component.ModelDefinitions.Add(key, SchemaCache.ComponentCache[key]);
                 }
 
-                //Security Schemes Added here from Cache
+                // Security Schemes Added here from Cache
                 foreach (string key in SchemaCache.SecurityCache.Keys)
                 {
-                    //Since we could have all unsecured components, the Security Scheme is optional.
+                    // Since we could have all unsecured components, the Security Scheme is optional.
                     if (openApiSpecification.Component.SecuritySchemes is null)
                     {
                         openApiSpecification.Component.SecuritySchemes = new Dictionary<string, SecurityScheme>();
@@ -247,7 +244,7 @@ namespace Nancy.Metadata.OpenApi.Modules
                     openApiSpecification.Component.SecuritySchemes.Add(key, SchemaCache.SecurityCache[key]);
                 }
 
-                //Security Requirements from the list defined by endpoint.
+                // Security Requirements from the list defined by endpoint.
                 if (m.Info.Security is List<Model.Security> list)
                 {
                     foreach (var sec in list)
@@ -267,7 +264,7 @@ namespace Nancy.Metadata.OpenApi.Modules
                 }
                 else
                 {
-                    //If no Security was defined on each operation we assign nothing for now.
+                    // If no Security was defined on each operation we assign nothing for now.
                     m.Info.Security = new List<Model.Security>();
                 }
             }
