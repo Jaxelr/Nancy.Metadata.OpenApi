@@ -60,7 +60,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
         }
 
         /// <summary>
-        /// Ads a request parameters to the endpoint operation.
+        /// 
         /// </summary>
         /// <param name="endpointInfo"></param>
         /// <param name="name"></param>
@@ -71,8 +71,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <param name="deprecated"></param>
         /// <returns></returns>
         public static Endpoint WithRequestParameter(this Endpoint endpointInfo, string name, Type type = null,
-            bool required = true, string description = null,
-            string loc = "path", bool deprecated = false)
+        bool required = true, string description = null,Loc loc = Loc.Path, bool deprecated = false)
         {
             if (endpointInfo.RequestParameters is null)
             {
@@ -85,12 +84,13 @@ namespace Nancy.Metadata.OpenApi.Fluent
             }
 
             var schema = SchemaGenerator.GetSchemaByType(type);
+            string locText = LocGenerator.GetLocByEnum(loc);
 
             endpointInfo.RequestParameters.Add(new RequestParameter
             {
                 Required = required,
                 Description = description,
-                In = loc,
+                In = locText,
                 Name = name,
                 Deprecated = deprecated,
                 Schema = schema
@@ -98,6 +98,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
 
             return endpointInfo;
         }
+
 
         /// <summary>
         /// Ads a request model to the endpoint operation.
