@@ -114,7 +114,6 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             Assert.All(listScopes, item => response.Contains(item.Key));
         }
 
-
         [Fact]
         public void Invoke_collection_serializer_empty()
         {
@@ -130,7 +129,6 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             Assert.True(shouldTrue);
             Assert.Contains(NullJson, response);
         }
-
 
         [Fact]
         public void Invoke_collection_deserializer()
@@ -176,6 +174,19 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
 
             //Assert
             Assert.Equal(typeNameHint, response);
+        }
+
+        [Fact]
+        public void Type_name_generator()
+        {
+            //Arrange
+            var generator = new TypeNameGenerator();
+
+            //Act
+            string fullName = generator.Generate(typeof(int));
+
+            //Assert
+            Assert.Equal(typeof(int).FullName, fullName);
         }
     }
 }
