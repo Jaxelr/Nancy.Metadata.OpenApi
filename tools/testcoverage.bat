@@ -4,7 +4,7 @@ set "destination=testcoverage"
 rmdir /q /s %destination%
 mkdir %destination%
 cd tests
-dotnet test /p:AltCover=true
+dotnet test /p:AltCover=true /p:AltCoverAssemblyExcludeFilter="xunit"
 mv coverage.xml ../%destination%/coverage.xml
 
 cd ../%destination%
