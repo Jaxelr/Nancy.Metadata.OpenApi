@@ -164,7 +164,7 @@ namespace Nancy.Metadata.OpenApi.Modules
         /// <summary>
         /// This operation generates the specification upon the openApiSpecification variable.
         /// </summary>
-        private void GenerateSpecification()
+        internal void GenerateSpecification()
         {
             openApiSpecification = new OpenApiSpecification
             {
