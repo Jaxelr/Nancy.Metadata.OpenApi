@@ -12,13 +12,13 @@ namespace Nancy.Metadata.OpenApi.Tests.Fakes
         public static string ApiVersion = "v1.0";
         public static string ApiBaseUrl = "/";
 
-        public FakeDocsModule(IRouteCacheProvider routeCacheProvider, Tag[] Tags) :
+        public FakeDocsModule(IRouteCacheProvider routeCacheProvider, Tag[] tags) :
             base(routeCacheProvider,
                 DocsLocation,
                 Title,
                 ApiVersion,
                 host: Server,
-                tags: Tags)
+                tags: tags)
         {
         }
 
@@ -31,12 +31,12 @@ namespace Nancy.Metadata.OpenApi.Tests.Fakes
         {
         }
 
-        public FakeDocsModule(IRouteCacheProvider routeCacheProvider, string TermsOfService) :
+        public FakeDocsModule(IRouteCacheProvider routeCacheProvider, string termsOfService) :
             base(routeCacheProvider,
                 DocsLocation,
                 Title,
                 ApiVersion,
-                termsOfService: TermsOfService,
+                termsOfService: termsOfService,
                 host: Server)
         {
         }
