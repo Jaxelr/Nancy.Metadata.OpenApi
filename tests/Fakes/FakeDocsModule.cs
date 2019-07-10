@@ -41,6 +41,15 @@ namespace Nancy.Metadata.OpenApi.Tests.Fakes
         {
         }
 
+        public FakeDocsModule(IRouteCacheProvider routeCacheProvider, Server server) :
+            base(routeCacheProvider,
+                DocsLocation,
+                Title,
+                ApiVersion,
+                host: server)
+        {
+        }
+
         public void FillContact(string name, string email, string url) => WithContact(name, email, url);
 
         public void FillExternalDoc(string desc, string url) => WithExternalDocument(desc, url);
