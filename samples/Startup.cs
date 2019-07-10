@@ -15,9 +15,8 @@ namespace Nancy.Metadata.OpenApi.DemoApplication
             app.UseCors("CustomPolicy");
         }
 
-        public void ConfigureServices(IServiceCollection services)
-            => services.AddCors(o => o.AddPolicy("CustomPolicy",
-                builder =>
+        public void ConfigureServices(IServiceCollection services) =>
+            services.AddCors(o => o.AddPolicy("CustomPolicy", builder =>
             {
                 builder.AllowAnyOrigin()
                         .AllowAnyMethod()
