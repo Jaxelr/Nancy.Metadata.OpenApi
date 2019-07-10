@@ -2,6 +2,7 @@
 using Nancy.Metadata.OpenApi.Tests.Fakes;
 using Nancy.Routing;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -30,8 +31,8 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             var spec = JsonConvert.DeserializeObject<OpenApiSpecification>(body);
 
             //Assert
-            Assert.All(spec.Servers, item => Assert.Contains(item.Description, FakeDocsModule.Server.Description));
-            Assert.All(spec.Servers, item => Assert.Contains(item.Url, FakeDocsModule.Server.Url));
+            Assert.All(spec.Servers, item => Assert.Equal(item.Description, FakeDocsModule.Server.Description));
+            Assert.All(spec.Servers, item => Assert.Equal(item.Url, FakeDocsModule.Server.Url));
             Assert.Equal(FakeDocsModule.Title, spec.Info.Title);
             Assert.Equal(FakeDocsModule.ApiVersion, spec.Info.Version);
         }
@@ -56,8 +57,8 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             var spec = JsonConvert.DeserializeObject<OpenApiSpecification>(body);
 
             //Assert
-            Assert.All(spec.Servers, item => Assert.Contains(item.Description, FakeDocsModule.Server.Description));
-            Assert.All(spec.Servers, item => Assert.Contains(item.Url, FakeDocsModule.Server.Url));
+            Assert.All(spec.Servers, item => Assert.Equal(item.Description, FakeDocsModule.Server.Description));
+            Assert.All(spec.Servers, item => Assert.Equal(item.Url, FakeDocsModule.Server.Url));
             Assert.Equal(FakeDocsModule.Title, spec.Info.Title);
             Assert.Equal(FakeDocsModule.ApiVersion, spec.Info.Version);
             Assert.True(Tags.All(t => spec.Tags.Any(
@@ -87,8 +88,8 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             var spec = JsonConvert.DeserializeObject<OpenApiSpecification>(body);
 
             //Assert
-            Assert.All(spec.Servers, item => Assert.Contains(item.Description, FakeDocsModule.Server.Description));
-            Assert.All(spec.Servers, item => Assert.Contains(item.Url, FakeDocsModule.Server.Url));
+            Assert.All(spec.Servers, item => Assert.Equal(item.Description, FakeDocsModule.Server.Description));
+            Assert.All(spec.Servers, item => Assert.Equal(item.Url, FakeDocsModule.Server.Url));
             Assert.Equal(FakeDocsModule.Title, spec.Info.Title);
             Assert.Equal(FakeDocsModule.ApiVersion, spec.Info.Version);
             Assert.Equal(TermsOfService, spec.Info.TermsOfService);
@@ -174,6 +175,35 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             //Assert
             Assert.Equal(lic.Name, spec.Info.License.Name);
             Assert.Equal(lic.Url, spec.Info.License.Url);
+        }
+
+        [Fact]
+        public void Generate_docs_with_expanded_server()
+        {
+            //Arrange
+            var server = FakeServer.Server;
+            
+            var module = new FakeDocsModule(new DefaultRouteCacheProvider(() => new FakeRouteCache()), server);
+
+            //Act
+            var response = module.GetDocumentation();
+            string body;
+
+            using (var memoryStream = new MemoryStream())
+            {
+                response.Contents.Invoke(memoryStream);
+                body = Encoding.UTF8.GetString(memoryStream.GetBuffer());
+            }
+
+            var spec = JsonConvert.DeserializeObject<OpenApiSpecification>(body);
+
+            //Assert
+            Assert.All(spec.Servers, item => Assert.Equal(item.Description, server.Description));
+            Assert.All(spec.Servers, item => Assert.Equal(item.Url, server.Url));
+            Assert.All(spec.Servers.FirstOrDefault().Variables, item => Assert.Equal(item.Key, FakeServer.FakeKey));
+            Assert.All(spec.Servers.FirstOrDefault().Variables, item => Assert.Equal(item.Value.Description, FakeServer.ServerVariable.Description));
+            Assert.All(spec.Servers.FirstOrDefault().Variables, item => Assert.Equal(item.Value.Default, FakeServer.ServerVariable.Default));
+            Assert.All(spec.Servers.FirstOrDefault().Variables, item => Assert.Equal(item.Value.Enum, FakeServer.ServerVariable.Enum));
         }
     }
 }
