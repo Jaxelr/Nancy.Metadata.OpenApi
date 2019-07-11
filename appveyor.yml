@@ -12,14 +12,13 @@ nuget:
   disable_publish_on_pr: true  
 before_build:
   - cmd: dotnet --version
-  - cmd: msbuild -version
   - choco install codecov
 build_script:
   - cmd: dotnet build ./src/Nancy.Metadata.OpenApi.csproj -v quiet
   - cmd: dotnet build ./samples/Nancy.Metadata.OpenApi.DemoApplication.csproj -v quiet
   - cmd: dotnet publish ./src/Nancy.Metadata.OpenApi.csproj -v quiet -f=netstandard2.0
 test_script:
-  - cmd: dotnet test ./tests/Nancy.Metadata.OpenApi.Tests.csproj /p:AltCover=true
+  - cmd: dotnet test ./tests/Nancy.Metadata.OpenApi.Tests.csproj /p:AltCover=true /p:AltCoverAssemblyExcludeFilter="xunit"
 after_test:
   - codecov -f "./tests/coverage.xml" -t $(codecov_token)
 artifacts:
