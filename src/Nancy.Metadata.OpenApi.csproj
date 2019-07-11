@@ -10,13 +10,12 @@
     <AssemblyName>Nancy.Metadata.OpenApi</AssemblyName>
     <RootNamespace>Nancy.Metadata.OpenApi</RootNamespace>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Upgrade to NJsonSchema 10</PackageReleaseNotes>
+    <PackageReleaseNotes>Adding new features related to standard 3.0.2</PackageReleaseNotes>
     <PackageTags>openapi;nancy;metadata</PackageTags>
     <PackageProjectUrl>https://github.com/Jaxelr/Nancy.Metadata.OpenApi</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Jaxelr/Nancy.Metadata.OpenApi</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Description>A library to add capabilities to a NancyFx web service to generate a json doc that complies to OpenApi spec 3.0.0.</Description>
-    <NeutralLanguage></NeutralLanguage>
+    <Description>A library to add capabilities to a NancyFx web service to generate a json doc that complies to OpenApi spec 3.0.2.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
