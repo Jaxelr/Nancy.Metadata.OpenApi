@@ -37,6 +37,9 @@ namespace Nancy.Metadata.OpenApi.Model
         [JsonProperty("security"), JsonConverter(typeof(Core.CustomCollectionJsonConverter))]
         public IList<Security> Security { get; set; }
 
+        [JsonProperty("servers")]
+        public Server[] Servers { get; set; }
+
         [JsonProperty("externalDocs")]
         public ExternalDocumentation ExternalDocs { get; set; }
     }
