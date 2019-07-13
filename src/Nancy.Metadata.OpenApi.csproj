@@ -14,6 +14,7 @@
     <PackageTags>openapi;nancy;metadata</PackageTags>
     <PackageProjectUrl>https://github.com/Jaxelr/Nancy.Metadata.OpenApi</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Jaxelr/Nancy.Metadata.OpenApi</RepositoryUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/Jaxelr/Nancy.Metadata.OpenApi/develop/icon.png</PackageIconUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>A library to add capabilities to a NancyFx web service to generate a json doc that complies to OpenApi spec 3.0.2.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
