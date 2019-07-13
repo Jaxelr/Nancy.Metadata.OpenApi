@@ -9,7 +9,7 @@ mv coverage.xml ../%destination%/coverage.xml
 
 cd ../%destination%
 
-set "reportgenerator=%UserProfile%\.nuget\packages\reportgenerator\4.2.2\tools\net47\ReportGenerator.exe"
+set "reportgenerator=%UserProfile%\.nuget\packages\reportgenerator\4.2.5\tools\net47\ReportGenerator.exe"
 set "targetdir=."
 
 "%reportGenerator%" -reports:coverage.xml -reporttypes:HtmlInline -targetdir:%targetdir%
