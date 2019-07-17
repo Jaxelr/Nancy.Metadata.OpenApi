@@ -1,11 +1,11 @@
-﻿using Nancy.Metadata.OpenApi.Model;
-using Nancy.Metadata.OpenApi.Tests.Fakes;
-using Nancy.Routing;
-using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Nancy.Metadata.OpenApi.Model;
+using Nancy.Metadata.OpenApi.Tests.Fakes;
+using Nancy.Routing;
+using Newtonsoft.Json;
 using Xunit;
 
 namespace Nancy.Metadata.OpenApi.Tests.Unit
@@ -20,19 +20,31 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
 
             //Act
             var response = module.GetDocumentation();
-            string body;
 
-            using (var memoryStream = new MemoryStream())
-            {
-                response.Contents.Invoke(memoryStream);
-                body = Encoding.UTF8.GetString(memoryStream.GetBuffer());
-            }
+            string body = InvokeStreamToString(response.Contents);
 
             var spec = JsonConvert.DeserializeObject<OpenApiSpecification>(body);
 
             //Assert
-            Assert.All(spec.Servers, item => Assert.Equal(item.Description, FakeDocsModule.Server.Description));
-            Assert.All(spec.Servers, item => Assert.Equal(item.Url, FakeDocsModule.Server.Url));
+            Assert.Equal(FakeDocsModule.Title, spec.Info.Title);
+            Assert.Equal(FakeDocsModule.ApiVersion, spec.Info.Version);
+        }
+
+        [Fact]
+        public void Generate_docs_twice()
+        {
+            //Arrange
+            var module = new FakeDocsModule(new DefaultRouteCacheProvider(() => new FakeRouteCache()));
+
+            //Act
+            var response = module.GetDocumentation();
+            response = module.GetDocumentation(); //We do this to make sure the cache object is not generated
+
+            string body = InvokeStreamToString(response.Contents);
+
+            var spec = JsonConvert.DeserializeObject<OpenApiSpecification>(body);
+
+            //Assert
             Assert.Equal(FakeDocsModule.Title, spec.Info.Title);
             Assert.Equal(FakeDocsModule.ApiVersion, spec.Info.Version);
         }
@@ -46,13 +58,8 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
 
             //Act
             var response = module.GetDocumentation();
-            string body;
 
-            using (var memoryStream = new MemoryStream())
-            {
-                response.Contents.Invoke(memoryStream);
-                body = Encoding.UTF8.GetString(memoryStream.GetBuffer());
-            }
+            string body = InvokeStreamToString(response.Contents);
 
             var spec = JsonConvert.DeserializeObject<OpenApiSpecification>(body);
 
@@ -77,13 +84,8 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
 
             //Act
             var response = module.GetDocumentation();
-            string body;
 
-            using (var memoryStream = new MemoryStream())
-            {
-                response.Contents.Invoke(memoryStream);
-                body = Encoding.UTF8.GetString(memoryStream.GetBuffer());
-            }
+            string body = InvokeStreamToString(response.Contents);
 
             var spec = JsonConvert.DeserializeObject<OpenApiSpecification>(body);
 
@@ -107,13 +109,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
 
             var response = module.GetDocumentation();
 
-            string body;
-
-            using (var memoryStream = new MemoryStream())
-            {
-                response.Contents.Invoke(memoryStream);
-                body = Encoding.UTF8.GetString(memoryStream.GetBuffer());
-            }
+            string body = InvokeStreamToString(response.Contents);
 
             var spec = JsonConvert.DeserializeObject<OpenApiSpecification>(body);
 
@@ -135,13 +131,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
 
             var response = module.GetDocumentation();
 
-            string body;
-
-            using (var memoryStream = new MemoryStream())
-            {
-                response.Contents.Invoke(memoryStream);
-                body = Encoding.UTF8.GetString(memoryStream.GetBuffer());
-            }
+            string body = InvokeStreamToString(response.Contents);
 
             var spec = JsonConvert.DeserializeObject<OpenApiSpecification>(body);
 
@@ -162,13 +152,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
 
             var response = module.GetDocumentation();
 
-            string body;
-
-            using (var memoryStream = new MemoryStream())
-            {
-                response.Contents.Invoke(memoryStream);
-                body = Encoding.UTF8.GetString(memoryStream.GetBuffer());
-            }
+            string body = InvokeStreamToString(response.Contents);
 
             var spec = JsonConvert.DeserializeObject<OpenApiSpecification>(body);
 
@@ -182,18 +166,13 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
         {
             //Arrange
             var server = FakeServer.Server;
-            
+
             var module = new FakeDocsModule(new DefaultRouteCacheProvider(() => new FakeRouteCache()), server);
 
             //Act
             var response = module.GetDocumentation();
-            string body;
 
-            using (var memoryStream = new MemoryStream())
-            {
-                response.Contents.Invoke(memoryStream);
-                body = Encoding.UTF8.GetString(memoryStream.GetBuffer());
-            }
+            string body = InvokeStreamToString(response.Contents);
 
             var spec = JsonConvert.DeserializeObject<OpenApiSpecification>(body);
 
@@ -204,6 +183,19 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             Assert.All(spec.Servers.FirstOrDefault().Variables, item => Assert.Equal(item.Value.Description, FakeServer.ServerVariable.Description));
             Assert.All(spec.Servers.FirstOrDefault().Variables, item => Assert.Equal(item.Value.Default, FakeServer.ServerVariable.Default));
             Assert.All(spec.Servers.FirstOrDefault().Variables, item => Assert.Equal(item.Value.Enum, FakeServer.ServerVariable.Enum));
+        }
+
+        private string InvokeStreamToString(Action<Stream> action)
+        {
+            string result = string.Empty;
+
+            using (var memoryStream = new MemoryStream())
+            {
+                action.Invoke(memoryStream);
+                result = Encoding.UTF8.GetString(memoryStream.GetBuffer());
+            }
+
+            return result;
         }
     }
 }

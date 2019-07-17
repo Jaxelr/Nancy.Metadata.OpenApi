@@ -26,8 +26,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Fakes
             base(routeCacheProvider,
                 DocsLocation,
                 Title,
-                ApiVersion,
-                host: Server)
+                ApiVersion)
         {
         }
 
