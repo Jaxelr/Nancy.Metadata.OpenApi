@@ -25,7 +25,7 @@ namespace Nancy.Metadata.OpenApi.Modules
         private ExternalDocumentation externalDocs;
 
         /// <summary>
-        /// Constructor with minimal amount of values required values.
+        /// Constructor with minimal amount of required values.
         /// </summary>
         /// <param name="routeCacheProvider"></param>
         /// <param name="docsLocation"></param>
@@ -46,7 +46,7 @@ namespace Nancy.Metadata.OpenApi.Modules
         }
 
         /// <summary>
-        /// Constructor established for use with Open Api version as a basic version
+        /// Constructor established for use with OpenApi as a basic version
         /// </summary>
         /// <param name="routeCacheProvider"></param>
         /// <param name="docsLocation"></param>
@@ -54,8 +54,6 @@ namespace Nancy.Metadata.OpenApi.Modules
         /// <param name="apiVersion"></param>
         /// <param name="termsOfService"></param>
         /// <param name="host"></param>
-        /// <param name="contact"></param>
-        /// <param name="license"></param>
         /// <param name="tags"></param>
         protected OpenApiDocsModuleBase(IRouteCacheProvider routeCacheProvider,
             string docsLocation,
@@ -84,8 +82,6 @@ namespace Nancy.Metadata.OpenApi.Modules
         /// <param name="apiVersion"></param>
         /// <param name="termsOfService"></param>
         /// <param name="hosts"></param>
-        /// <param name="contact"></param>
-        /// <param name="license"></param>
         /// <param name="tags"></param>
         protected OpenApiDocsModuleBase(IRouteCacheProvider routeCacheProvider,
             string docsLocation,
