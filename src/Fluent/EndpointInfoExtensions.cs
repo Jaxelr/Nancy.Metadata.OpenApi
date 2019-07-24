@@ -15,17 +15,38 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// </summary>
         /// <param name="endpointInfo"></param>
         /// <param name="statusCode"></param>
-        /// <param name="modelType"></param>
+        /// <param name="responseType"></param>
         /// <param name="description"></param>
         /// <returns></returns>
-        public static Endpoint WithResponseModel(this Endpoint endpointInfo, string statusCode, Type modelType, string description = null)
+        [Obsolete("This operation will be removed on future versions, favoring the HttpStatusCode enumeration")]
+        public static Endpoint WithResponseModel(this Endpoint endpointInfo, string statusCode, Type responseType, string description = null)
         {
             if (endpointInfo.ResponseInfos is null)
             {
                 endpointInfo.ResponseInfos = new Dictionary<string, Model.Response>();
             }
 
-            endpointInfo.ResponseInfos[statusCode] = GenerateResponseInfo(description, modelType);
+            endpointInfo.ResponseInfos[statusCode] = GenerateResponseInfo(description, responseType);
+
+            return endpointInfo;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="endpointInfo"></param>
+        /// <param name="statusCode"></param>
+        /// <param name="responseType"></param>
+        /// <param name="description"></param>
+        /// <returns></returns>
+        public static Endpoint WithResponseModel(this Endpoint endpointInfo, HttpStatusCode statusCode, Type responseType, string description = null)
+        {
+            if (endpointInfo.ResponseInfos is null)
+            {
+                endpointInfo.ResponseInfos = new Dictionary<string, Model.Response>();
+            }
+
+            endpointInfo.ResponseInfos[statusCode.ToString()] = GenerateResponseInfo(description, responseType);
 
             return endpointInfo;
         }
@@ -38,7 +59,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <param name="description"></param>
         /// <returns></returns>
         public static Endpoint WithDefaultResponse(this Endpoint endpointInfo, Type responseType, string description = "Default response")
-            => endpointInfo.WithResponseModel("200", responseType, description);
+            => endpointInfo.WithResponseModel(HttpStatusCode.OK, responseType, description);
 
         /// <summary>
         /// Adds a Response without a model, for usage with status code and description.
