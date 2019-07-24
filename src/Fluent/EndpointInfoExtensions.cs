@@ -46,7 +46,10 @@ namespace Nancy.Metadata.OpenApi.Fluent
                 endpointInfo.ResponseInfos = new Dictionary<string, Model.Response>();
             }
 
-            endpointInfo.ResponseInfos[statusCode.ToString()] = GenerateResponseInfo(description, responseType);
+            string code = statusCode.GetHashCode()
+                                    .ToString();
+
+            endpointInfo.ResponseInfos[code] = GenerateResponseInfo(description, responseType);
 
             return endpointInfo;
         }
