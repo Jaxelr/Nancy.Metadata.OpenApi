@@ -11,12 +11,12 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
     {
         private static string[] arrayScopes = { "read", "write" };
 
-        private static List<Model.Security> listScopes = new List<Model.Security>()
+        private static readonly List<Model.Security> ListScopes = new List<Model.Security>()
         {
             new Model.Security { Key = "key", Scopes = arrayScopes }
         };
 
-        private static List<Model.Security> multipleListScopes = new List<Model.Security>()
+        private static readonly List<Model.Security> MultipleListScopes = new List<Model.Security>()
         {
             new Model.Security { Key = "key", Scopes = arrayScopes },
             new Model.Security { Key = "key", Scopes = arrayScopes }
@@ -90,8 +90,8 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             var converter = new CustomCollectionJsonConverter();
 
             //Act
-            bool shouldFalse = converter.CanConvert(listScopes[0].GetType());
-            bool shouldTrue = converter.CanConvert(listScopes.GetType());
+            bool shouldFalse = converter.CanConvert(ListScopes[0].GetType());
+            bool shouldTrue = converter.CanConvert(ListScopes.GetType());
 
             //Assert
             Assert.True(shouldTrue);
@@ -105,13 +105,13 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             var converter = new CustomCollectionJsonConverter();
 
             //Act
-            bool shouldTrue = converter.CanConvert(listScopes.GetType());
-            string response = JsonConvert.SerializeObject(listScopes, Formatting.Indented, converter);
+            bool shouldTrue = converter.CanConvert(ListScopes.GetType());
+            string response = JsonConvert.SerializeObject(ListScopes, Formatting.Indented, converter);
 
             //Assert
             Assert.True(shouldTrue);
             Assert.NotEmpty(response);
-            Assert.All(listScopes, item => response.Contains(item.Key));
+            Assert.All(ListScopes, item => response.Contains(item.Key));
         }
 
         [Fact]
@@ -122,7 +122,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             const string NullJson = "null";
 
             //Act
-            bool shouldTrue = converter.CanConvert(listScopes.GetType());
+            bool shouldTrue = converter.CanConvert(ListScopes.GetType());
             string response = JsonConvert.SerializeObject(null, Formatting.Indented, converter);
 
             //Assert
@@ -137,8 +137,8 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             var converter = new CustomCollectionJsonConverter();
 
             //Act
-            bool shouldTrue = converter.CanConvert(listScopes.GetType());
-            string response = JsonConvert.SerializeObject(listScopes, Formatting.Indented, converter);
+            bool shouldTrue = converter.CanConvert(ListScopes.GetType());
+            string response = JsonConvert.SerializeObject(ListScopes, Formatting.Indented, converter);
 
             //Assert
             Assert.Throws<NotImplementedException>(() => JsonConvert.DeserializeObject<List<Model.Security>>(response, converter));
@@ -151,13 +151,13 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             var converter = new CustomCollectionJsonConverter();
 
             //Act
-            bool shouldTrue = converter.CanConvert(multipleListScopes.GetType());
-            string response = JsonConvert.SerializeObject(multipleListScopes, Formatting.Indented, converter);
+            bool shouldTrue = converter.CanConvert(MultipleListScopes.GetType());
+            string response = JsonConvert.SerializeObject(MultipleListScopes, Formatting.Indented, converter);
 
             //Assert
             Assert.True(shouldTrue);
             Assert.NotEmpty(response);
-            Assert.All(listScopes, item => response.Contains(item.Key));
+            Assert.All(ListScopes, item => response.Contains(item.Key));
         }
 
         [Fact]
