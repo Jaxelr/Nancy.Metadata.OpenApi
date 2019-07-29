@@ -239,7 +239,7 @@ namespace Nancy.Metadata.OpenApi.Modules
                     openApiSpecification.Component.SecuritySchemes.Add(key, SchemaCache.SecurityCache[key]);
                 }
 
-                openApiSpecification.Security = SecurityRequirements(m);
+                openApiSpecification.Security = GetSecurityRequirements(m);
             }
 
             openApiSpecification.PathInfos = endpoints;
@@ -250,7 +250,7 @@ namespace Nancy.Metadata.OpenApi.Modules
         /// </summary>
         /// <param name="metadata"></param>
         /// <returns></returns>
-        internal List<Model.Security> SecurityRequirements(OpenApiRouteMetadata metadata)
+        internal List<Model.Security> GetSecurityRequirements(OpenApiRouteMetadata metadata)
         {
             var result = new List<Model.Security>();
 
