@@ -1,9 +1,9 @@
-﻿using Nancy.Metadata.OpenApi.Core;
+﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using Nancy.Metadata.OpenApi.Core;
 using Nancy.Metadata.OpenApi.Model;
 using Nancy.Routing;
 using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
 namespace Nancy.Metadata.OpenApi.Modules
 {
@@ -99,7 +99,6 @@ namespace Nancy.Metadata.OpenApi.Modules
             this.tags = tags;
 
             Get(docsLocation, r => GetDocumentation());
-
         }
 
         /// <summary>
@@ -181,7 +180,7 @@ namespace Nancy.Metadata.OpenApi.Modules
             IEnumerable<OpenApiRouteMetadata> metadata = routeCacheProvider.GetCache().RetrieveMetadata<OpenApiRouteMetadata>();
 
             var endpoints = new Dictionary<string, Dictionary<string, Endpoint>>();
-            
+
             foreach (OpenApiRouteMetadata m in metadata)
             {
                 if (m is null)
@@ -240,32 +239,35 @@ namespace Nancy.Metadata.OpenApi.Modules
                     openApiSpecification.Component.SecuritySchemes.Add(key, SchemaCache.SecurityCache[key]);
                 }
 
-                // Security Requirements from the list defined by endpoint.
-                if (m.Info.Security is List<Model.Security> list)
-                {
-                    foreach (var sec in list)
-                    {
-                        if (openApiSpecification.Security is null)
-                        {
-                            openApiSpecification.Security = new List<Model.Security>();
-                        }
-
-                        if (openApiSpecification.Security.Contains(sec))
-                        {
-                            continue;
-                        }
-
-                        openApiSpecification.Security.Add(sec);
-                    }
-                }
-                else
-                {
-                    // If no Security was defined on each operation we assign nothing for now.
-                    m.Info.Security = new List<Model.Security>();
-                }
+                openApiSpecification.Security = SecurityRequirements(m);
             }
 
             openApiSpecification.PathInfos = endpoints;
+        }
+
+        /// <summary>
+        /// Security Requirements from the list defined by endpoint
+        /// </summary>
+        /// <param name="metadata"></param>
+        /// <returns></returns>
+        internal List<Model.Security> SecurityRequirements(OpenApiRouteMetadata metadata)
+        {
+            var result = new List<Model.Security>();
+
+            if (metadata.Info.Security is List<Model.Security> list)
+            {
+                foreach (var sec in list)
+                {
+                    if (result.Contains(sec))
+                    {
+                        continue;
+                    }
+
+                    result.Add(sec);
+                }
+            }
+
+            return result;
         }
     }
 }
