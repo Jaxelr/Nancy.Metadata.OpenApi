@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -183,6 +184,49 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             Assert.All(spec.Servers.FirstOrDefault().Variables, item => Assert.Equal(item.Value.Description, FakeServer.ServerVariable.Description));
             Assert.All(spec.Servers.FirstOrDefault().Variables, item => Assert.Equal(item.Value.Default, FakeServer.ServerVariable.Default));
             Assert.All(spec.Servers.FirstOrDefault().Variables, item => Assert.Equal(item.Value.Enum, FakeServer.ServerVariable.Enum));
+        }
+
+        [Theory]
+        [InlineData("basic")]
+        public void Get_security_requirements_on_metadata(string key)
+        {
+            //Arrange
+            var module = new FakeDocsModule(new DefaultRouteCacheProvider(() => new FakeRouteCache()));
+            var endpoint = new FakeEndpoint();
+            var metadata = new Core.OpenApiRouteMetadata(endpoint.Path, endpoint.Method, endpoint.Operation);
+            var securities = new List<Model.Security>
+            {
+                new Model.Security() { Key = key }
+            };
+
+            metadata.Info = new Endpoint(endpoint.Operation)
+            {
+                Security = securities
+            };
+
+            //Act
+            var result = module.GetSecurityRequirements(metadata);
+
+            //Assert
+            Assert.True(result.All(r => r.Key == key));
+            Assert.Single(result);
+        }
+
+        [Fact]
+        public void Get_security_requirements_with_no_key()
+        {
+            //Arrange
+            var module = new FakeDocsModule(new DefaultRouteCacheProvider(() => new FakeRouteCache()));
+            var endpoint = new FakeEndpoint();
+            var metadata = new Core.OpenApiRouteMetadata(endpoint.Path, endpoint.Method, endpoint.Operation);
+            
+            metadata.Info = new Endpoint(endpoint.Operation);
+
+            //Act
+            var result = module.GetSecurityRequirements(metadata);
+
+            //Assert
+            Assert.Empty(result);
         }
 
         private string InvokeStreamToString(Action<Stream> action)
