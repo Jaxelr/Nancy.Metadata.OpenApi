@@ -428,5 +428,44 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             Assert.NotNull(endpoint.ResponseInfos[badRequest]);
             Assert.Equal(badRequestDesc, endpoint.ResponseInfos[badRequest].Description);
         }
+
+        [Fact]
+        public void Endpoint_with_response_http_status_code()
+        {
+            //Arrange
+            var fakeEndpoint = new FakeEndpoint();
+            var fakeResponse = new FakeResponse();
+
+            //Act
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
+                .WithResponse(fakeResponse.HttpStatusCode, fakeResponse.Description);
+
+            //Assert
+            Assert.Equal(fakeEndpoint.Operation, endpoint.OperationId);
+            Assert.NotNull(endpoint.ResponseInfos[fakeResponse.StatusCode]);
+            Assert.Equal(fakeResponse.Description, endpoint.ResponseInfos[fakeResponse.StatusCode].Description);
+        }
+
+        [Fact]
+        public void Endpoint_with_multiple_response_http_status_code()
+        {
+            //Arrange
+            var fakeEndpoint = new FakeEndpoint();
+            var fakeResponse = new FakeResponse();
+            var badRequest = HttpStatusCode.BadRequest;
+            string badRequestDesc = "Bad Request Made";
+
+            //Act
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
+                .WithResponse(fakeResponse.HttpStatusCode, fakeResponse.Description)
+                .WithResponse(badRequest, badRequestDesc);
+
+            //Assert
+            Assert.Equal(fakeEndpoint.Operation, endpoint.OperationId);
+            Assert.NotNull(endpoint.ResponseInfos[fakeResponse.StatusCode]);
+            Assert.Equal(fakeResponse.Description, endpoint.ResponseInfos[fakeResponse.StatusCode].Description);
+            Assert.NotNull(endpoint.ResponseInfos[badRequest.GetHashCode().ToString()]);
+            Assert.Equal(badRequestDesc, endpoint.ResponseInfos[badRequest.GetHashCode().ToString()].Description);
+        }
     }
 }
