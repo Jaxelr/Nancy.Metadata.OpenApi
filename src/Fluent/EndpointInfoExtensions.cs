@@ -71,6 +71,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <param name="statusCode"></param>
         /// <param name="description"></param>
         /// <returns></returns>
+        [Obsolete("This operation will be removed on future versions, favoring the HttpStatusCode enumeration")]
         public static Endpoint WithResponse(this Endpoint endpointInfo, string statusCode, string description)
         {
             if (endpointInfo.ResponseInfos is null)
@@ -79,6 +80,28 @@ namespace Nancy.Metadata.OpenApi.Fluent
             }
 
             endpointInfo.ResponseInfos[statusCode] = GenerateResponseInfo(description);
+
+            return endpointInfo;
+        }
+
+        /// <summary>
+        /// Adds a Response without a model, for usage with status code and description.
+        /// </summary>
+        /// <param name="endpointInfo"></param>
+        /// <param name="statusCode"></param>
+        /// <param name="description"></param>
+        /// <returns></returns>
+        public static Endpoint WithResponse(this Endpoint endpointInfo, HttpStatusCode statusCode, string description)
+        {
+            if (endpointInfo.ResponseInfos is null)
+            {
+                endpointInfo.ResponseInfos = new Dictionary<string, Model.Response>();
+            }
+
+            string code = statusCode.GetHashCode()
+                        .ToString();
+
+            endpointInfo.ResponseInfos[code] = GenerateResponseInfo(description);
 
             return endpointInfo;
         }
