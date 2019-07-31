@@ -4,5 +4,7 @@
     {
         public string Description => @"Fake Response Model";
         public string StatusCode => @"200";
+
+        public HttpStatusCode HttpStatusCode => HttpStatusCode.OK;
     }
 }

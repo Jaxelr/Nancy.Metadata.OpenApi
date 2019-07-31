@@ -394,6 +394,29 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             Assert.Contains(nameof(FakeResponseModel), endpoint.ResponseInfos[fakeResponseModel.StatusCode].Schema.Ref);
         }
 
+        [Fact]
+        public void Endpoint_with_multiple_response_models_http_status_codes()
+        {
+            //Arrange
+            var fakeEndpoint = new FakeEndpoint();
+            var fakeResponseModel = new FakeResponseModel();
+            HttpStatusCode NewResource = HttpStatusCode.Created;
+            string NewResourceDescription = "New Resource Created";
+
+            //Act
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
+                .WithResponseModel(fakeResponseModel.HttpStatusCode, typeof(FakeResponseModel), fakeResponseModel.Description)
+                .WithResponseModel(NewResource, typeof(FakeResponseModel), NewResourceDescription);
+
+            //Assert
+            Assert.Equal(fakeEndpoint.Operation, endpoint.OperationId);
+            Assert.NotNull(endpoint.ResponseInfos[fakeResponseModel.StatusCode]);
+            Assert.NotNull(endpoint.ResponseInfos[NewResource.GetHashCode().ToString()]);
+            Assert.Equal(fakeResponseModel.Description, endpoint.ResponseInfos[fakeResponseModel.StatusCode].Description);
+            Assert.Equal(NewResourceDescription, endpoint.ResponseInfos[NewResource.GetHashCode().ToString()].Description);
+            Assert.Contains(nameof(FakeResponseModel), endpoint.ResponseInfos[fakeResponseModel.StatusCode].Schema.Ref);
+        }
+
         [Obsolete]
         [Fact]
         public void Endpoint_with_response()
