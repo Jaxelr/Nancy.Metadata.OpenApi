@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Nancy.Metadata.OpenApi.Core;
 using Nancy.Metadata.OpenApi.Model;
 
@@ -6,6 +7,8 @@ namespace Nancy.Metadata.OpenApi.Fluent
 {
     public static class EndpointInfoSecurityExtensions
     {
+        private const string InvalidLocationMessage = "The location of the ApiKey cannot be documented on the path";
+
         /// <summary>
         /// Add documentation pertinent to basic authentication on the endpoint
         /// </summary>
@@ -14,12 +17,13 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <returns></returns>
         public static Endpoint WithBasicAuthentication(this Endpoint endpointInfo, string description = null)
         {
+            const string type = "http", scheme = "basic";
             string securityKey = "basic";
 
             var security = new SecurityScheme()
             {
-                Type = "http",
-                Scheme = "basic",
+                Type = type,
+                Scheme = scheme,
                 Name = securityKey,
                 Description = description
             };
@@ -35,13 +39,44 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <param name="location">Plausible values are cookie, header and query</param>
         /// <param name="description"></param>
         /// <returns></returns>
+        [Obsolete("This operation will be removed on future versions, favoring the enum with location")]
         public static Endpoint WithApiKeyAuthentication(this Endpoint endpointInfo, string name, string location, string description = null)
         {
+            const string type = "apiKey";
+
             var security = new SecurityScheme()
             {
-                Type = "apiKey",
+                Type = type,
                 Name = name,
                 In = location,
+                Description = description
+            };
+
+            return SaveAuthentication(endpointInfo, name, security);
+        }
+
+        /// <summary>
+        /// Add documentation pertinent to custom key authentication on the endpoint
+        /// </summary>
+        /// <param name="endpointInfo"></param>
+        /// <param name="name"></param>
+        /// <param name="location">Plausible valid routes are cookie, header and query</param>
+        /// <param name="description"></param>
+        /// <returns></returns>
+        public static Endpoint WithApiKeyAuthentication(this Endpoint endpointInfo, string name, Loc location, string description = null)
+        {
+            const string type = "apiKey";
+
+            if (location == Loc.Path)
+            {
+                throw new ArgumentOutOfRangeException(InvalidLocationMessage);
+            }
+
+            var security = new SecurityScheme()
+            {
+                Type = type,
+                Name = name,
+                In = LocGenerator.GetLocByEnum(location),
                 Description = description
             };
 
@@ -57,12 +92,13 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <returns></returns>
         public static Endpoint WithBearerAuthentication(this Endpoint endpointInfo, string bearerFormat, string description = null)
         {
+            const string type = "http", scheme = "bearer";
             string securityKey = "bearer";
 
             var security = new SecurityScheme()
             {
-                Type = "http",
-                Scheme = "bearer",
+                Type = type,
+                Scheme = scheme,
                 Name = securityKey,
                 BearerFormat = bearerFormat,
                 Description = description
@@ -81,6 +117,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
         public static Endpoint WithOpenIdConnectAuthentication(this Endpoint endpointInfo, string authorizationUrl, string flow,
             string tokenUrl, string openIdConnectUrl, string description = null, string refreshUrl = null, params string[] scopes)
         {
+            const string type = "openIdConnect";
             string securityKey = "openIdConnect";
 
             var flowspec = new Flow()
@@ -95,7 +132,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
 
             var security = new SecurityScheme()
             {
-                Type = "openIdConnect",
+                Type = type,
                 OpenIdConnectUrl = openIdConnectUrl,
                 Flows = oauth2,
                 Name = securityKey,
@@ -108,7 +145,9 @@ namespace Nancy.Metadata.OpenApi.Fluent
         public static Endpoint WithOAuth2Authentication(this Endpoint endpointInfo, string authorizationUrl, string flow,
             string tokenUrl, string description = null, string refreshUrl = null, params string[] scopes)
         {
-            string securityKey = string.Concat("oauth2", flow);
+            const string type = "oauth2";
+
+            string securityKey = string.Concat(type, flow);
 
             var flowspec = new Flow()
             {
@@ -122,7 +161,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
 
             var security = new SecurityScheme()
             {
-                Type = "oauth2",
+                Type = type,
                 Flows = oauth2,
                 Name = securityKey,
                 Description = description
