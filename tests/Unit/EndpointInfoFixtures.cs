@@ -1,4 +1,5 @@
-﻿using Nancy.Metadata.OpenApi.Core;
+﻿using System;
+using Nancy.Metadata.OpenApi.Core;
 using Nancy.Metadata.OpenApi.Fluent;
 using Nancy.Metadata.OpenApi.Model;
 using Nancy.Metadata.OpenApi.Tests.Fakes;
@@ -25,6 +26,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             Assert.Equal(metadata.Name, fakeRouteDescription.Name);
         }
 
+        [Obsolete]
         [Fact]
         public void Generate_method_description()
         {
@@ -331,6 +333,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             Assert.Contains(nameof(FakeRequestModel), endpoint.RequestBody.Content[fakeRequest.ContentType].Schema.Ref);
         }
 
+        [Obsolete]
         [Fact]
         public void Endpoint_with_response_model()
         {
@@ -367,6 +370,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             Assert.Contains(nameof(FakeResponseModel), endpoint.ResponseInfos[fakeResponseModel.StatusCode].Schema.Ref);
         }
 
+        [Obsolete]
         [Fact]
         public void Endpoint_with_multiple_response_models()
         {
@@ -390,6 +394,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             Assert.Contains(nameof(FakeResponseModel), endpoint.ResponseInfos[fakeResponseModel.StatusCode].Schema.Ref);
         }
 
+        [Obsolete]
         [Fact]
         public void Endpoint_with_response()
         {
@@ -407,6 +412,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             Assert.Equal(fakeResponse.Description, endpoint.ResponseInfos[fakeResponse.StatusCode].Description);
         }
 
+        [Obsolete]
         [Fact]
         public void Endpoint_with_multiple_response()
         {
