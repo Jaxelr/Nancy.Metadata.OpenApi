@@ -13,7 +13,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// Add documentation pertinent to basic authentication on the endpoint
         /// </summary>
         /// <param name="endpointInfo"></param>
-        /// <param name="description"></param>
+        /// <param name="description">A description for the basic authentication endpoint</param>
         /// <returns></returns>
         public static Endpoint WithBasicAuthentication(this Endpoint endpointInfo, string description = null)
         {
@@ -32,12 +32,12 @@ namespace Nancy.Metadata.OpenApi.Fluent
         }
 
         /// <summary>
-        /// Add documentation pertinent to custom key authentication on the endpoint
+        /// Add documentation pertinent to a custom Api Key authentication on the endpoint
         /// </summary>
         /// <param name="endpointInfo"></param>
-        /// <param name="name"></param>
+        /// <param name="name">The name of the ApiKey</param>
         /// <param name="location">Plausible values are cookie, header and query</param>
-        /// <param name="description"></param>
+        /// <param name="description">A description for the ApiKey authentication endpoint</param>
         /// <returns></returns>
         [Obsolete("This operation will be removed on future versions, favoring the enum with location")]
         public static Endpoint WithApiKeyAuthentication(this Endpoint endpointInfo, string name, string location, string description = null)
@@ -56,12 +56,12 @@ namespace Nancy.Metadata.OpenApi.Fluent
         }
 
         /// <summary>
-        /// Add documentation pertinent to custom key authentication on the endpoint
+        /// Add documentation pertinent to a custom Api Key authentication on the endpoint
         /// </summary>
         /// <param name="endpointInfo"></param>
-        /// <param name="name"></param>
-        /// <param name="location">Plausible valid routes are cookie, header and query</param>
-        /// <param name="description"></param>
+        /// <param name="name">The name of the ApiKey</param>
+        /// <param name="location">An enumerable with plausible valid locations as cookie, header and query</param>
+        /// <param name="description">A description for the ApiKey authentication endpoint</param>
         /// <returns></returns>
         public static Endpoint WithApiKeyAuthentication(this Endpoint endpointInfo, string name, Loc location, string description = null)
         {
@@ -88,7 +88,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// </summary>
         /// <param name="endpointInfo"></param>
         /// <param name="bearerFormat">The format of the bearer</param>
-        /// <param name="description"></param>
+        /// <param name="description">A description for the bearer authentication endpoint</param>
         /// <returns></returns>
         public static Endpoint WithBearerAuthentication(this Endpoint endpointInfo, string bearerFormat, string description = null)
         {
@@ -112,7 +112,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// </summary>
         /// <param name="endpointInfo"></param>
         /// <param name="url">A valid url to refer the client</param>
-        /// <param name="description"></param>
+        /// <param name="description">A description for the OpenId connect authentication endpoint</param>
         /// <returns></returns>
         public static Endpoint WithOpenIdConnectAuthentication(this Endpoint endpointInfo, string authorizationUrl, string flow,
             string tokenUrl, string openIdConnectUrl, string description = null, string refreshUrl = null, params string[] scopes)
@@ -142,6 +142,17 @@ namespace Nancy.Metadata.OpenApi.Fluent
             return SaveAuthentication(endpointInfo, securityKey, security);
         }
 
+        /// <summary>
+        /// Add documentation pertinent to OAuth2 authentication on the endpoint
+        /// </summary>
+        /// <param name="endpointInfo"></param>
+        /// <param name="authorizationUrl">The url to obtain authorization</param>
+        /// <param name="flow">The flow defined based on the OAuth2 standards</param>
+        /// <param name="tokenUrl">The initial url to obtain tokens</param>
+        /// <param name="description">A description for the OAuth2 authentication endpoint</param>
+        /// <param name="refreshUrl">The url to refresh tokens obtained</param>
+        /// <param name="scopes">The scopes that are accesable</param>
+        /// <returns></returns>
         public static Endpoint WithOAuth2Authentication(this Endpoint endpointInfo, string authorizationUrl, string flow,
             string tokenUrl, string description = null, string refreshUrl = null, params string[] scopes)
         {
@@ -170,6 +181,12 @@ namespace Nancy.Metadata.OpenApi.Fluent
             return SaveAuthentication(endpointInfo, securityKey, security);
         }
 
+        /// <summary>
+        /// Match the flow to the flow name
+        /// </summary>
+        /// <param name="flowspec"></param>
+        /// <param name="flow"></param>
+        /// <returns></returns>
         private static OAuth2 MatchFlow(Flow flowspec, string flow)
         {
             var oauth2 = new OAuth2();
@@ -195,6 +212,14 @@ namespace Nancy.Metadata.OpenApi.Fluent
             return oauth2;
         }
 
+        /// <summary>
+        /// Save authentication on the authentication cache
+        /// </summary>
+        /// <param name="endpointInfo"></param>
+        /// <param name="key"></param>
+        /// <param name="security"></param>
+        /// <param name="scopes"></param>
+        /// <returns></returns>
         private static Endpoint SaveAuthentication(this Endpoint endpointInfo, string key, SecurityScheme security, params string[] scopes)
         {
             if (endpointInfo.Security is null)

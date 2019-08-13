@@ -6,17 +6,17 @@ using Nancy.Metadata.OpenApi.Model;
 namespace Nancy.Metadata.OpenApi.Fluent
 {
     /// <summary>
-    /// Endpoint Info Extensions for use with the nancy modules.
+    /// Endpoint info extensions for use with the metadata nancy modules
     /// </summary>
     public static class EndpointInfoExtensions
     {
         /// <summary>
-        /// Adds a Response Model to the endpoint.
+        /// Adds a response model to the endpoint
         /// </summary>
         /// <param name="endpointInfo"></param>
-        /// <param name="statusCode"></param>
-        /// <param name="responseType"></param>
-        /// <param name="description"></param>
+        /// <param name="statusCode">Http status code of the response</param>
+        /// <param name="responseType">Poco that describes the response model</param>
+        /// <param name="description">A description of the response model</param>
         /// <returns></returns>
         [Obsolete("This operation will be removed on future versions, favoring the HttpStatusCode enumeration")]
         public static Endpoint WithResponseModel(this Endpoint endpointInfo, string statusCode, Type responseType, string description = null)
@@ -32,12 +32,12 @@ namespace Nancy.Metadata.OpenApi.Fluent
         }
 
         /// <summary>
-        /// 
+        /// Adds a response model to the endpoint
         /// </summary>
         /// <param name="endpointInfo"></param>
-        /// <param name="statusCode"></param>
-        /// <param name="responseType"></param>
-        /// <param name="description"></param>
+        /// <param name="statusCode">Http status code of the response</param>
+        /// <param name="responseType">Poco that describes the response model</param>
+        /// <param name="description">A description of the response model</param>
         /// <returns></returns>
         public static Endpoint WithResponseModel(this Endpoint endpointInfo, HttpStatusCode statusCode, Type responseType, string description = null)
         {
@@ -55,21 +55,21 @@ namespace Nancy.Metadata.OpenApi.Fluent
         }
 
         /// <summary>
-        /// Adds a Default Response Model with status code 200.
+        /// Adds a default response model with status code 200
         /// </summary>
         /// <param name="endpointInfo"></param>
-        /// <param name="responseType"></param>
-        /// <param name="description"></param>
+        /// <param name="responseType">Poco that describes the response model</param>
+        /// <param name="description">A description of the default response model</param>
         /// <returns></returns>
         public static Endpoint WithDefaultResponse(this Endpoint endpointInfo, Type responseType, string description = "Default response")
             => endpointInfo.WithResponseModel(HttpStatusCode.OK, responseType, description);
 
         /// <summary>
-        /// Adds a Response without a model, for usage with status code and description.
+        /// Adds a response without a model, for usage with status code and description
         /// </summary>
         /// <param name="endpointInfo"></param>
-        /// <param name="statusCode"></param>
-        /// <param name="description"></param>
+        /// <param name="statusCode">Http status code of the response</param>
+        /// <param name="description">A description of the default response</param>
         /// <returns></returns>
         [Obsolete("This operation will be removed on future versions, favoring the HttpStatusCode enumeration")]
         public static Endpoint WithResponse(this Endpoint endpointInfo, string statusCode, string description)
@@ -85,11 +85,11 @@ namespace Nancy.Metadata.OpenApi.Fluent
         }
 
         /// <summary>
-        /// Adds a Response without a model, for usage with status code and description.
+        /// Adds a response without a model, for usage with status code and description
         /// </summary>
         /// <param name="endpointInfo"></param>
-        /// <param name="statusCode"></param>
-        /// <param name="description"></param>
+        /// <param name="statusCode">Http status code of the response</param>
+        /// <param name="description">A description of the response</param>
         /// <returns></returns>
         public static Endpoint WithResponse(this Endpoint endpointInfo, HttpStatusCode statusCode, string description)
         {
@@ -107,15 +107,15 @@ namespace Nancy.Metadata.OpenApi.Fluent
         }
 
         /// <summary>
-        /// 
+        /// Ads a request parameter for usage with querystring, header, path or cookie parameters
         /// </summary>
         /// <param name="endpointInfo"></param>
-        /// <param name="name"></param>
-        /// <param name="type"></param>
-        /// <param name="required"></param>
-        /// <param name="description"></param>
+        /// <param name="name">The name of the parameter</param>
+        /// <param name="type">Poco that describes the request parameter</param>
+        /// <param name="required">A flag to indicate if the parameter is required</param>
+        /// <param name="description">A description of the request parameter</param>
         /// <param name="loc">Plausible values are query, header, path or cookie</param>
-        /// <param name="deprecated"></param>
+        /// <param name="deprecated">A flag to indicate if this parameter is deprecated</param>
         /// <returns></returns>
         public static Endpoint WithRequestParameter(this Endpoint endpointInfo, string name, Type type = null,
         bool required = true, string description = null,Loc loc = Loc.Path, bool deprecated = false)
@@ -148,13 +148,13 @@ namespace Nancy.Metadata.OpenApi.Fluent
 
 
         /// <summary>
-        /// Ads a request model to the endpoint operation.
+        /// Ads a request model to the endpoint operation
         /// </summary>
         /// <param name="endpointInfo"></param>
-        /// <param name="requestType"></param>
-        /// <param name="contentType"></param>
-        /// <param name="description"></param>
-        /// <param name="required"></param>
+        /// <param name="requestType">Poco that describes the request model</param>
+        /// <param name="contentType">The http content type of the response</param>
+        /// <param name="description">A description of the request model</param>
+        /// <param name="required">A flag to indicate if the parameter is required</param>
         /// <returns></returns>
         public static Endpoint WithRequestModel(this Endpoint endpointInfo, Type requestType, string contentType = null, string description = null, bool required = true)
         {
@@ -181,11 +181,11 @@ namespace Nancy.Metadata.OpenApi.Fluent
         }
 
         /// <summary>
-        /// Add a description to the endpoint operation.
+        /// Add a description to the endpoint operation
         /// </summary>
         /// <param name="endpointInfo"></param>
-        /// <param name="description"></param>
-        /// <param name="tags"></param>
+        /// <param name="description">A description of the attached endpoint</param>
+        /// <param name="tags">Tags defined to the endpoint</param>
         /// <returns></returns>
         public static Endpoint WithDescription(this Endpoint endpointInfo, string description, params string[] tags)
         {
@@ -207,10 +207,10 @@ namespace Nancy.Metadata.OpenApi.Fluent
         }
 
         /// <summary>
-        /// Add a summary description to the endpoint operation.
+        /// Add a summary description to the endpoint operation
         /// </summary>
         /// <param name="endpointInfo"></param>
-        /// <param name="summary"></param>
+        /// <param name="summary">A summary definition of the attached endpoint</param>
         /// <returns></returns>
         public static Endpoint WithSummary(this Endpoint endpointInfo, string summary)
         {
@@ -219,11 +219,11 @@ namespace Nancy.Metadata.OpenApi.Fluent
         }
 
         /// <summary>
-        /// Add an external documentation object to the endpoint operation.
+        /// Add an external documentation object to the endpoint operation
         /// </summary>
         /// <param name="endpointInfo"></param>
-        /// <param name="url"></param>
-        /// <param name="description"></param>
+        /// <param name="url">A url of the external documentation</param>
+        /// <param name="description">A description of the external documentation</param>
         /// <returns></returns>
         public static Endpoint WithExternalDocumentation(this Endpoint endpointInfo, string url, string description)
         {
@@ -237,7 +237,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
         }
 
         /// <summary>
-        /// Create an optional deprecation flag for the endpoints.
+        /// Create an optional deprecation flag for the endpoints
         /// </summary>
         /// <param name="endpointInfo"></param>
         /// <returns></returns>
@@ -249,10 +249,10 @@ namespace Nancy.Metadata.OpenApi.Fluent
         }
 
         /// <summary>
-        ///
+        /// Generate a response as based on the poco and description included
         /// </summary>
-        /// <param name="description"></param>
-        /// <param name="responseType"></param>
+        /// <param name="description">A description of the response model</param>
+        /// <param name="responseType">Poco that describes the response model</param>
         /// <returns></returns>
         private static Model.Response GenerateResponseInfo(string description, Type responseType = null)
         {
