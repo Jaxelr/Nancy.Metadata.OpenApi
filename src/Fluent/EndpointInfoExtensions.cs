@@ -122,7 +122,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
         {
             if (endpointInfo.RequestParameters is null)
             {
-                endpointInfo.RequestParameters = new List<RequestParameter>();
+                endpointInfo.RequestParameters = new List<Parameter>();
             }
 
             if (type is null)
@@ -133,7 +133,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
             var schema = SchemaGenerator.GetSchemaByType(type);
             string locText = LocGenerator.GetLocByEnum(loc);
 
-            endpointInfo.RequestParameters.Add(new RequestParameter
+            endpointInfo.RequestParameters.Add(new Parameter
             {
                 Required = required,
                 Description = description,

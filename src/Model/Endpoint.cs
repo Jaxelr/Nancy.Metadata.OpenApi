@@ -26,7 +26,7 @@ namespace Nancy.Metadata.OpenApi.Model
         public IDictionary<string, Response> ResponseInfos { get; set; }
 
         [JsonProperty("parameters")]
-        public IList<RequestParameter> RequestParameters { get; set; }
+        public IList<Parameter> RequestParameters { get; set; }
 
         [JsonProperty("requestBody")]
         public RequestBody RequestBody { get; set; }
