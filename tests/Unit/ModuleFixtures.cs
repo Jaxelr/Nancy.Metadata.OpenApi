@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using Nancy.Metadata.OpenApi.Model;
 using Nancy.Metadata.OpenApi.Tests.Fakes;
 using Nancy.Routing;
@@ -246,9 +245,11 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             //Arrange
             var module = new FakeDocsModule(new DefaultRouteCacheProvider(() => new FakeRouteCache()));
             var endpoint = new FakeEndpoint();
-            var metadata = new Core.OpenApiRouteMetadata(endpoint.Path, endpoint.Method, endpoint.Operation);
 
-            metadata.Info = new Endpoint(endpoint.Operation);
+            var metadata = new Core.OpenApiRouteMetadata(endpoint.Path, endpoint.Method, endpoint.Operation)
+            {
+                Info = new Endpoint(endpoint.Operation)
+            };
 
             //Act
             var result = module.GetSecurityRequirements(metadata);
@@ -264,7 +265,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             using (var memoryStream = new MemoryStream())
             {
                 action.Invoke(memoryStream);
-                result = Encoding.UTF8.GetString(memoryStream.GetBuffer());
+                result = System.Text.Encoding.UTF8.GetString(memoryStream.GetBuffer());
             }
 
             return result;
