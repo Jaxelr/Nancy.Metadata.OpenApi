@@ -56,11 +56,11 @@ namespace Nancy.Metadata.OpenApi.Core
         /// </summary>
         /// <param name="type">The type defined for the parameter, check: https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#data-types for guidelines</param>
         /// <returns></returns>
-        internal static SchemaRef GetSchemaByType(Type type)
+        internal static Schema GetSchemaByType(Type type)
         {
             bool isCollection = false;
 
-            if (type.IsArray)
+            if (type.IsArray || type.IsGenericType)
             {
                 type = type.GetElementType();
                 isCollection = true;
@@ -72,7 +72,7 @@ namespace Nancy.Metadata.OpenApi.Core
                 isCollection = true;
             }
 
-            SchemaRef schema;
+            Schema schema;
             string schemaType, format;
 
             switch (Type.GetTypeCode(type)) //formats as defined by OAS:
@@ -126,9 +126,9 @@ namespace Nancy.Metadata.OpenApi.Core
 
             if (isCollection)
             {
-                schema = new SchemaRef()
+                schema = new Schema()
                 {
-                    Item = new Item()
+                    Items = new Schema()
                     {
                         Type = schemaType,
                         Format = format
@@ -138,7 +138,7 @@ namespace Nancy.Metadata.OpenApi.Core
             }
             else
             {
-                schema = new SchemaRef()
+                schema = new Schema()
                 {
                     Type = schemaType,
                     Format = format

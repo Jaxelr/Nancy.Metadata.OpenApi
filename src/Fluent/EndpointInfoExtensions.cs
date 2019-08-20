@@ -172,7 +172,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
                 Content = new Dictionary<string, MediaTypeObject>
                 {
                     {
-                        contentType, new MediaTypeObject() { Schema = new SchemaRef() { Ref = Ref } }
+                        contentType, new MediaTypeObject() { Schema = new Schema() { Ref = Ref } }
                     }
                 }
             };
@@ -260,7 +260,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
             {
                 return new Model.Response
                 {
-                    Schema = new SchemaRef
+                    Schema = new Schema
                     {
                         Ref = $"#/components/schemas/{SchemaGenerator.GetOrSaveSchemaReference(responseType)}"
                     },

@@ -9,7 +9,7 @@ namespace Nancy.Metadata.OpenApi.Model
     public class MediaTypeObject
     {
         [JsonProperty("schema")]
-        public SchemaRef Schema { get; set; }
+        public Schema Schema { get; set; }
 
         [JsonProperty("encoding")]
         public Encoding Encoding { get; set; }

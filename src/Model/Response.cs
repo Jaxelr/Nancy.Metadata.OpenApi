@@ -12,9 +12,12 @@ namespace Nancy.Metadata.OpenApi.Model
         public string Description { get; set; }
 
         [JsonProperty("headers")]
-        public IDictionary<string, TypeDefinition> Headers { get; set; }
+        public IDictionary<string, Header> Headers { get; set; }
 
         [JsonProperty("schema")]
-        public SchemaRef Schema { get; set; }
+        public Schema Schema { get; set; }
+
+        [JsonProperty("links")]
+        public IDictionary<string, Link> Links { get; set; }
     }
 }

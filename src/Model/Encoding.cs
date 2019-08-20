@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Nancy.Metadata.OpenApi.Model
 {
@@ -12,6 +13,9 @@ namespace Nancy.Metadata.OpenApi.Model
 
         [JsonProperty("style")]
         public string Style { get; set; }
+
+        [JsonProperty("headers")]
+        public IDictionary<string, Header> Headers { get; set; }
 
         [JsonProperty("explode")]
         public bool Explode { get; set; }

@@ -5,8 +5,11 @@ namespace Nancy.Metadata.OpenApi.Model
     /// <summary>
     /// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#schemaObject
     /// </summary>
-    public class SchemaRef
+    public class Schema
     {
+        [JsonProperty("title")]
+        public string Title { get; set; }
+
         [JsonProperty("$ref")]
         public string Ref { get; set; }
 
@@ -16,7 +19,10 @@ namespace Nancy.Metadata.OpenApi.Model
         [JsonProperty("format")]
         public string Format { get; set; }
 
+        [JsonProperty("description")]
+        public string Description { get; set; }
+
         [JsonProperty("items")]
-        public Item Item { get; set; }
+        public Schema Items { get; set; }
     }
 }
