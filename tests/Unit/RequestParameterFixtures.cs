@@ -235,6 +235,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             //Arrange
             var fakeEndpoint = new FakeEndpoint();
             var fakeRequest = new FakeRequest();
+            const string OBJECT = "object";
 
             //Act
             var endpoint = new Endpoint(fakeEndpoint.Operation)
@@ -252,7 +253,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             Assert.Equal(fakeRequest.Required, endpoint.RequestParameters[0].Required);
             Assert.Equal(fakeRequest.Name, endpoint.RequestParameters[0].Name);
             Assert.Equal(LocGenerator.GetLocByEnum(fakeRequest.Loc), endpoint.RequestParameters[0].In);
-            Assert.Equal(fakeRequest.Type.Name.ToLowerInvariant(), endpoint.RequestParameters[0].Schema.Type);
+            Assert.Equal(OBJECT, endpoint.RequestParameters[0].Schema.Type);
         }
     }
 }
