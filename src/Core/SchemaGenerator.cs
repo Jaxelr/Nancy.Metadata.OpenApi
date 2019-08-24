@@ -14,7 +14,7 @@ namespace Nancy.Metadata.OpenApi.Core
         /// <returns></returns>
         internal static string GetOrSaveSchemaReference(Type type)
         {
-            string key = type.FullName;
+            string key = type.Name;
 
             if (SchemaCache.ComponentCache.ContainsKey(key))
             {
@@ -60,7 +60,7 @@ namespace Nancy.Metadata.OpenApi.Core
         {
             bool isCollection = false;
 
-            if (type.IsArray || type.IsGenericType)
+            if (type.IsArray)
             {
                 type = type.GetElementType();
                 isCollection = true;
@@ -119,7 +119,7 @@ namespace Nancy.Metadata.OpenApi.Core
                     break;
 
                 default:
-                    schemaType = "string";
+                    schemaType = "object";
                     format = null;
                     break;
             }
