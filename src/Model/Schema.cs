@@ -24,5 +24,11 @@ namespace Nancy.Metadata.OpenApi.Model
 
         [JsonProperty("items")]
         public Schema Items { get; set; }
+
+        [JsonProperty("deprecated")]
+        public bool Deprecated { get; set; }
+
+        [JsonProperty("nullable")]
+        public bool Nullable { get; set; }
     }
 }
