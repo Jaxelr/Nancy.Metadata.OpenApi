@@ -200,17 +200,6 @@ namespace Nancy.Metadata.OpenApi.Modules
 
                 endpoints[path].Add(m.Method, m.Info);
 
-                // add component definitions
-                if (openApiSpecification.Component is null)
-                {
-                    openApiSpecification.Component = new Component();
-
-                    if (openApiSpecification.Component.ModelDefinitions is null)
-                    {
-                        openApiSpecification.Component.ModelDefinitions = new Dictionary<string, NJsonSchema.JsonSchema>();
-                    }
-                }
-
                 // Components added here from Cache
                 foreach (string key in SchemaCache.ComponentCache.Keys)
                 {

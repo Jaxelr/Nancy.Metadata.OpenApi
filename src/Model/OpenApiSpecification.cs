@@ -31,5 +31,11 @@ namespace Nancy.Metadata.OpenApi.Model
 
         [JsonProperty("externalDocs")]
         public ExternalDocumentation ExternalDocs { get; set; }
+
+        public OpenApiSpecification()
+        {
+            Component = new Component();
+            ExternalDocs = new ExternalDocumentation();
+        }
     }
 }
