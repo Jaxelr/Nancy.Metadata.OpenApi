@@ -188,10 +188,8 @@ namespace Nancy.Metadata.OpenApi.Modules
                     continue;
                 }
 
-                string path = m.Path;
-
                 // OpenApi doesnt handle these special characters on the url path construction, but Nancy allows it.
-                path = Regex.Replace(path, "[?:.*]", string.Empty);
+                string path = Regex.Replace(m.Path, "[?:.*]", string.Empty);
 
                 if (!endpoints.ContainsKey(path))
                 {
