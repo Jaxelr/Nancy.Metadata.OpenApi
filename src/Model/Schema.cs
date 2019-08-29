@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Nancy.Metadata.OpenApi.Model
 {
@@ -30,5 +31,8 @@ namespace Nancy.Metadata.OpenApi.Model
 
         [JsonProperty("nullable")]
         public bool Nullable { get; set; }
+
+        [JsonProperty("properties")]
+        public Dictionary<string, Schema>  Properties { get; set; }
     }
 }
