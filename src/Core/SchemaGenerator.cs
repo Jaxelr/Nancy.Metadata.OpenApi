@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 using Nancy.Metadata.OpenApi.Model;
-using NJsonSchema;
 
 namespace Nancy.Metadata.OpenApi.Core
 {
@@ -21,13 +21,28 @@ namespace Nancy.Metadata.OpenApi.Core
                 return key;
             }
 
-            var Schema = JsonSchema.FromType(type, new NJsonSchema.Generation.JsonSchemaGeneratorSettings
+            var schema = GetSchemaByType(type);
+
+            schema.Properties = new System.Collections.Generic.Dictionary<string, Schema>();
+
+            var props = type.GetProperties().Select(x => new
             {
-                SchemaType = SchemaType.OpenApi3,
-                TypeNameGenerator = new TypeNameGenerator()
+                Name = x.Name.ToLower(),
+                Type = x.PropertyType
             });
 
-            SchemaCache.ComponentCache[key] = Schema;
+            foreach (var prop in props)
+            {
+                schema.Properties.Add(prop.Name, GetSchemaByType(prop.Type));
+            }
+
+            //var Schema = JsonSchema.FromType(type, new NJsonSchema.Generation.JsonSchemaGeneratorSettings
+            //{
+            //    SchemaType = SchemaType.OpenApi3,
+            //    TypeNameGenerator = new TypeNameGenerator()
+            //});
+
+            SchemaCache.ComponentCache[key] = schema;
 
             return key;
         }
@@ -133,7 +148,7 @@ namespace Nancy.Metadata.OpenApi.Core
                         Type = schemaType,
                         Format = format
                     },
-                    Type = "array"
+                    Type = "array",
                 };
             }
             else

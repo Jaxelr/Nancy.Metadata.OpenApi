@@ -1,12 +1,11 @@
-﻿using Nancy.Metadata.OpenApi.Model;
-using NJsonSchema;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Nancy.Metadata.OpenApi.Model;
 
 namespace Nancy.Metadata.OpenApi.Core
 {
     public static class SchemaCache
     {
-        public static IDictionary<string, JsonSchema> ComponentCache = new Dictionary<string, JsonSchema>();
+        public static IDictionary<string, Schema> ComponentCache = new Dictionary<string, Schema>();
 
         public static IDictionary<string, SecurityScheme> SecurityCache = new Dictionary<string, SecurityScheme>();
     }

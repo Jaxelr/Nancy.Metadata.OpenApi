@@ -11,8 +11,11 @@ namespace Nancy.Metadata.OpenApi.Model
         // TODO: Complex type properties of complex types under schemas are not properly generated
         // TODO: Properties of Array types are not properly generated
 
+        //[JsonProperty("schemas")]
+        //public Dictionary<string, NJsonSchema.JsonSchema> ModelDefinitions { get; set; }
+
         [JsonProperty("schemas")]
-        public Dictionary<string, NJsonSchema.JsonSchema> ModelDefinitions { get; set; }
+        public Dictionary<string, Schema> ModelDefinitions { get; set; }
 
         [JsonProperty("responses")]
         public Dictionary<string, Response> Responses { get; set; }
@@ -40,7 +43,7 @@ namespace Nancy.Metadata.OpenApi.Model
 
         public Component()
         {
-            ModelDefinitions = new Dictionary<string, NJsonSchema.JsonSchema>();
+            ModelDefinitions = new Dictionary<string, Schema>();
         }
     }
 }
