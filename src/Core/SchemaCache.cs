@@ -5,8 +5,8 @@ namespace Nancy.Metadata.OpenApi.Core
 {
     public static class SchemaCache
     {
-        public static IDictionary<string, Schema> ComponentCache = new Dictionary<string, Schema>();
+        public static Dictionary<string, Schema> ComponentCache = new Dictionary<string, Schema>();
 
-        public static IDictionary<string, SecurityScheme> SecurityCache = new Dictionary<string, SecurityScheme>();
+        public static Dictionary<string, SecurityScheme> SecurityCache = new Dictionary<string, SecurityScheme>();
     }
 }
