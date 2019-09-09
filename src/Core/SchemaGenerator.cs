@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Nancy.Metadata.OpenApi.Model;
 
@@ -23,24 +24,7 @@ namespace Nancy.Metadata.OpenApi.Core
 
             var schema = GetSchemaByType(type);
 
-            schema.Properties = new System.Collections.Generic.Dictionary<string, Schema>();
-
-            var props = type.GetProperties().Select(x => new
-            {
-                Name = x.Name.ToLower(),
-                Type = x.PropertyType
-            });
-
-            foreach (var prop in props)
-            {
-                schema.Properties.Add(prop.Name, GetSchemaByType(prop.Type));
-            }
-
-            //var Schema = JsonSchema.FromType(type, new NJsonSchema.Generation.JsonSchemaGeneratorSettings
-            //{
-            //    SchemaType = SchemaType.OpenApi3,
-            //    TypeNameGenerator = new TypeNameGenerator()
-            //});
+            schema.Properties = GetPropertiesByType(type);
 
             SchemaCache.ComponentCache[key] = schema;
 
@@ -139,6 +123,7 @@ namespace Nancy.Metadata.OpenApi.Core
                     break;
             }
 
+
             if (isCollection)
             {
                 schema = new Schema()
@@ -150,6 +135,11 @@ namespace Nancy.Metadata.OpenApi.Core
                     },
                     Type = "array",
                 };
+
+                if (schemaType == "object")
+                {
+                    schema.Items.Ref = $"#/components/schemas/{GetOrSaveSchemaReference(type)}";
+                }
             }
             else
             {
@@ -161,6 +151,29 @@ namespace Nancy.Metadata.OpenApi.Core
             }
 
             return schema;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        internal static Dictionary<string, Schema> GetPropertiesByType(Type type)
+        {
+            var result = new Dictionary<string, Schema>();
+
+            var props = type.GetProperties().Select(x => new
+            {
+                Name = x.Name.ToLower(),
+                Type = x.PropertyType
+            });
+
+            foreach (var prop in props)
+            {
+                result.Add(prop.Name, GetSchemaByType(prop.Type));
+            }
+
+            return result;
         }
     }
 }
