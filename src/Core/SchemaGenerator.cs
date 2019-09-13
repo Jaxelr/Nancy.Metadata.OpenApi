@@ -57,22 +57,11 @@ namespace Nancy.Metadata.OpenApi.Core
         /// <returns></returns>
         internal static Schema GetSchemaByType(Type type)
         {
-            bool isCollection = false;
-
-            if (type.IsArray)
-            {
-                type = type.GetElementType();
-                isCollection = true;
-            }
-
-            if (typeof(IEnumerable).IsAssignableFrom(type) && (type != typeof(string)))
-            {
-                type = type.GetGenericArguments()[0];
-                isCollection = true;
-            }
-
             Schema schema;
             string schemaType, format;
+
+            bool isCollection;
+            (isCollection, type) = GetElementCollection(type);
 
             switch (Type.GetTypeCode(type)) //formats as defined by OAS:
             {
@@ -122,7 +111,6 @@ namespace Nancy.Metadata.OpenApi.Core
                     format = null;
                     break;
             }
-
 
             if (isCollection)
             {
@@ -174,6 +162,25 @@ namespace Nancy.Metadata.OpenApi.Core
             }
 
             return result;
+        }
+
+        internal static (bool, Type) GetElementCollection(Type type)
+        {
+            bool collection = false;
+
+            if (type.IsArray)
+            {
+                type = type.GetElementType();
+                collection = true;
+            }
+
+            if (typeof(IEnumerable).IsAssignableFrom(type) && (type != typeof(string)))
+            {
+                type = type.GetGenericArguments()[0];
+                collection = true;
+            }
+
+            return (collection, type);
         }
     }
 }
