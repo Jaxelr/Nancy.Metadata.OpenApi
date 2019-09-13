@@ -9,7 +9,8 @@ namespace Nancy.Metadata.OpenApi.Core
     internal static class SchemaGenerator
     {
         /// <summary>
-        /// Look up schema on schema cache, if not present add a new key.
+        /// Look up schema class on the schema cache, if its missing,
+        /// process the type and add it to cache.
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
@@ -32,7 +33,7 @@ namespace Nancy.Metadata.OpenApi.Core
         }
 
         /// <summary>
-        /// Saves the Security Schemes on the Cache Dictionary also returns the key used.
+        /// Saves the securitysSchemes on the cache dictionary also returns the key used.
         /// </summary>
         /// <param name="securityScheme"></param>
         /// <returns></returns>
@@ -158,12 +159,26 @@ namespace Nancy.Metadata.OpenApi.Core
 
             foreach (var prop in props)
             {
-                result.Add(prop.Name, GetSchemaByType(prop.Type));
+                var schema = GetSchemaByType(prop.Type);
+
+                //If the prop its a poco and it doesnt exist on the dictionary, we must add it.
+                if (schema.Type == "object")
+                {
+                    schema.Ref = $"#/components/schemas/{GetOrSaveSchemaReference(prop.Type)}";
+                }
+
+                result.Add(prop.Name, schema);
             }
 
             return result;
         }
 
+        /// <summary>
+        /// This method validates if the type is a collection and
+        /// returns the type of the element inside the collection
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         internal static (bool, Type) GetElementCollection(Type type)
         {
             bool collection = false;
@@ -176,7 +191,7 @@ namespace Nancy.Metadata.OpenApi.Core
 
             if (typeof(IEnumerable).IsAssignableFrom(type) && (type != typeof(string)))
             {
-                type = type.GetGenericArguments()[0];
+                type = type.GetGenericArguments().First();
                 collection = true;
             }
 
