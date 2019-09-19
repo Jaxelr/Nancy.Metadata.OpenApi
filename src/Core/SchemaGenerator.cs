@@ -25,9 +25,9 @@ namespace Nancy.Metadata.OpenApi.Core
 
             var schema = GetSchemaByType(type);
 
-            schema.Properties = GetPropertiesByType(type);
-
             SchemaCache.ComponentCache[key] = schema;
+
+            schema.Properties = GetPropertiesByType(type);
 
             return key;
         }
@@ -166,7 +166,6 @@ namespace Nancy.Metadata.OpenApi.Core
                 {
                     schema.Ref = $"#/components/schemas/{GetOrSaveSchemaReference(prop.Type)}";
                 }
-
                 result.Add(prop.Name, schema);
             }
 
