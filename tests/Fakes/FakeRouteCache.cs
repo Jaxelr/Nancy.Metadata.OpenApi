@@ -23,13 +23,8 @@ namespace Nancy.Metadata.OpenApi.Tests.Fakes
 
         public class FakeRouteCacheConfigurator
         {
-#pragma warning disable IDE0052 // Remove unread private members
-            private readonly FakeRouteCache routeCache;
-#pragma warning restore IDE0052 // Remove unread private members
-
             public FakeRouteCacheConfigurator(FakeRouteCache routeCache)
             {
-                this.routeCache = routeCache;
             }
         }
     }
