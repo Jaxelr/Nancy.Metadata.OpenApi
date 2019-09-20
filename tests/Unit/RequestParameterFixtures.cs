@@ -35,6 +35,35 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             Assert.Equal(fakeRequest.Type.Name.ToLowerInvariant(), endpoint.RequestParameters[0].Schema.Type);
         }
 
+
+        [Fact]
+        public void Request_parameter_short()
+        {
+            //Arrange
+            var fakeEndpoint = new FakeEndpoint();
+            var fakeRequest = new FakeRequest();
+            const string INT = "integer";
+            const string BYTES = "int32";
+
+            //Act
+            var endpoint = new Endpoint(fakeEndpoint.Operation)
+                .WithRequestParameter(
+                fakeRequest.Name,
+                typeof(short),
+                fakeRequest.Required,
+                fakeRequest.Description,
+                fakeRequest.Loc,
+                fakeRequest.Deprecated);
+
+            //Assert
+            Assert.Equal(fakeRequest.Description, endpoint.RequestParameters[0].Description);
+            Assert.Equal(fakeRequest.Required, endpoint.RequestParameters[0].Required);
+            Assert.Equal(fakeRequest.Name, endpoint.RequestParameters[0].Name);
+            Assert.Equal(LocGenerator.GetLocByEnum(fakeRequest.Loc), endpoint.RequestParameters[0].In);
+            Assert.Equal(INT, endpoint.RequestParameters[0].Schema.Type);
+            Assert.Equal(BYTES, endpoint.RequestParameters[0].Schema.Format);
+        }
+
         [Fact]
         public void Request_parameter_integer()
         {
