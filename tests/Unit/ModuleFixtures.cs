@@ -239,6 +239,33 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             Assert.Single(result);
         }
 
+        [Theory]
+        [InlineData("basic")]
+        public void Get_security_requirements_on_metadata_with_multiple_securities(string key)
+        {
+            //Arrange
+            var module = new FakeDocsModule(new DefaultRouteCacheProvider(() => new FakeRouteCache()));
+            var endpoint = new FakeEndpoint();
+            var metadata = new Core.OpenApiRouteMetadata(endpoint.Path, endpoint.Method, endpoint.Operation);
+            var securities = new List<Model.Security>
+            {
+                new Model.Security() { Key = key },
+                new Model.Security() { Key = key }
+            };
+
+            metadata.Info = new Endpoint(endpoint.Operation)
+            {
+                Security = securities
+            };
+
+            //Act
+            var result = module.GetSecurityRequirements(metadata);
+
+            //Assert
+            Assert.True(result.All(r => r.Key == key));
+            Assert.Single(result);
+        }
+
         [Fact]
         public void Get_security_requirements_with_no_key()
         {
