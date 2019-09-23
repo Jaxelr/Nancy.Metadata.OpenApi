@@ -115,7 +115,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
 
             //Assert
             Assert.True(success);
-            Assert.Equal(1, SchemaCache.SecurityCache.Count);
+            Assert.Single(SchemaCache.SecurityCache);
             Assert.Equal(securityScheme.Name, scheme);
             Assert.Equal(securityScheme.Scheme, scheme);
             Assert.Equal(securityScheme.Type, type);
