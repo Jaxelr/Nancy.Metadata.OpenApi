@@ -21,7 +21,7 @@
     <Content Include="wwwroot\swagger-ui.js.map" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.7.1" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.8.2" />
     <PackageReference Include="Nancy" Version="2.0.0" />
     <PackageReference Include="Nancy.Metadata.Modules" Version="2.0.0" />
     <PackageReference Include="Nancy.Validation.FluentValidation" Version="2.0.0" />
