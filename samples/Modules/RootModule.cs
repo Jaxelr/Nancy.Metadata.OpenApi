@@ -16,6 +16,7 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
             Get("/hello/{name}", r => Hello(r.name), name: "SimpleRequestWithParameter");
             Get("/hello/{names}", r => Hello(r.names), name: "SimpleRequestWithParameterArray");
             Get("/Count/{number}", r => HelloCount(r.number), name: "SimpleRequestWithNumericParameter");
+            Get("/Parent/{name}", r => Hello2(r.name), name: "ParentChildResponseModel");
             Post("/hello", r => HelloPost(), name: "SimplePostRequest");
             Post("hello/model", r => HelloModel(), name: "PostRequestWithModel");
             Post("/hello/nestedmodel", r => HelloNestedModel(), name: "PostRequestWithNestedModel");
@@ -28,6 +29,16 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
         private Response Hello(string name) => Response.AsJson(new SimpleResponseModel { Hello = $"Hello, {name}" });
 
         private Response HelloWorld() => Response.AsJson(new SimpleResponseModel { Hello = "Hello World!" });
+
+        private Response Hello2(string name)
+        {
+            string Hello = $"Hello, {name}";
+            var element = new SimpleResponseModel() { Hello = Hello };
+
+            //Multiple elements to simulate an array
+            return Response.AsJson(new ParentChildModel { Responses = new SimpleResponseModel[] { element, element } });
+        }
+
 
         private Response HelloNestedModel()
         {
@@ -122,6 +133,12 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
                             .WithDescription("This is a simple request with a parameter", "Sample")
                             .WithRequestParameter("name")
                             .WithSummary("Simple GET with parameters"));
+
+            Describe["ParentChildResponseModel"] = desc => new OpenApiRouteMetadata(desc)
+                 .With(i => i.WithResponseModel(HttpStatusCode.OK, typeof(ParentChildModel), "Sample array response")
+                 .WithDescription("This is a simple request with a parameter", "Sample")
+                 .WithRequestParameter("name")
+                 .WithSummary("Simple GET with parameters with parent child response model"));
 
             Describe["SimpleRequestWithNumericParameter"] = desc => new OpenApiRouteMetadata(desc)
                 .With(i => i.WithResponseModel(HttpStatusCode.OK, typeof(SimpleResponseModel), "Sample response")
