@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="altcover" Version="6.2.727" />
+    <PackageReference Include="altcover" Version="6.3.729" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.3.0" />
     <PackageReference Include="Nancy" Version="2.0.0" />
     <PackageReference Include="Nancy.Testing" Version="2.0.0" />
