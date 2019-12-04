@@ -30,7 +30,7 @@
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.2'">
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Owin" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Owin" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="2.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />    
@@ -38,7 +38,7 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
   	    <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    	<PackageReference Include="Microsoft.AspnetCore.Owin" Version="3.0.0" />
+    	<PackageReference Include="Microsoft.AspnetCore.Owin" Version="3.1.0" />
 
   </ItemGroup>
 
