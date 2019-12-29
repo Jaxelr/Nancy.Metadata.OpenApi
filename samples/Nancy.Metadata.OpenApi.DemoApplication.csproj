@@ -37,9 +37,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
-  	    <FrameworkReference Include="Microsoft.AspNetCore.App" />
     	<PackageReference Include="Microsoft.AspnetCore.Owin" Version="3.0.0" />
-
   </ItemGroup>
 
   <ItemGroup>
