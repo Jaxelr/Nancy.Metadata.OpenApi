@@ -12,14 +12,14 @@ namespace Nancy.Metadata.OpenApi.DemoApplication.Modules
     {
         public RootModule() : base("/api")
         {
-            Get("/hello", r => HelloWorld(), name: "SimpleRequest");
+            Get("/hello", _ => HelloWorld(), name: "SimpleRequest");
             Get("/hello/{name}", r => Hello(r.name), name: "SimpleRequestWithParameter");
             Get("/hello/{names}", r => Hello(r.names), name: "SimpleRequestWithParameterArray");
             Get("/Count/{number}", r => HelloCount(r.number), name: "SimpleRequestWithNumericParameter");
             Get("/Parent/{name}", r => Hello2(r.name), name: "ParentChildResponseModel");
-            Post("/hello", r => HelloPost(), name: "SimplePostRequest");
-            Post("hello/model", r => HelloModel(), name: "PostRequestWithModel");
-            Post("/hello/nestedmodel", r => HelloNestedModel(), name: "PostRequestWithNestedModel");
+            Post("/hello", _ => HelloPost(), name: "SimplePostRequest");
+            Post("hello/model", _ => HelloModel(), name: "PostRequestWithModel");
+            Post("/hello/nestedmodel", _ => HelloNestedModel(), name: "PostRequestWithNestedModel");
         }
 
         private Response HelloCount(int number) => Response.AsJson(new SimpleResponseModel { Hello = $"Hello, {number + 1}" });
