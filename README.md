@@ -6,6 +6,8 @@ You can find the latest specifications of [OpenAPI here](https://github.com/OAI/
 
 This library targets Nancy 2.0, for previous versions that target Nancy 1.X check release that target version 0.7.0 and below.
 
+__Note:__ Since Nancyfx is no longer being maintained i will be deprioritizing this library, please read [here for details](https://github.com/NancyFx/Nancy/issues/3010)
+
 ## Builds
 
 | Appveyor  | Branch | Coverage |
@@ -130,10 +132,6 @@ public class MyMetadataModule : MetadataModule<OpenApiRouteMetadata>
 Thats pretty much it, the docs endpoint defined above would generate some valid OpenApi Json. You can validate the Open Api endpoint using [swagger-ui](https://github.com/swagger-api/swagger-ui). (For those unaware, OpenApi used to be called Swagger, so any reference to Swagger usually means version <= 2.0) Check the [Compatibility table](https://github.com/swagger-api/swagger-ui#compatibility) of UI for usage.
 
 For a working example, clone this repo and see the sample app that uses the Swagger-UI site as a validator.
-
-## Working Progress
-
-Open Api specifies optional objects that havent been implemented at the library level. Check the [Current Development Project](https://github.com/Jaxelr/Nancy.Metadata.OpenApi/projects) for more details.
 
 ## Contributing
 
