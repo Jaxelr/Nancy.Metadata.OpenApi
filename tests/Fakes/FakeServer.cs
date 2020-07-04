@@ -3,7 +3,9 @@ using Nancy.Metadata.OpenApi.Model;
 
 namespace Nancy.Metadata.OpenApi.Tests.Fakes
 {
+#pragma warning disable RCS1102 // Make class static.
     public class FakeServer
+#pragma warning restore RCS1102 // Make class static.
     {
         private static readonly string[] Enums = { "8080", "8088" };
         internal const string FakeKey = "port";

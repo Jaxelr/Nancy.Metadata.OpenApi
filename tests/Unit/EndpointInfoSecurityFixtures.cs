@@ -18,8 +18,8 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             var fakeEndpoint = new FakeEndpoint();
 
             //This is defined by the standard
-            string type = "apiKey";
-            string location = "cookie";
+            const string type = "apiKey";
+            const string location = "cookie";
 
             //Act
             _ = new Endpoint(fakeEndpoint.Operation).WithApiKeyAuthentication(name, location, description);
@@ -41,9 +41,9 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             var fakeEndpoint = new FakeEndpoint();
 
             //This is defined by the standard
-            string type = "apiKey";
-            Loc location = Loc.Cookie;
-            
+            const string type = "apiKey";
+            const Loc location = Loc.Cookie;
+
             //Act
             _ = new Endpoint(fakeEndpoint.Operation).WithApiKeyAuthentication(name, location, description);
             bool success = SchemaCache.SecurityCache.TryGetValue(name, out SecurityScheme securityScheme);
@@ -65,7 +65,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             var fakeEndpoint = new FakeEndpoint();
 
             //This is defined by the standard
-            Loc location = Loc.Path;
+            const Loc location = Loc.Path;
 
             //Act
             Assert.Throws<ArgumentOutOfRangeException>(() => new Endpoint(fakeEndpoint.Operation).WithApiKeyAuthentication(name, location, description));
@@ -80,9 +80,9 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
         {
             //Arrange
             var fakeEndpoint = new FakeEndpoint();
-            string scheme = "basic";
-            string type = "http";
-            string description = "Basic Authentication Sample";
+            const string scheme = "basic";
+            const string type = "http";
+            const string description = "Basic Authentication Sample";
 
             //Act
             _ = new Endpoint(fakeEndpoint.Operation).WithBasicAuthentication(description);
@@ -101,9 +101,9 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
         {
             //Arrange
             var fakeEndpoint = new FakeEndpoint();
-            string scheme = "basic";
-            string type = "http";
-            string description = "Basic Authentication Sample";
+            const string scheme = "basic";
+            const string type = "http";
+            const string description = "Basic Authentication Sample";
 
             //Act
             SchemaCache.SecurityCache.Clear(); //This test requires that the size of the Schema Cache is 0 at the start.
@@ -127,10 +127,10 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
         {
             //Arrange
             var fakeEndpoint = new FakeEndpoint();
-            string bearerFormat = "jwt";
-            string type = "http";
-            string scheme = "bearer";
-            string description = "Bearer Auth Sample";
+            const string bearerFormat = "jwt";
+            const string type = "http";
+            const string scheme = "bearer";
+            const string description = "Bearer Auth Sample";
 
             //Act
             _ = new Endpoint(fakeEndpoint.Operation).WithBearerAuthentication(bearerFormat, description);
@@ -150,14 +150,14 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
         {
             //Arrange
             var fakeEndpoint = new FakeEndpoint();
-            string type = "openIdConnect";
-            string name = "openIdConnect";
-            string authUrl = "http://www.fakymcfake.com/authorization";
-            string tokenUrl = "http://www.fakymcfake.com/tokenAuth";
-            string refreshUrl = "http://www.fakymcfake.com/refresh";
-            string openIdurl = "http://www.fakeaddress.com/myopenidconnectpoint";
-            string flow = "implicit";
-            string description = "OAuth2 Authentication Sample";
+            const string type = "openIdConnect";
+            const string name = "openIdConnect";
+            const string authUrl = "http://www.fakymcfake.com/authorization";
+            const string tokenUrl = "http://www.fakymcfake.com/tokenAuth";
+            const string refreshUrl = "http://www.fakymcfake.com/refresh";
+            const string openIdurl = "http://www.fakeaddress.com/myopenidconnectpoint";
+            const string flow = "implicit";
+            const string description = "OAuth2 Authentication Sample";
             string[] scopes = new string[] { "read", "write" };
 
             //Act
@@ -181,13 +181,13 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
         {
             //Arrange
             var fakeEndpoint = new FakeEndpoint();
-            string type = "oauth2";
-            string authUrl = "http://www.fakymcfake.com/authorization";
-            string tokenUrl = "http://www.fakymcfake.com/tokenAuth";
-            string refreshUrl = "http://www.fakymcfake.com/refresh";
-            string flow = "clientCredentials";
+            const string type = "oauth2";
+            const string authUrl = "http://www.fakymcfake.com/authorization";
+            const string tokenUrl = "http://www.fakymcfake.com/tokenAuth";
+            const string refreshUrl = "http://www.fakymcfake.com/refresh";
+            const string flow = "clientCredentials";
             string name = string.Concat(type, flow);
-            string description = "OAuth2 Authentication with Client Credentials Sample";
+            const string description = "OAuth2 Authentication with Client Credentials Sample";
             string[] scopes = new string[] { "read", "write" };
 
             //Act
@@ -210,13 +210,13 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
         {
             //Arrange
             var fakeEndpoint = new FakeEndpoint();
-            string type = "oauth2";
-            string authUrl = "http://www.fakymcfake.com/authorization";
-            string tokenUrl = "http://www.fakymcfake.com/tokenAuth";
-            string refreshUrl = "http://www.fakymcfake.com/refresh";
-            string flow = "authorizationcode";
+            const string type = "oauth2";
+            const string authUrl = "http://www.fakymcfake.com/authorization";
+            const string tokenUrl = "http://www.fakymcfake.com/tokenAuth";
+            const string refreshUrl = "http://www.fakymcfake.com/refresh";
+            const string flow = "authorizationcode";
             string name = string.Concat(type, flow);
-            string description = "OAuth2 Authentication with Authorization Code Sample";
+            const string description = "OAuth2 Authentication with Authorization Code Sample";
             string[] scopes = new string[] { "read", "write" };
 
             //Act
@@ -239,13 +239,13 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
         {
             //Arrange
             var fakeEndpoint = new FakeEndpoint();
-            string type = "oauth2";
-            string authUrl = "http://www.fakymcfake.com/authorization";
-            string tokenUrl = "http://www.fakymcfake.com/tokenAuth";
-            string refreshUrl = "http://www.fakymcfake.com/refresh";
-            string flow = "password";
+            const string type = "oauth2";
+            const string authUrl = "http://www.fakymcfake.com/authorization";
+            const string tokenUrl = "http://www.fakymcfake.com/tokenAuth";
+            const string refreshUrl = "http://www.fakymcfake.com/refresh";
+            const string flow = "password";
             string name = string.Concat(type, flow);
-            string description = "OAuth2 Authentication with Password Sample";
+            const string description = "OAuth2 Authentication with Password Sample";
             string[] scopes = new string[] { "read", "write" };
 
             //Act

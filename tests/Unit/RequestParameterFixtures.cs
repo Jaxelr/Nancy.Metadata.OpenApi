@@ -35,7 +35,6 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             Assert.Equal(fakeRequest.Type.Name.ToLowerInvariant(), endpoint.RequestParameters[0].Schema.Type);
         }
 
-
         [Fact]
         public void Request_parameter_short()
         {

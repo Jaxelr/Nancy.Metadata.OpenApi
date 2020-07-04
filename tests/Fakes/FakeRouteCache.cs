@@ -23,7 +23,11 @@ namespace Nancy.Metadata.OpenApi.Tests.Fakes
 
         public class FakeRouteCacheConfigurator
         {
-            public FakeRouteCacheConfigurator(FakeRouteCache routeCache)
+#pragma warning disable RCS1163 // Unused parameter.
+#pragma warning disable IDE0060 // Remove unused parameter
+            public FakeRouteCacheConfigurator(FakeRouteCache fakeRouteCache)
+#pragma warning restore IDE0060 // Remove unused parameter
+#pragma warning restore RCS1163 // Unused parameter.
             {
             }
         }

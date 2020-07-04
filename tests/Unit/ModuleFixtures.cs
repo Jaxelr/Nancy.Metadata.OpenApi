@@ -79,7 +79,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
         public void Generate_docs_with_terms_of_services()
         {
             //Arrange
-            string TermsOfService = "blah blah blah";
+            const string TermsOfService = "blah blah blah";
             var module = new FakeDocsModule(new DefaultRouteCacheProvider(() => new FakeRouteCache()), TermsOfService);
 
             //Act
@@ -179,10 +179,10 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             //Assert
             Assert.All(spec.Servers, item => Assert.Equal(item.Description, server.Description));
             Assert.All(spec.Servers, item => Assert.Equal(item.Url, server.Url));
-            Assert.All(spec.Servers.FirstOrDefault().Variables, item => Assert.Equal(item.Key, FakeServer.FakeKey));
-            Assert.All(spec.Servers.FirstOrDefault().Variables, item => Assert.Equal(item.Value.Description, FakeServer.ServerVariable.Description));
-            Assert.All(spec.Servers.FirstOrDefault().Variables, item => Assert.Equal(item.Value.Default, FakeServer.ServerVariable.Default));
-            Assert.All(spec.Servers.FirstOrDefault().Variables, item => Assert.Equal(item.Value.Enum, FakeServer.ServerVariable.Enum));
+            Assert.All(spec.Servers.FirstOrDefault()?.Variables, item => Assert.Equal(item.Key, FakeServer.FakeKey));
+            Assert.All(spec.Servers.FirstOrDefault()?.Variables, item => Assert.Equal(item.Value.Description, FakeServer.ServerVariable.Description));
+            Assert.All(spec.Servers.FirstOrDefault()?.Variables, item => Assert.Equal(item.Value.Default, FakeServer.ServerVariable.Default));
+            Assert.All(spec.Servers.FirstOrDefault()?.Variables, item => Assert.Equal(item.Value.Enum, FakeServer.ServerVariable.Enum));
         }
 
         [Theory]
@@ -210,7 +210,6 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             Assert.True(result.All(r => r.Key == key));
             Assert.Single(result);
         }
-
 
         [Theory]
         [InlineData("basic")]

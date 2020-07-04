@@ -15,7 +15,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
         {
             //Arrange
             var endpoint = new FakeEndpoint();
-            var fakeRouteDescription = new RouteDescription(endpoint.Operation, endpoint.Method, endpoint.Path, ctx => true, null);
+            var fakeRouteDescription = new RouteDescription(endpoint.Operation, endpoint.Method, endpoint.Path, _ => true, null);
 
             //Act
             var metadata = new OpenApiRouteMetadata(fakeRouteDescription);
@@ -147,7 +147,7 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             //Arrange
             var fakeEndpoint = new FakeEndpoint();
             var fakeRequest = new FakeRequest();
-            string Param2 = "Param2";
+            const string Param2 = "Param2";
 
             //Act
             var endpoint = new Endpoint(fakeEndpoint.Operation)
@@ -335,8 +335,8 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             //Arrange
             var fakeEndpoint = new FakeEndpoint();
             var fakeResponseModel = new FakeResponseModel();
-            HttpStatusCode NewResource = HttpStatusCode.Created;
-            string NewResourceDescription = "New Resource Created";
+            const HttpStatusCode NewResource = HttpStatusCode.Created;
+            const string NewResourceDescription = "New Resource Created";
 
             //Act
             var endpoint = new Endpoint(fakeEndpoint.Operation)
@@ -375,8 +375,8 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             //Arrange
             var fakeEndpoint = new FakeEndpoint();
             var fakeResponse = new FakeResponse();
-            var badRequest = HttpStatusCode.BadRequest;
-            string badRequestDesc = "Bad Request Made";
+            const HttpStatusCode badRequest = HttpStatusCode.BadRequest;
+            const string badRequestDesc = "Bad Request Made";
 
             //Act
             var endpoint = new Endpoint(fakeEndpoint.Operation)
