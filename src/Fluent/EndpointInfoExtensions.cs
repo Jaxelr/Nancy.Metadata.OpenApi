@@ -118,7 +118,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
         {
             if (contentType is null)
             {
-                contentType = @"application/json";
+                contentType = "application/json";
             }
 
             string Ref = $"#/components/schemas/{SchemaGenerator.GetOrSaveSchemaReference(requestType)}";

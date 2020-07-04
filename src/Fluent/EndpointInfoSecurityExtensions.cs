@@ -18,7 +18,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
         public static Endpoint WithBasicAuthentication(this Endpoint endpointInfo, string description = null)
         {
             const string type = "http", scheme = "basic";
-            string securityKey = "basic";
+            const string securityKey = "basic";
 
             var security = new SecurityScheme()
             {
@@ -93,7 +93,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
         public static Endpoint WithBearerAuthentication(this Endpoint endpointInfo, string bearerFormat, string description = null)
         {
             const string type = "http", scheme = "bearer";
-            string securityKey = "bearer";
+            const string securityKey = "bearer";
 
             var security = new SecurityScheme()
             {
@@ -118,7 +118,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
             string tokenUrl, string openIdConnectUrl, string description = null, string refreshUrl = null, params string[] scopes)
         {
             const string type = "openIdConnect";
-            string securityKey = "openIdConnect";
+            const string securityKey = "openIdConnect";
 
             var flowspec = new Flow()
             {
@@ -222,12 +222,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <returns></returns>
         private static Endpoint SaveAuthentication(this Endpoint endpointInfo, string key, SecurityScheme security, params string[] scopes)
         {
-            if (endpointInfo.Security is null)
-            {
-                endpointInfo.Security = new List<Model.Security>();
-            }
-
-            endpointInfo.Security.Add(new Model.Security() { Key = key, Scopes = scopes });
+            (endpointInfo.Security ?? (endpointInfo.Security = new List<Model.Security>())).Add(new Model.Security() { Key = key, Scopes = scopes });
 
             SchemaGenerator.GetOrSaveSecurity(security);
 

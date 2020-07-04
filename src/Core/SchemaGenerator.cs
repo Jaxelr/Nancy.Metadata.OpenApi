@@ -143,10 +143,10 @@ namespace Nancy.Metadata.OpenApi.Core
         }
 
         /// <summary>
-        ///
+        /// This method returns the public properties by the poco type
         /// </summary>
         /// <param name="type"></param>
-        /// <returns></returns>
+        /// <returns><A Dictionary with the poco name as key and the Schema Open Api object as the value/returns>
         internal static Dictionary<string, Schema> GetPropertiesByType(Type type)
         {
             var result = new Dictionary<string, Schema>();
@@ -190,7 +190,7 @@ namespace Nancy.Metadata.OpenApi.Core
 
             if (typeof(IEnumerable).IsAssignableFrom(type) && (type != typeof(string)))
             {
-                type = type.GetGenericArguments().First();
+                type = type.GetGenericArguments()[0];
                 collection = true;
             }
 

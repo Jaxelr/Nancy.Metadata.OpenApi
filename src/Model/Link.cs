@@ -25,6 +25,5 @@ namespace Nancy.Metadata.OpenApi.Model
 
         [JsonProperty("server")]
         public Server Server { get; set; }
-
     }
 }
