@@ -222,7 +222,7 @@ namespace Nancy.Metadata.OpenApi.Fluent
         /// <returns></returns>
         private static Endpoint SaveAuthentication(this Endpoint endpointInfo, string key, SecurityScheme security, params string[] scopes)
         {
-            (endpointInfo.Security ?? (endpointInfo.Security = new List<Model.Security>())).Add(new Model.Security() { Key = key, Scopes = scopes });
+            (endpointInfo.Security ??= new List<Model.Security>()).Add(new Model.Security() { Key = key, Scopes = scopes });
 
             SchemaGenerator.GetOrSaveSecurity(security);
 

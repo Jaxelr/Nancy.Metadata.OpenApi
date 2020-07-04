@@ -18,6 +18,7 @@
     <Description>A library to add capabilities to a NancyFx web service to generate a json doc that complies to OpenApi spec 3.0.2.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <LangVersion>8</LangVersion>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
 
