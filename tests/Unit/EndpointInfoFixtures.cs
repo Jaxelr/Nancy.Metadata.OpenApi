@@ -26,28 +26,6 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             Assert.Equal(metadata.Name, fakeRouteDescription.Name);
         }
 
-        [Obsolete]
-        [Fact]
-        public void Generate_method_description()
-        {
-            //Arrange
-            var endpoint = new FakeEndpoint();
-
-            var fakeRouteDescription = new RouteDescription(endpoint.Operation, endpoint.Method, endpoint.Path, ctx => true, null);
-
-            //Act
-            var metadata = new OpenApiRouteMetadata(fakeRouteDescription)
-                .With(i => i.WithResponseModel("200", typeof(FakeResponseModel), "Sample response")
-                            .WithSummary(endpoint.Summary));
-
-            //Assert
-            Assert.Equal(metadata.Path, fakeRouteDescription.Path);
-            Assert.Equal(metadata.Method, fakeRouteDescription.Method.ToLowerInvariant());
-            Assert.Equal(metadata.Name, fakeRouteDescription.Name);
-            Assert.Equal(metadata.Info.OperationId, endpoint.Operation);
-            Assert.Equal(metadata.Info.Summary, endpoint.Summary);
-        }
-
         [Fact]
         public void Endpoint_with_summary()
         {
@@ -333,25 +311,6 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             Assert.Contains(nameof(FakeRequestModel), endpoint.RequestBody.Content[fakeRequest.ContentType].Schema.Ref);
         }
 
-        [Obsolete]
-        [Fact]
-        public void Endpoint_with_response_model()
-        {
-            //Arrange
-            var fakeEndpoint = new FakeEndpoint();
-            var fakeResponseModel = new FakeResponseModel();
-
-            //Act
-            var endpoint = new Endpoint(fakeEndpoint.Operation)
-                .WithResponseModel(fakeResponseModel.StatusCode, typeof(FakeResponseModel), fakeResponseModel.Description);
-
-            //Assert
-            Assert.Equal(fakeEndpoint.Operation, endpoint.OperationId);
-            Assert.NotNull(endpoint.ResponseInfos[fakeResponseModel.StatusCode]);
-            Assert.Equal(fakeResponseModel.Description, endpoint.ResponseInfos[fakeResponseModel.StatusCode].Description);
-            Assert.Contains(nameof(FakeResponseModel), endpoint.ResponseInfos[fakeResponseModel.StatusCode].Schema.Ref);
-        }
-
         [Fact]
         public void Endpoint_with_default_response_model()
         {
@@ -367,30 +326,6 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             Assert.Equal(fakeEndpoint.Operation, endpoint.OperationId);
             Assert.NotNull(endpoint.ResponseInfos[fakeResponseModel.StatusCode]);
             Assert.Equal(fakeResponseModel.Description, endpoint.ResponseInfos[fakeResponseModel.StatusCode].Description);
-            Assert.Contains(nameof(FakeResponseModel), endpoint.ResponseInfos[fakeResponseModel.StatusCode].Schema.Ref);
-        }
-
-        [Obsolete]
-        [Fact]
-        public void Endpoint_with_multiple_response_models()
-        {
-            //Arrange
-            var fakeEndpoint = new FakeEndpoint();
-            var fakeResponseModel = new FakeResponseModel();
-            string NewResource = "201";
-            string NewResourceDescription = "New Resource Created";
-
-            //Act
-            var endpoint = new Endpoint(fakeEndpoint.Operation)
-                .WithResponseModel(fakeResponseModel.StatusCode, typeof(FakeResponseModel), fakeResponseModel.Description)
-                .WithResponseModel(NewResource, typeof(FakeResponseModel), NewResourceDescription);
-
-            //Assert
-            Assert.Equal(fakeEndpoint.Operation, endpoint.OperationId);
-            Assert.NotNull(endpoint.ResponseInfos[fakeResponseModel.StatusCode]);
-            Assert.NotNull(endpoint.ResponseInfos[NewResource]);
-            Assert.Equal(fakeResponseModel.Description, endpoint.ResponseInfos[fakeResponseModel.StatusCode].Description);
-            Assert.Equal(NewResourceDescription, endpoint.ResponseInfos[NewResource].Description);
             Assert.Contains(nameof(FakeResponseModel), endpoint.ResponseInfos[fakeResponseModel.StatusCode].Schema.Ref);
         }
 
@@ -415,47 +350,6 @@ namespace Nancy.Metadata.OpenApi.Tests.Unit
             Assert.Equal(fakeResponseModel.Description, endpoint.ResponseInfos[fakeResponseModel.StatusCode].Description);
             Assert.Equal(NewResourceDescription, endpoint.ResponseInfos[NewResource.GetHashCode().ToString()].Description);
             Assert.Contains(nameof(FakeResponseModel), endpoint.ResponseInfos[fakeResponseModel.StatusCode].Schema.Ref);
-        }
-
-        [Obsolete]
-        [Fact]
-        public void Endpoint_with_response()
-        {
-            //Arrange
-            var fakeEndpoint = new FakeEndpoint();
-            var fakeResponse = new FakeResponse();
-
-            //Act
-            var endpoint = new Endpoint(fakeEndpoint.Operation)
-                .WithResponse(fakeResponse.StatusCode, fakeResponse.Description);
-
-            //Assert
-            Assert.Equal(fakeEndpoint.Operation, endpoint.OperationId);
-            Assert.NotNull(endpoint.ResponseInfos[fakeResponse.StatusCode]);
-            Assert.Equal(fakeResponse.Description, endpoint.ResponseInfos[fakeResponse.StatusCode].Description);
-        }
-
-        [Obsolete]
-        [Fact]
-        public void Endpoint_with_multiple_response()
-        {
-            //Arrange
-            var fakeEndpoint = new FakeEndpoint();
-            var fakeResponse = new FakeResponse();
-            string badRequest = "400";
-            string badRequestDesc = "Bad Request Made";
-
-            //Act
-            var endpoint = new Endpoint(fakeEndpoint.Operation)
-                .WithResponse(fakeResponse.StatusCode, fakeResponse.Description)
-                .WithResponse(badRequest, badRequestDesc);
-
-            //Assert
-            Assert.Equal(fakeEndpoint.Operation, endpoint.OperationId);
-            Assert.NotNull(endpoint.ResponseInfos[fakeResponse.StatusCode]);
-            Assert.Equal(fakeResponse.Description, endpoint.ResponseInfos[fakeResponse.StatusCode].Description);
-            Assert.NotNull(endpoint.ResponseInfos[badRequest]);
-            Assert.Equal(badRequestDesc, endpoint.ResponseInfos[badRequest].Description);
         }
 
         [Fact]
