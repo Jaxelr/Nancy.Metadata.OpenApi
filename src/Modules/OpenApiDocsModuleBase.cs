@@ -31,9 +31,7 @@ namespace Nancy.Metadata.OpenApi.Modules
         /// <param name="docsLocation"></param>
         /// <param name="title"></param>
         /// <param name="apiVersion"></param>
-#pragma warning disable RCS1160 // Abstract type should not have public constructors.
-        public OpenApiDocsModuleBase(IRouteCacheProvider routeCacheProvider,
-#pragma warning restore RCS1160 // Abstract type should not have public constructors.
+        protected OpenApiDocsModuleBase(IRouteCacheProvider routeCacheProvider,
             string docsLocation,
             string title,
             string apiVersion) : this(routeCacheProvider,
