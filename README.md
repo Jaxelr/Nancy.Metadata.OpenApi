@@ -45,7 +45,7 @@ using Nancy.Metadata.OpenApi.Modules;
 
 public class DocsModule : OpenApiDocsModuleBase //We must inherit from the OpenApiDocsModuleBase
 {
-    //Could be an array of Servers.
+    //Could be an array of Servers corresponding to different environments. 
     public static Server Server
         => new Server() { Description = "My Descripton", Url = "http://localhost:5000/" };
 
