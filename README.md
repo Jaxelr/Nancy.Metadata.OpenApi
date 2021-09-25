@@ -131,7 +131,7 @@ public class MyMetadataModule : MetadataModule<OpenApiRouteMetadata>
 
 Thats pretty much it, the docs endpoint defined above would generate some valid OpenApi Json. You can validate the Open Api endpoint using [swagger-ui](https://github.com/swagger-api/swagger-ui). (For those unaware, OpenApi used to be called Swagger, so any reference to Swagger usually means version <= 2.0) Check the [Compatibility table](https://github.com/swagger-api/swagger-ui#compatibility) of UI for usage.
 
-For a working example, clone this repo and see the sample app that uses the Swagger-UI site as a validator.
+For a working example, see the sample app that uses the Swagger-UI site as a validator.
 
 ## Contributing
 
